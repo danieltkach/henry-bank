@@ -1,0 +1,20 @@
+{
+  "name": "henry_bank_gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": {},
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "babel-node $1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-gateway": "^1.16.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.17",
+    "@babel/node": "^7.12.17",
+    "@babel/preset-env": "^7.12.17"
+  }
+}
