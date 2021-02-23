@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const {
-  DB_HOST, DB_TABLE, DB_PORT
+  DB_HOST, DB_NAME, DB_PORT
 } = process.env;
 
 const dbConnection = async () => {
     try {
-        await mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_TABLE}`,{
+        await mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`,{
             useNewUrlParser:true,
             useUnifiedTopology:true,
             useCreateIndex:true,
@@ -17,8 +17,6 @@ const dbConnection = async () => {
         console.log(error)
         throw new Error("Error al iniciar base de datos")
     }
-
-
 }
 
 module.exports = {
