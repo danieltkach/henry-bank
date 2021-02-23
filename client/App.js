@@ -24,8 +24,8 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
-              options={{ title: "lets Sign Up" }}
+            <Stack.Screen 
+              options={{ title: "Bienvenido!" }}
               name="Login"
               component={LoginScreen}
             />
@@ -38,9 +38,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 3,
+    backgroundColor: "#1954C2",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
   },
 });
