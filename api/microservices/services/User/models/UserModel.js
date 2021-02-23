@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const bcrypt = require('bcrypt');
 
 const validateEmail = function(email) {
     let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -30,14 +31,14 @@ const UserSchema = new Schema({
   idType: {
     type: String,
     enum: ['dni'],
-    required: true
+    /* required: true */
   },
   idNumber: {
     type: Number,
     trim: true,
     // min: [8, 'Numero fuera de rango'],
     // max: [8, 'Numero fuera de rango'],
-    required: true
+    /* required: true */
   },
   name: {
     type: String,
