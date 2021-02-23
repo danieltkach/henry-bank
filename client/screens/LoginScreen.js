@@ -5,28 +5,77 @@ import { color } from "react-native-reanimated";
 import Logo from "../images/Logo.png"
 
 const LoginScreen = () => {
-  const [text, setText] = useState("");
-  const {colors} = useTheme()
+  const [text, setText] = useState({
+    email:"",
+    pass:"",
+    emailError:false,
+    passError:false
+  });
 
+
+  const checkTextInput = () => {
+    if (!text.email.trim()) {
+      alert('Please Enter Email')
+      setText({
+        ...text,
+        emailError:true
+      })
+      return;
+    }
+    if (!text.pass.trim()) {
+      alert('Please Enter Pass');
+      setText({
+        ...text,
+        passError:true
+      })
+      return;
+    }
+  };
+
+const textInputEmail=(val) =>{
+    setText({
+      ...text,
+      email:val,
+      emailError:false
+    })
+}
+const textInputPass=(val) =>{
+    setText({
+      ...text,
+      pass:val,
+      passError:false
+    })
+}
+
+const {colors} = useTheme()
   return (
     <View style={styles.container}>
       <View style={styles.inputs}>
-      <TextInput mode="outlined" label="Email" value={text} onChangeText={(text) => setText(text)}/>
-      <TextInput mode="outlined" label="Password" value={text} onChangeText={(text) => setText(text)}/>
+      <TextInput mode="outlined" label="Email"  onChangeText={(val) => textInputEmail(val)}/>
+      {text.emailError && (
+        <Text style={{ color: "red" }}>verificar email</Text>
+      )}
+      <TextInput mode="outlined" label="Password" onChangeText={(val) => textInputPass(val)}/>
+      {text.passError && (
+        <Text style={{ color: "red" }}>verificar password</Text>
+      )}
       </View>
       
       <View style={styles.foto}> 
       <Image style={styles.logo} source={Logo}/>
       </View>
       <View style={styles.button}>
-        <Button  mode="text" onPress={() => console.log('Pressed')}>
-          Ingresar
+        <Button
+        onPress={checkTextInput}>
+            Ingresar
         </Button>
-        <Button  mode="text" onPress={() => console.log('Pressed')}>
+        <Button onPress={() => console.log('Pressed')}>
           Registrarse
         </Button>
       </View>
     </View>
+
+    
     
   );
 };
