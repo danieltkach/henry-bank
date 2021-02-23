@@ -6,7 +6,7 @@ const validateEmail = function(email) {
     return re.test(email)
 };
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
   email: {
     type: String,
         trim: true,
@@ -24,8 +24,8 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['client', 'admin'],
-    default: 'client'
+    enum: ['guest', 'client', 'admin'],
+    default: 'guest'
   },
   idType: {
     type: String,
@@ -83,4 +83,18 @@ const userSchema = new Schema({
       ref: 'Contact'
     }
   ]
-module.exports = mongoose.model('User', userSchema)
+});
+
+UserSchema.pre('save', async function (next) {
+  const hash = await bcrypt.hash(this.password, 10)
+  this.password = hash;
+  next();
+})
+
+UserSchema.methods.isValidPassword = async function(password) {
+  const user = this;
+  const compare = await bcrypt.compare(password, user.password);
+  return compare;
+}
+
+module.exports = mongoose.model('User', UserSchema)
