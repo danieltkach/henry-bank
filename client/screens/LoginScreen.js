@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button ,useTheme} from "react-native-paper";
+import { color } from "react-native-reanimated";
 import Logo from "../images/Logo.png"
 
 const LoginScreen = () => {
   const [text, setText] = useState("");
-  
+  const {colors} = useTheme()
 
   return (
     <View style={styles.container}>
       <View style={styles.inputs}>
-
-      <TextInput outline label="Email" value={text} onChangeText={(text) => setText(text)}/>
-      <TextInput outline label="Password" value={text} onChangeText={(text) => setText(text)}/>
-  
+      <TextInput mode="outlined" label="Email" value={text} onChangeText={(text) => setText(text)}/>
+      <TextInput mode="outlined" label="Password" value={text} onChangeText={(text) => setText(text)}/>
       </View>
       
       <View style={styles.foto}> 
