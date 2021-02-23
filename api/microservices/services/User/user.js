@@ -1,12 +1,24 @@
 const express = require('express');
-const {PORT_USER} = process.env
+const bodyParser = require('body-parser');
+const cors = require('cors')
+const morgan = require('morgan')
+const {dbConnection} = require("./database/config")
 
 let app = express();
 
-app.get('/users', (req, res, next) => {
-    res.send(["Tony","Lisa","Michael","Ginger","Food"])
+//middleware
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+app.use(bodyParser.json())
+app.use(cors())
+app.use(morgan('dev'));
+
+//db connection
+dbConnection()
+
+app.get('/user',(req,res)=> {
+    res.send('Hola user')
 })
 
-app.listen(4000, () => {
-    console.log('Server running on 4000');
+app.listen(4001, () => {
+    console.log('Server running on 4001');
 })
