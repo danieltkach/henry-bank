@@ -4,9 +4,9 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
 const createUser = async (req, res, next) => {
-    res.status(201).json({
-      message: 'Signup successful',
-      user: req.user,
+  res.status(201).json({
+    message: 'Signup successful',
+    user: req.user,
   })
 }
 

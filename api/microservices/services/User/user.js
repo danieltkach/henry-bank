@@ -9,11 +9,15 @@ let app = express();
 
 app.name = 'API_USER';
 
+require('./middlewares/auth')
+
 //middleware
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 app.use(bodyParser.json({ limit: "50mb" }))
 app.use(cors())
 app.use(morgan('dev'));
+
+/* app.use(passport.initialize()) */
 
 //db connection
 dbConnection();
