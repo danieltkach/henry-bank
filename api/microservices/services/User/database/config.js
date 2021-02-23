@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 
+const {
+  DB_HOST, DB_TABLE, DB_PORT
+} = process.env;
+
 const dbConnection = async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/henry_bank",{
+        await mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_TABLE}`,{
             useNewUrlParser:true,
             useUnifiedTopology:true,
             useCreateIndex:true,
