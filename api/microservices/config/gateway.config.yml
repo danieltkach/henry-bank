@@ -10,6 +10,9 @@ apiEndpoints:
   user:
     host: localhost
     path: ['/users','/users/*']
+  transction:
+    host: localhost
+    path: ['/transactions','/transactions/*']
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'

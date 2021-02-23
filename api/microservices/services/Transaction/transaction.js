@@ -15,8 +15,8 @@ app.use(morgan('dev'));
 //db connection
 dbConnection()
 
-app.get('/user',(req,res)=> {
-    res.send('Hola transaction')
+app.get('/transaction',(req,res)=> {
+    res.send('Soy una transaction')
 })
 
 app.listen(4002, () => {

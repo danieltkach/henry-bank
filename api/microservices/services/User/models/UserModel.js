@@ -83,4 +83,6 @@ const userSchema = new Schema({
       ref: 'Contact'
     }
   ]
+
+})
 module.exports = mongoose.model('User', userSchema)
