@@ -33,15 +33,49 @@ const loginUser = async (req, res, next) => {
   })(req, res, next)
 }
 
+
+const modifyUser = async(req,res,next) => {
+  const user_id = req.params.id
+
+  User.findByIdAndUpdate(user_id ,{
+    role : 'client',
+    idType : req.body.idType,
+    idNumber: req.body.idNumber,
+    name: req.body.name,
+    lastName: req.body.lastName,
+    streetNumber : req.body.streetNumber,
+    zipCode : req.body.zipCode,
+    country : req.body.country,
+    phone : req.body.phone,
+    street : req.body.street,
+    city: req.body.city,
+  }, (err, userUpdated) => {
+    if(err) res.status(400).send({message: 'Error al terminar de registrar al usuario'})
+    res.status(200).send({user : userUpdated, msg : 'Registro completado'})
+  })
+}
+
 const getUser = (req, res, next) => {
-  res.json({
-    message: 'Get user',
-    user: req.user,
-    token: req.query.secret_token,
+    const user = req.params.id
+
+    User.findById(user, (error, data) =>{
+      if(error) res.status(400).send("Error al cargar")
+      res.status(200).send(data)
+    })
+}
+
+const getUsers = (req, res, next) => {
+
+  User.find((error, data) =>{
+    if(error) res.status(400).send("Error al cargar")
+    res.status(200).send(data)
   })
 }
 
 module.exports= {
     createUser,
-    loginUser
+    loginUser,
+    modifyUser,
+    getUser,
+    getUsers
 }

@@ -1,4 +1,4 @@
-const Transaction = require('./TransactionModel')
+const Transaction = require('../models/TransactionModel')
 
 const getTransactions = (req,res) => {
     Transaction.find()
