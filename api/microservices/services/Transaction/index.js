@@ -4,6 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const {dbConnection} = require("./database/config")
 const transactionRoutes = require("./routes/transactionRoutes")
+const accountRoutes = require("./routes/accountRoutes")
 let app = express();
 
 //middleware
@@ -18,6 +19,8 @@ dbConnection()
 //routes
 
 app.use('/' , transactionRoutes)
+
+app.use('/account', accountRoutes)
 
 
 app.get('/transaction',(req,res)=> {
