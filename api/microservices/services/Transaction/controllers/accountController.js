@@ -84,5 +84,5 @@ module.exports = {
     findAccount,
     updateAccount,
     getAllAccounts,
-    getBalance
+    getBalance,
 }
