@@ -4,7 +4,7 @@
   "description": "",
   "main": "transaction.js",
   "scripts": {
-    "start": "nodemon transaction.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,6 @@
 const AccountModel = require('../models/AccountModel')
 
+//crear en el registro
 const createAccount = (req,res) => {
     const {userId, currency, CVU, balance} = req.body
     const account = new AccountModel({
@@ -70,9 +71,18 @@ const getAllAccounts = (req,res) => {
     })
 }
 
+const getBalance = (req,res) => {
+    const idAccount = req.params.id
+    Account.findById(idAccount , (err , data) => {
+        if(err) res.status(400).send("Error de balance")
+        res.status(200).send(data)
+    })
+}
+
 module.exports = {
     createAccount,
     findAccount,
     updateAccount,
-    getAllAccounts
+    getAllAccounts,
+    getBalance
 }
