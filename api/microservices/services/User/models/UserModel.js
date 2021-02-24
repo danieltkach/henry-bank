@@ -7,6 +7,7 @@ const validateEmail = function(email) {
     return re.test(email)
 };
 
+
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -72,6 +73,10 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
+  birthdate: {
+    type : String,
+   // validate: [validateAge, 'Ingresa una edad valida'],
+  },
   contacts : [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -83,7 +88,7 @@ const UserSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Contact'
     }
-  ]
+  ],
 });
 
 UserSchema.pre('save', async function (next) {
