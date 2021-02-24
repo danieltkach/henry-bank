@@ -33,26 +33,44 @@ const loginUser = async (req, res, next) => {
   })(req, res, next)
 }
 
+function calcularEdad(fecha) {
+  var hoy = new Date();
+  var cumpleanos = new Date(fecha);
+  var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+  var m = hoy.getMonth() - cumpleanos.getMonth();
+
+  if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+      edad--;
+  }
+
+  return edad;
+}
+
 
 const modifyUser = async(req,res,next) => {
   const user_id = req.params.id
-
-  User.findByIdAndUpdate(user_id ,{
-    role : 'client',
-    idType : req.body.idType,
-    idNumber: req.body.idNumber,
-    name: req.body.name,
-    lastName: req.body.lastName,
-    streetNumber : req.body.streetNumber,
-    zipCode : req.body.zipCode,
-    country : req.body.country,
-    phone : req.body.phone,
-    street : req.body.street,
-    city: req.body.city,
-  }, (err, userUpdated) => {
-    if(err) res.status(400).send({message: 'Error al terminar de registrar al usuario'})
-    res.status(200).send({user : userUpdated, msg : 'Registro completado'})
-  })
+  if(calcularEdad(req.body.birthdate) >=16){
+    User.findByIdAndUpdate(user_id ,{
+      role : 'client',
+      idType : req.body.idType,
+      idNumber: req.body.idNumber,
+      name: req.body.name,
+      lastName: req.body.lastName,
+      streetNumber : req.body.streetNumber,
+      zipCode : req.body.zipCode,
+      country : req.body.country,
+      phone : req.body.phone,
+      street : req.body.street,
+      city: req.body.city,
+      birthdate: req.body.birthdate
+    }, (err, userUpdated) => {
+      if(err) res.status(400).send({message: 'Error al terminar de registrar al usuario'})
+      res.status(200).send({msg : 'Registro completado'})
+    })
+  }
+  else{
+    res.status(400).send("Menor de edad!!")
+  }
 }
 
 const getUser = (req, res, next) => {
