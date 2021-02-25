@@ -19,16 +19,23 @@ const theme = {
     secondary:"#E52B2B"
   },
 };
+
+
 export default function App() {
   return (
     <StoreProvider store={store}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen 
+            <Stack.Screen
               /* options={{ title: "Bienvenido!" }}
               name="Login"
               component={LoginScreen} */
+              options={{ headerShown: false }}
+              name="LoginScreen"
+              component={LoginScreen}
+            />
+            <Stack.Screen
               options={{ headerShown: false }}
               name="Menu"
               component={Menu}

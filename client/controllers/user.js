@@ -5,7 +5,7 @@ import {
   GET_USER_BY_ID,
   GET_USERS,
   GET_ADDRESS
-} from '../constants/api';
+} from './index';
 
 
 export const registerUserFetch = (dataForm) => {
@@ -29,7 +29,7 @@ export const registerUserFetch = (dataForm) => {
 
 export const loginUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch(POST_LOGIN_USER, {
+    fetch('http://localhost:4001/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
