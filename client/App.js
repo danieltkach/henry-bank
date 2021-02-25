@@ -9,6 +9,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from './Redux/Store';
 import Menu from './screens/Menu';
 import RegisterScreen from './screens/RegisterScreen';
+import Register3 from './screens/Register3';
 
 const Stack = createStackNavigator();
 const theme = {
@@ -39,6 +40,10 @@ export default function App() {
               options={{headerShown: false }}
               name="Menu"
               component={Menu} />
+              <Stack.Screen
+              options={{headerShown: false }}
+              name="Register3"
+              component={Register3} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

@@ -4,7 +4,7 @@ import { TextInput, Button ,useTheme} from "react-native-paper";
 import { color } from "react-native-reanimated";
 import Logo from "../images/Logo.png"
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [text, setText] = useState({
     email:"",
     pass:"",
@@ -69,7 +69,7 @@ const {colors} = useTheme()
         onPress={checkTextInput}>
             Ingresar
         </Button>
-        <Button onPress={() => console.log('Pressed')}>
+        <Button onPress={() => navigation.navigate('Register')}>
           Registrarse
         </Button>
       </View>
