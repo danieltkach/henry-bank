@@ -1,13 +1,18 @@
 const User = require('../models/UserModel')
-
+const nodeMailer = require('../util/nodeMailer')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
 const createUser = async (req, res, next) => {
-  res.status(201).json({
-    message: 'Signup successful',
-    user: req.user,
+  const { name, email, lastName } = req.user;
+  const body = { _id: req.user._id, email: req.user.email }
+  const token = jwt.sign({ user: body }, 'top_secret');
+
+  nodeMailer.sendEmail({name, lastName, email, token})
+  .then(response => {
+    res.status(200).json({ message: "Registro inicial completado", user: req.user });
   })
+  .catch(err => res.status(400).json({ message: "Error al enviar el email" }))
 }
 
 const loginUser = async (req, res, next) => {
@@ -72,10 +77,20 @@ const getUsers = (req, res, next) => {
   })
 }
 
+const verifyToken = (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+
+  jwt.verify(token, "top_secret", (err, decode) => {
+      if(err) return res.status(409).json({ message: 'Autorizacion no valida' });
+      return res.status(200).json({ user: decode, message: 'Correo electrónico autorizado' });
+  });
+}
+
 module.exports= {
     createUser,
     loginUser,
     modifyUser,
     getUser,
-    getUsers
+    getUsers,
+    verifyToken
 }
