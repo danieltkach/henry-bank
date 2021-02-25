@@ -15,13 +15,13 @@ export const createTransactionFetch = (dataId, dataForm) => {
       },
       body: JSON.stringify(dataForm)
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const readTransferFetch = (dataId) => {
@@ -29,13 +29,13 @@ export const readTransferFetch = (dataId) => {
     fetch(`${POST_TRANSFER}/${dataId}`, {
       method: 'GET'
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const readIncomeFetch = (dataId) => {
@@ -43,11 +43,11 @@ export const readIncomeFetch = (dataId) => {
     fetch(`${GET_TRANSFER_INCOME}/${dataId}`, {
       method: 'GET'
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
