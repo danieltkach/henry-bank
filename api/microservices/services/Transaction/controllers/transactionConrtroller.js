@@ -12,7 +12,7 @@ const getTranfers = (req,res) =>{
 }
 
 const getIncomes = (req,res) =>{
-    Transaction.find({idReceiverAccount : req.params.id , transactionType:{$in:['transfer', 'recharge']}} 
+    Transaction.find({idReceiverAccount : req.params.id , transactionType:{$in:['transfer', 'recharge']}} //ta bien ?
         , function(err,data){
         if(err) res.status(400).send('Sin ingresos')
         let total = 0;
@@ -20,7 +20,7 @@ const getIncomes = (req,res) =>{
     })
 }
 
-const createTransfer = (req,res ) => {
+const createTransfer = (req,res ) => { // no hace falta descontarle amount a su cuenta ??
     const {currency, amount, idSenderAccount, idReceiverAccount} = req.body
 
     const transaction = new Transaction({
@@ -43,8 +43,32 @@ const createTransfer = (req,res ) => {
         })
 }
 
+const getIncomesByDate = (req,res) =>{
+    let start = new Date (req.params.start)
+    let end = new Date (req.params.end)
+    const {id} = req.body
+
+    Transaction.find({ $or:[{idReceiverAccount :id} , {idSenderAccount:id} ] , $and : [{date : {$gte : start}}, { date : {$lte : end}}]} , function(err,data){
+        if(err) res.status(400).send('Sin transferencias')
+        let total = 0;
+        data.forEach(transfer => {
+            if(transfer.idReceiverAccount===id){
+                total += parseFloat(transfer.amount)
+            } 
+            if (transfer.idSenderAccount===id) {
+                total -= parseFloat(transfer.amount)
+            }            
+        }  )
+        res.status(200).send('total : ' + total)
+    })
+}
+
+
+
+
 module.exports= {
     getTranfers,
     getIncomes,
-    createTransfer
+    createTransfer,
+    getIncomesByDate
 }
