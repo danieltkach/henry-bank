@@ -2,18 +2,15 @@ const AccountModel = require('../models/AccountModel')
 
 //crear en el registro
 const createAccount = (req,res) => {
-    const {userId, currency, CVU, balance} = req.body
+    const {userId} = req.params
     const account = new AccountModel({
         userId,
-        currency,
-        CVU,
-        balance
     })
     account.save()
         .then((resp)=>{
             res.status(200).json({
                 message: 'Account created',
-                account: resp
+                account
             })
         })
         .catch(err=>{
@@ -21,7 +18,6 @@ const createAccount = (req,res) => {
                 message: err.message || "Some error occurred while creating the Account."
             })
         })
-
 }
 
 const findAccount = (req, res) => {
