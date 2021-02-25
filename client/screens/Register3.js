@@ -6,13 +6,16 @@ import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
 
 
-const RegisterScreen = ({ navigation }) => {
+const Register3 = ({ navigation }) => {
   const { control, handleSubmit, errors, watch } = useForm();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const tipoRef = useRef();
+  const docRef = useRef();
+  const nombreRef = useRef ();
+  const apellidoRef = useRef ();
+  const nacimientoRef = useRef ();
   const confirmPasswordRef = useRef();
   const onSubmit = (data) => console.log(data);
- 
+
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
@@ -21,18 +24,15 @@ const RegisterScreen = ({ navigation }) => {
         <View style={styles.circuloS}/>
         <View style={styles.circuloSE}/>
 
- <View style={styles.foto}> 
-            <Image style={styles.logo} source={Logo}/>
-        </View>
 
       <Text h1 style={styles.welcome}>
-        Bienvenido !
+        Registro
       </Text>
       <Text h3 style={styles.continue}>
-        Registrarse para continuar
+        Datos personales
       </Text>
 
-      
+
       <Controller
         control={control}
         onFocus={() => {
@@ -41,18 +41,18 @@ const RegisterScreen = ({ navigation }) => {
         render={({ onChange, onBlur,value }) => (
           <TextInput
             style={styles.input}
-            label="Email"
+            label="Tipo de documento"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
-            ref={emailRef}
+            ref={tipoRef}
           />
         )}
-        name="email"
+        name="tipo"
         rules={{ required: true }}
         defaultValue=""
       />
-      {errors.email && <Text>Obligatorio</Text>}
+      {errors.tipo && <Text>Obligatorio</Text>}
 
       <Controller
         control={control}
@@ -62,50 +62,92 @@ const RegisterScreen = ({ navigation }) => {
         render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
-            label="Contraseña"
+            label="N° de documento"
             onBlur={onBlur}
             secureTextEntry={false}
             onChangeText={(value) => onChange(value)}
             value={value}
-             ref={passwordRef}
+             ref={docRef}
           />
         )}
-        name="password"
+        name="doc"
          rules={{ required: true }}
         defaultValue=""
-        
       />
- {errors.password && <Text>Obligatorio</Text>}
+ {errors.doc && <Text>Obligatorio</Text>}
+
+       <Controller
+         control={control}
+          onFocus={() => {
+           passwordRef.current.focus();
+         }}
+         render={({ onChange, onBlur, value }) => (
+           <TextInput
+             style={styles.input}
+             label="Nombre"
+             onBlur={onBlur}
+             secureTextEntry={false}
+             onChangeText={(value) => onChange(value)}
+             value={value}
+              ref={nombreRef}
+           />
+         )}
+         name="nombre"
+          rules={{ required: true }}
+         defaultValue=""
+       />
+  {errors.nombre && <Text>Obligatorio</Text>}
+
+       <Controller
+         control={control}
+          onFocus={() => {
+           passwordRef.current.focus();
+         }}
+         render={({ onChange, onBlur, value }) => (
+           <TextInput
+             style={styles.input}
+             label="Apellido"
+             onBlur={onBlur}
+             secureTextEntry={false}
+             onChangeText={(value) => onChange(value)}
+             value={value}
+              ref={apellidoRef}
+           />
+         )}
+         name="apellido"
+          rules={{ required: true }}
+         defaultValue=""
+       />
+  {errors.apellido && <Text>Obligatorio</Text>}
+
       <Controller
         control={control}
-        onFocus={() => {
-          confirmPasswordRef.current.focus();
+         onFocus={() => {
+          passwordRef.current.focus();
         }}
         render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
-             label="Confirmar Contraseña"
+            label="nacimiento"
             onBlur={onBlur}
+            secureTextEntry={false}
             onChangeText={(value) => onChange(value)}
             value={value}
-            secureTextEntry={false}
+             ref={nacimientoRef}
           />
         )}
-        name="confirmpassword"
-        rules={{ required: true }}
+        name="nacimiento"
+         rules={{ required: true }}
         defaultValue=""
       />
- {errors.confirmpassword && <Text>Obligatorio</Text>}
-
- {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> }
-      
+ {errors.nacimiento && <Text>Obligatorio</Text>}
 
 
       <View>
-        <IconButton color={Colors.white} mode='contained'style={styles.buttonleft} icon = "arrow-left-bold" onPress={() => navigation.navigate('Login')} > </IconButton>
+        <IconButton color={Colors.white} mode='contained'style={styles.buttonleft} icon = "arrow-left-bold" onPress={() => navigation.navigate('Register')} > </IconButton>
       </View>
       <View>
-        <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} onPress={() => navigation.navigate('Register3')} />
+        <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
       <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Login')}>
         ¿Ya tenes cuenta? Inicia Sesión
@@ -114,7 +156,7 @@ const RegisterScreen = ({ navigation }) => {
   );
 };
 
-export default RegisterScreen;
+export default Register3;
 
 const styles = StyleSheet.create({
   label: {
@@ -129,7 +171,7 @@ const styles = StyleSheet.create({
   },
   continue:{
       fontSize:20,
-      right:38,
+      right:60,
   },
   container: {
     flex: 1,
@@ -170,7 +212,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 400,
-        height: 400, 
+        height: 400,
     },
     circuloS: {
         position: "absolute",
@@ -178,7 +220,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 250,
-        height: 250, 
+        height: 250,
         bottom: -190,
     },
     circuloSE: {
@@ -189,6 +231,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3551F2',
         opacity:0.4 ,
         width: 200,
-        height: 200, 
+        height: 200,
     }
 });
