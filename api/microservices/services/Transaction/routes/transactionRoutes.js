@@ -6,5 +6,6 @@ const transactionController = require('../controllers/transactionConrtroller')
 server.get('/transfers/:id', transactionController.getTranfers)
 
 server.get('/incomes/:id', transactionController.getIncomes)
+server.post('/transfer', transactionController.createTransfer)
 
 module.exports = server
