@@ -9,7 +9,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from './Redux/Store';
 import Menu from './screens/Menu';
 import RegisterScreen from './screens/RegisterScreen';
-
+import TokenScreen from './screens/TokenScreen';
 const Stack = createStackNavigator();
 const theme = {
   ...DefaultTheme,
@@ -37,6 +37,16 @@ export default function App() {
               options={{ headerShown: false }}
               name="Menu"
               component={Menu}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Register"
+              component={RegisterScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Token"
+              component={TokenScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

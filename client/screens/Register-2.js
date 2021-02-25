@@ -65,7 +65,6 @@ import { TextInput, Button ,useTheme} from "react-native-paper";
             defaultValue=""
         />
         {errors.Localidad && <Text style={{color:"red"}}>This is required.</Text>}
-
         <Controller
             control={control}
             rules={{required:true}}

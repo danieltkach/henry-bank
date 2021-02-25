@@ -4,15 +4,23 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
-
+import { registerUserFetch } from "./../controllers/user"
 
 const RegisterScreen = ({ navigation }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const onSubmit = (data) => console.log(data);
- 
+  const onSubmit = (data) => {
+    console.log(data)
+    registerUserFetch(data)
+    .then(response => {
+      console.log(response)
+    });
+   }
+  
+
+
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
@@ -76,7 +84,7 @@ const RegisterScreen = ({ navigation }) => {
         
       />
  {errors.password && <Text>Obligatorio</Text>}
-      <Controller
+      {/* <Controller
         control={control}
         onFocus={() => {
           confirmPasswordRef.current.focus();
@@ -97,7 +105,7 @@ const RegisterScreen = ({ navigation }) => {
       />
  {errors.confirmpassword && <Text>Obligatorio</Text>}
 
- {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> }
+ {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> } */}
       
 
 
@@ -107,7 +115,7 @@ const RegisterScreen = ({ navigation }) => {
       <View>
         <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
-      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Login')}>
+      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Token')}>
         ¿Ya tenes cuenta? Inicia Sesión
       </Button>
     </View>
