@@ -2,7 +2,7 @@ const Transaction = require('../models/TransactionModel')
 
 
 const getTranfers = (req,res) =>{
-
+    
     Transaction.find({idSenderAccount : req.params.id , transactionType:'transfer'} , function(err,data){
         if(err) res.status(400).send('Sin transferencias')
         let total = 0;
@@ -44,9 +44,11 @@ const createTransfer = (req,res ) => { // no hace falta descontarle amount a su 
 }
 
 const getIncomesByDate = (req,res) =>{
+    
     let start = new Date (req.params.start)
     let end = new Date (req.params.end)
-    const {id} = req.body
+    const {id} = req.params
+    console.log()
 
     Transaction.find({ $or:[{idReceiverAccount :id} , {idSenderAccount:id} ] , $and : [{date : {$gte : start}}, { date : {$lte : end}}]} , function(err,data){
         if(err) res.status(400).send('Sin transferencias')

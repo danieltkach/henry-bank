@@ -7,7 +7,7 @@ server.get('/transfers/:id', transactionController.getTranfers)
 
 server.get('/incomes/:id', transactionController.getIncomes)
 
-server.get('/incomesByDate/:id', transactionController.getIncomesByDate)
+server.get('/incomesByDate/:id/:start/:end', transactionController.getIncomesByDate)
 
 server.post('/transfer', transactionController.createTransfer)
 
