@@ -8,16 +8,17 @@ const accountSchema = new Schema({
   },
   currency: {
     type: String,
-    required: true,
+    default: '' 
   },
   CVU: {
     type: String,
-    required: true,
   },
   balance: {
     type: String,
-    required: true,
+    default: ''
   },
 });
+
+//hook
 
 module.exports = mongoose.model('Account', accountSchema);
