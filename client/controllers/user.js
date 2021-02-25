@@ -5,16 +5,16 @@ import {
   GET_USER_BY_ID,
   GET_USERS,
   GET_ADDRESS
-} from "../constants/api";
+} from '../constants/api';
 
 
 export const registerUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
     fetch(POST_REGISTER_USER, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(dataForm)
     })
@@ -30,10 +30,10 @@ export const registerUserFetch = (dataForm) => {
 export const loginUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
     fetch(POST_LOGIN_USER, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(dataForm)
     })
@@ -49,10 +49,10 @@ export const loginUserFetch = (dataForm) => {
 export const updateUserFetch = (dataId, dataForm) => {
   return new Promise((resolve, reject) => {
     fetch(`${PUT_USER}/${dataId}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json"
+        Accept: '*/*',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(dataForm)
     })
@@ -70,7 +70,7 @@ export const updateUserFetch = (dataId, dataForm) => {
 export const readUserByIdFetch = (dataId) => {
   return new Promise((resolve, reject) => {
     fetch(`${GET_USER_BY_ID}/${dataId}`, {
-      method: "GET",
+      method: 'GET',
     })
   })
   .then(response => {
@@ -84,7 +84,7 @@ export const readUserByIdFetch = (dataId) => {
 export const readUsersFetch = () => {
   return new Promise((resolve, reject) => {
     fetch(GET_USERS, {
-      method: "GET",
+      method: 'GET',
     })
   })
   .then(response => {
@@ -98,7 +98,7 @@ export const readUsersFetch = () => {
 export const readAddressFetch = (queryData) => {
   return new Promise((resolve, reject) => {
     fetch(`${GET_ADDRESS}/?direccion=${queryData}`, {
-      method: "GET",
+      method: 'GET',
     })
   })
   .then(response => {
