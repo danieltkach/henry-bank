@@ -8,23 +8,23 @@ const SENDGRID_API = 'SG.mfBKG0tUTsm6N7biX1B8Qg.HNBez8skRmeHMwdjYfErpEShdV1d8BIN
 // const icono = require('PONER LINK CLOUDINARY')
 //TODO importar
 
-const transporter = nodemailer.createTransport({
-  service: "gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: `regtest.luc@gmail.com`,
-    pass: `jcbskvkejovdppsx`,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   service: "gmail.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: `regtest.luc@gmail.com`,
+//     pass: `jcbskvkejovdppsx`,
+//   },
+// });
 
-// const transporter = nodemailer.createTransport(
-//   sendGridTransport({
-//     auth: {
-//       api_key: SENDGRID_API,
-//     },
-//   })
-// );
+const transporter = nodemailer.createTransport(
+  sendGridTransport({
+    auth: {
+      api_key: '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',
+    },
+  })
+);
 
 
 let sendEmail = props => {
@@ -32,9 +32,9 @@ let sendEmail = props => {
 
   const data = {
     from: "Inro",
-    to: 'esequieledl@gmail.com',
+    to: `${email}`,
     subject: "Verificacion de email",
-    html: `TEST 2`,
+    html: `Codigo de verificacion: <a href='http://localhost:4001/user/verify/${token}'>Click aca</a>`,
   };
 
   return new Promise((resolve, reject) => {

@@ -38,7 +38,6 @@ const loginUser = async (req, res, next) => {
   })(req, res, next)
 }
 
-
 const modifyUser = async(req,res,next) => {
   const user_id = req.params.id
 
@@ -78,11 +77,11 @@ const getUsers = (req, res, next) => {
 }
 
 const verifyToken = (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-
+  // const token = req.headers.authorization.split(" ")[1];
+  const token = req.params.token;
   jwt.verify(token, "top_secret", (err, decode) => {
       if(err) return res.status(409).json({ message: 'Autorizacion no valida' });
-      return res.status(200).json({ user: decode, message: 'Correo electrónico autorizado' });
+      return res.status(200).json({ user: decode.user, message: 'Correo electrónico autorizado' });
   });
 }
 

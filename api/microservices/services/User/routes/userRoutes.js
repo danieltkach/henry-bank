@@ -12,15 +12,7 @@ router.get('/user/verify/:token', userController.verifyToken);
 // router.get('/profile', passport.authenticate('jwt', { session: false }), userController.getUser);
 router.put('/user/:id', userController.modifyUser);
 router.get('/user/:id', userController.getUser);
-router.get('/', userController.getUsers);
-
-
-
-
-
-
-
-
+router.get('/user', userController.getUsers);
 
 
 module.exports = router;
