@@ -35,8 +35,8 @@ const findAccount = (req, res) => {
 }
 
 const updateAccount = (req, res) => {
-    AccountModel.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        then(account => {
+    AccountModel.findByIdAndUpdate(req.params.id, {currency: req.body.currency, balance: req.body.balance}, {new: true})
+        .then(account => {
             if(!account){
                 return res.status(404).json({
                     message: 'Account not found'
