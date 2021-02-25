@@ -17,7 +17,7 @@ export const registerUserFetch = (dataForm) => {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dataForm)
+      body: dataForm
     })
     .then(response => {
       resolve(response.json());
@@ -26,7 +26,7 @@ export const registerUserFetch = (dataForm) => {
       console.log(err.message)
     });
   })
-  
+
 }
 
 export const loginUserFetch = (dataForm) => {
@@ -47,7 +47,7 @@ export const loginUserFetch = (dataForm) => {
       console.log(err.message)
     });
   })
-  
+
 }
 
 export const updateUserFetch = (dataId, dataForm) => {
@@ -67,7 +67,7 @@ export const updateUserFetch = (dataId, dataForm) => {
        console.log(err.message)
     });
   })
-  
+
 }
 
 // export const readAuthFetch = () => {}
@@ -112,7 +112,7 @@ export const readAddressFetch = (queryData) => {
       console.log(err.message)
     });
   })
-  
+
 }
 
 export const verifyUserFetch = (token) => {
@@ -127,5 +127,5 @@ export const verifyUserFetch = (token) => {
       console.log(err.message)
     });
   })
-  
+
 }

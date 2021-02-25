@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
+import { registerUserFetch } from './../controllers/user'
 
 
 const RegisterScreen = ({ navigation }) => {
@@ -11,8 +12,16 @@ const RegisterScreen = ({ navigation }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const onSubmit = (data) => console.log(data);
- 
+  const onSubmit = data => {
+    registerUserFetch(data)
+    .then((responseRegister) =>  {
+      console.log(responseRegister);
+      navigation.navigate('EmailSended');
+      return
+    })
+    .catch(err => console.log(err));
+  };
+
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
@@ -21,7 +30,7 @@ const RegisterScreen = ({ navigation }) => {
         <View style={styles.circuloS}/>
         <View style={styles.circuloSE}/>
 
- <View style={styles.foto}> 
+ <View style={styles.foto}>
             <Image style={styles.logo} source={Logo}/>
         </View>
 
@@ -32,7 +41,7 @@ const RegisterScreen = ({ navigation }) => {
         Registrarse para continuar
       </Text>
 
-      
+
       <Controller
         control={control}
         onFocus={() => {
@@ -73,7 +82,7 @@ const RegisterScreen = ({ navigation }) => {
         name="password"
          rules={{ required: true }}
         defaultValue=""
-        
+
       />
  {errors.password && <Text>Obligatorio</Text>}
       <Controller
@@ -98,16 +107,16 @@ const RegisterScreen = ({ navigation }) => {
  {errors.confirmpassword && <Text>Obligatorio</Text>}
 
  {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> }
-      
+
 
 
       <View>
-        <IconButton color={Colors.white} mode='contained'style={styles.buttonleft} icon = "arrow-left-bold" onPress={() => navigation.navigate('Login')} > </IconButton>
+        <IconButton color={Colors.white} mode='contained'style={styles.buttonleft} icon = "arrow-left-bold" onPress={() => navigation.navigate('LoginScreen')} > </IconButton>
       </View>
       <View>
-        <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} onPress={() => navigation.navigate('Register3')} />
+        <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
-      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Login')}>
+      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('LoginScreen')}>
         ¿Ya tenes cuenta? Inicia Sesión
       </Button>
     </View>
@@ -170,7 +179,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 400,
-        height: 400, 
+        height: 400,
     },
     circuloS: {
         position: "absolute",
@@ -178,7 +187,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 250,
-        height: 250, 
+        height: 250,
         bottom: -190,
     },
     circuloSE: {
@@ -189,6 +198,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3551F2',
         opacity:0.4 ,
         width: 200,
-        height: 200, 
+        height: 200,
     }
 });

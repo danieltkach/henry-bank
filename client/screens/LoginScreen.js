@@ -68,7 +68,7 @@ const {colors} = useTheme()
         onPress={handleSubmit(onSubmit)}>
             Ingresar
         </Button>
-        <Button onPress={() => navigation.navigate('Register')}>
+        <Button onPress={() => navigation.navigate('RegisterScreen')}>
           Registrarse
         </Button>
       </View>

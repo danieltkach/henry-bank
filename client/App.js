@@ -37,11 +37,18 @@ export default function App() {
             <Stack.Screen
               options={{ headerShown: false }}
               name="Menu"
-              component={Menu} />
-              <Stack.Screen
-              options={{headerShown: false }}
-              name="Register3"
-              component={Register3} />
+              component={Menu}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="RegisterScreen"
+              component={RegisterScreen}
+            />
+            <Stack.Screen
+            options={{headerShown: false }}
+            name="Register3"
+            component={Register3}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
