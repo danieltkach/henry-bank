@@ -20,6 +20,8 @@ const theme = {
     secondary: '#E52B2B',
   },
 };
+
+
 export default function App() {
   return (
     <StoreProvider store={store}>
@@ -27,18 +29,15 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
-              options={{headerShown: false }}
-              name="Login"
-              component={LoginScreen} />
-            <Stack.Screen
               options={{ headerShown: false }}
-              name="Register"
-              component={RegisterScreen}
+              name="LoginScreen"
+              component={LoginScreen}
             />
             <Stack.Screen
-              options={{headerShown: false }}
+              options={{ headerShown: false }}
               name="Menu"
-              component={Menu} />
+              component={Menu}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
