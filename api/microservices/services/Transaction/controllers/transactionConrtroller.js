@@ -12,16 +12,11 @@ const getTranfers = (req,res) =>{
 }
 
 const getIncomes = (req,res) =>{
-
-    Transaction.find({idReceiverAccount : req.params.id , transactionType:'transfer'} , function(err,data){
+    Transaction.find({idReceiverAccount : req.params.id , transactionType:{$in:['transfer', 'recharge']}} 
+        , function(err,data){
         if(err) res.status(400).send('Sin ingresos')
         let total = 0;
         data.forEach(income =>  total += parseFloat(income.amount) )
-        Transaction.find({idReceiverAccount: req.params.id , transactionType:'recharge'} , function(err,data){
-            if(err) res.status(200).send(total)
-            data.forEach(income =>  total += parseFloat(income.amount) )
-            res.status(200).send('total : ' + total)
-        })
     })
 }
 
