@@ -18,7 +18,7 @@ const Menu = () => {
 
     const {colors} = useTheme()
 
-return (
+ return (
     <View style={styles.container}>
         <View style={styles.circuloNE}/>
         <View style={styles.circuloE}/>
@@ -47,7 +47,7 @@ return (
             <Text style={styles.saludo}>Hola usuario</Text>
 
         <View>
-            <Text style={styles.cantidadDinero}>5.910,34</Text>
+            <Text style={styles.cantidadDinero}>5.911,34</Text>
             <Text style={styles.dineroDisponible}>
                 Dinero disponible</Text>
             <Image style={styles.pesos} source={Vector}/>
