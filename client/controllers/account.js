@@ -17,13 +17,14 @@ export const createAccountFetch = (dataId) => {
       },
       body: JSON.stringify(dataForm)
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
+ 
 }
 
 export const readAccountsFetch = () => {
@@ -31,13 +32,13 @@ export const readAccountsFetch = () => {
     fetch(GET_ACCOUNTS, {
       method: 'GET'
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const readAccountsByIdFetch = (dataId) => {
@@ -45,13 +46,13 @@ export const readAccountsByIdFetch = (dataId) => {
     fetch(`${GET_ACCOUNT_BY_ID}/${dataId}`, {
       method: 'GET'
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const updateAccountFetch = (dataId, dataForm) => {
@@ -64,13 +65,13 @@ export const updateAccountFetch = (dataId, dataForm) => {
       },
       body: JSON.stringify(dataForm)
     })
-  })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-     console.log(err.message)
-  });
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+       console.log(err.message)
+    });
+  }) 
 }
 
 // export const readAccountsByIdFetch = (dataId) => {

@@ -6,70 +6,17 @@ import { color } from "react-native-reanimated";
 import { loginUserFetch } from './../controllers/user'
 import Logo from "../images/Logo.png"
 
-
 const LoginScreen = ({ navigation }) => {
   const { control, handleSubmit, errors } = useForm();
-  const [flag, setFlag] = useState(false);
   const onSubmit = data => {
     loginUserFetch(data)
-    .then(responseLogin => {
+    .then((responseLogin) =>  {
       console.log(responseLogin);
-      setFlag(true)
+      navigation.navigate('Menu');
+      return
     })
     .catch(err => console.log(err));
   };
-
-  useEffect(() => {
-    if (flag) navigation.navigate('Menu');
-  });
-
-
-  const navigateHandle = () => {
-    navigation.navigate('Menu');
-  }
-
-
-  const [text, setText] = useState({
-    email:"",
-    pass:"",
-    emailError:false,
-    passError:false
-  });
-
-
-const checkTextInput = () => {
-    if (!text.email.trim()) {
-      alert('Please Enter Email')
-      setText({
-        ...text,
-        emailError:true
-      })
-      return;
-    }
-    if (!text.pass.trim()) {
-      alert('Please Enter Pass');
-      setText({
-        ...text,
-        passError:true
-      })
-      return;
-    }
-  };
-
-const textInputEmail=(val) =>{
-    setText({
-      ...text,
-      email:val,
-      emailError:false
-    })
-}
-const textInputPass=(val) =>{
-    setText({
-      ...text,
-      pass:val,
-      passError:false
-    })
-}
 
 const {colors} = useTheme()
   return (
@@ -126,9 +73,6 @@ const {colors} = useTheme()
         </Button>
       </View>
     </View>
-
-
-
   );
 };
 

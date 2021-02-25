@@ -6,7 +6,7 @@ import {
   GET_USERS,
   GET_ADDRESS,
   GET_VERIFY
-} from '../constants/api';
+} from './index';
 
 
 export const registerUserFetch = (dataForm) => {
@@ -19,18 +19,19 @@ export const registerUserFetch = (dataForm) => {
       },
       body: JSON.stringify(dataForm)
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
+  
 }
 
 export const loginUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:4001/login', {
+    fetch('http://localhost:4001/user/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -38,13 +39,15 @@ export const loginUserFetch = (dataForm) => {
       },
       body: JSON.stringify(dataForm)
     })
+    .then(response => {
+      console.log(response)
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
+  
 }
 
 export const updateUserFetch = (dataId, dataForm) => {
@@ -57,13 +60,14 @@ export const updateUserFetch = (dataId, dataForm) => {
       },
       body: JSON.stringify(dataForm)
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+       console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-     console.log(err.message)
-  });
+  
 }
 
 // export const readAuthFetch = () => {}
@@ -73,13 +77,13 @@ export const readUserByIdFetch = (dataId) => {
     fetch(`${GET_USER_BY_ID}/${dataId}`, {
       method: 'GET',
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const readUsersFetch = () => {
@@ -87,13 +91,13 @@ export const readUsersFetch = () => {
     fetch(GET_USERS, {
       method: 'GET',
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
 }
 
 export const readAddressFetch = (queryData) => {
@@ -101,25 +105,27 @@ export const readAddressFetch = (queryData) => {
     fetch(`${GET_ADDRESS}/?direccion=${queryData}`, {
       method: 'GET',
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
+  
 }
 
-export const readUsersFetch = (token) => {
+export const verifyUserFetch = (token) => {
   return new Promise((resolve, reject) => {
     fetch(`${GET_VERIFY}/${token}`, {
       method: 'GET',
     })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
   })
-  .then(response => {
-    resolve(response.json());
-  })
-  .catch(err => {
-    console.log(err.message)
-  });
+  
 }
