@@ -1,10 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form"
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
 import { color } from "react-native-reanimated";
+import { loginUserFetch } from './../controllers/user'
 import Logo from "../images/Logo.png"
 
-const LoginScreen = ({navigation}) => {
+
+const LoginScreen = ({ navigation }) => {
+  const { control, handleSubmit, errors } = useForm();
+  const [flag, setFlag] = useState(false);
+  const onSubmit = data => {
+    loginUserFetch(data)
+    .then(responseLogin => {
+      console.log(responseLogin);
+      setFlag(true)
+    })
+    .catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    if (flag) navigation.navigate('Menu');
+  });
+
+
+  const navigateHandle = () => {
+    navigation.navigate('Menu');
+  }
+
+
   const [text, setText] = useState({
     email:"",
     pass:"",
@@ -13,7 +37,7 @@ const LoginScreen = ({navigation}) => {
   });
 
 
-  const checkTextInput = () => {
+const checkTextInput = () => {
     if (!text.email.trim()) {
       alert('Please Enter Email')
       setText({
@@ -51,22 +75,50 @@ const {colors} = useTheme()
   return (
     <View style={styles.container}>
       <View style={styles.inputs}>
-      <TextInput mode="outlined" label="Email"  onChangeText={(val) => textInputEmail(val)}/>
-      {text.emailError && (
-        <Text style={{ color: "red" }}>verificar email</Text>
-      )}
-      <TextInput mode="outlined" label="Password" onChangeText={(val) => textInputPass(val)}/>
-      {text.passError && (
-        <Text style={{ color: "red" }}>verificar password</Text>
-      )}
+        <Controller
+            control={control}
+            rules={{required:true}}
+            render={({ onChange, onBlur, value }) => (
+            <TextInput
+                style={{backgroundColor:"white"}}
+                label="Correo electrónico"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+            />
+            )}
+            name="email"
+            rules={{ required: true }}
+            defaultValue=""
+        />
+        {errors.email && <Text style={{color:"red"}}>Correo electrónico requerido.</Text>}
+
+        <Controller
+            control={control}
+            rules={{required:true}}
+            render={({ onChange, onBlur, value }) => (
+            <TextInput
+                style={{backgroundColor:"white"}}
+                label="Contraseña"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+            />
+            )}
+            name="password"
+            rules={{ required: true }}
+            defaultValue=""
+        />
+        {errors.password && <Text style={{color:"red"}}>Contraseña requerida.</Text>}
+
       </View>
-      
-      <View style={styles.foto}> 
+
+      <View style={styles.foto}>
       <Image style={styles.logo} source={Logo}/>
       </View>
       <View style={styles.button}>
         <Button
-        onPress={checkTextInput}>
+        onPress={handleSubmit(onSubmit)}>
             Ingresar
         </Button>
         <Button onPress={() => navigation.navigate('Register')}>
@@ -75,8 +127,8 @@ const {colors} = useTheme()
       </View>
     </View>
 
-    
-    
+
+
   );
 };
 
@@ -90,12 +142,12 @@ const styles = StyleSheet.create({
     height: 80,
     resizeMode: 'contain',
     width: 150,
-    
+
   },
   inputs: {
     flex:1,
     justifyContent:'center',
-    
+
   },
   foto: {
     position: "absolute",
@@ -110,5 +162,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-

@@ -1,5 +1,5 @@
 import React from 'react'
-import {useForm,Controller} from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
 
@@ -117,7 +117,7 @@ import { TextInput, Button ,useTheme} from "react-native-paper";
             defaultValue=""
         />
         {errors.Telefono && <Text style={{color:"red"}}>This is required.</Text>}
-            
+
         <Button onPress={handleSubmit(onSubmit)}>Crear Cuenta</Button>
         </View>
 </View>

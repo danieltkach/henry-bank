@@ -4,7 +4,8 @@ import {
   PUT_USER,
   GET_USER_BY_ID,
   GET_USERS,
-  GET_ADDRESS
+  GET_ADDRESS,
+  GET_VERIFY
 } from '../constants/api';
 
 
@@ -29,7 +30,7 @@ export const registerUserFetch = (dataForm) => {
 
 export const loginUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch(POST_LOGIN_USER, {
+    fetch('http://localhost:4001/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -98,6 +99,20 @@ export const readUsersFetch = () => {
 export const readAddressFetch = (queryData) => {
   return new Promise((resolve, reject) => {
     fetch(`${GET_ADDRESS}/?direccion=${queryData}`, {
+      method: 'GET',
+    })
+  })
+  .then(response => {
+    resolve(response.json());
+  })
+  .catch(err => {
+    console.log(err.message)
+  });
+}
+
+export const readUsersFetch = (token) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${GET_VERIFY}/${token}`, {
       method: 'GET',
     })
   })
