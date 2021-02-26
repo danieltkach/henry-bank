@@ -10,6 +10,7 @@ import {
 
 
 export const registerUserFetch = (dataForm) => {
+  console.log(dataForm)
   return new Promise((resolve, reject) => {
     fetch(POST_REGISTER_USER, {
       method: 'POST',
