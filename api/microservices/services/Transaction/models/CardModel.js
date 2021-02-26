@@ -10,14 +10,14 @@ const cardSchema = new Schema({
 			type: Number,
 			required: true
 		},
-        expDate:{
-            type:Date,
-            required: true,
-        },
-        securityCode:{
-            type: Number,
-            required: true
-        }
+    expDate:{
+        type:Date,
+        required: true,
+    },
+    securityCode:{
+        type: Number,
+        required: true
+    }
 
   });
 
