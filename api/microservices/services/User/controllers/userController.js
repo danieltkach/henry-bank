@@ -104,10 +104,11 @@ const verifyCodeSecurity = (req, res) => {
   // const token = req.headers.authorization.split(" ")[1];
 
   const {email, codeSecurity} = req.body
+  console.log(email, codeSecurity)
 
   User.findOne({ email })
   .then(responseUser => {
-    if (responseUser.codeSecurity === codeSecurity) res.status(200).json({ message: "Codigo verificado" });
+    if (responseUser.codeSecurity === codeSecurity) res.status(200).json({ message: "Codigo verificado", userId: responseUser._id });
     else res.status(400).json({ message: "Error de verificacion" });
   })
   .catch(err => res.status(400).json({ message: "Email inexistente" }))
