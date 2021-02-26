@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 import Logo from "../images/Logo.png"
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar }  from 'expo-status-bar';
 
 
-const Register1 = ({ navigation }) => {
+const Register1 = ({ navigation, idUser }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const tipoRef = useRef();
   const docRef = useRef();
@@ -14,7 +14,7 @@ const Register1 = ({ navigation }) => {
   const apellidoRef = useRef ();
   const nacimientoRef = useRef ();
   const confirmPasswordRef = useRef();
-  const onSubmit = (data) => navigation.navigate('Register2');
+  const onSubmit = (data) => navigation.navigate('Register2', {dataInitial:data, idUser});
 
   return (
     <View style={styles.container}>

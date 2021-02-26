@@ -8,7 +8,7 @@ const createUser = async (req, res, next) => {
   const { name, email, lastName } = req.user;
   const body = { _id: req.user._id, email: req.user.email }
   const token = jwt.sign({ user: body }, 'top_secret');
-  axios.post(`http://locaslhost:4002/account/${req.user._id}`)
+  /* axios.post(`http://localhost:4002/account/${req.user._id}`)
    .then((resp) => {
      res.status(200).json({
        message:`account created for ${req.user._id}`
@@ -18,7 +18,7 @@ const createUser = async (req, res, next) => {
      res.status(400).json({
        message: err.message || "Some error occurred while creating the Account."
      })
-   })
+   }) */
   nodeMailer.sendEmail({name, lastName, email, token})
   .then(response => {
     res.status(200).json({ message: "Registro inicial completado", user: req.user });
@@ -111,6 +111,7 @@ const verifyToken = (req, res) => {
   // const token = req.headers.authorization.split(" ")[1];
   const token = req.body.token;
   jwt.verify(token, "top_secret", (err, decode) => {
+    console.log("soy el decode", decode);
       if(err) return res.status(409).json({ message: 'Autorizacion no valida' });
       return res.status(200).json({ user: decode.user, message: 'Correo electrónico autorizado' });
   });
