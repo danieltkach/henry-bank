@@ -12,15 +12,16 @@ const getTranfers = (req,res) =>{
 }
 
 const getIncomes = (req,res) =>{
-    Transaction.find({idReceiverAccount : req.params.id , transactionType:{$in:['transfer', 'recharge']}} //ta bien ?
+    Transaction.find({idReceiverAccount : req.params.id /* , transactionType:{$in:['transfer', 'recharge']} */} 
         , function(err,data){
         if(err) res.status(400).send('Sin ingresos')
         let total = 0;
         data.forEach(income =>  total += parseFloat(income.amount) )
+        res.status(200).send('total : ' + total)
     })
 }
 
-const createTransfer = (req,res ) => { // no hace falta descontarle amount a su cuenta ??
+const createTransfer = (req,res ) => { 
     const {currency, amount, idSenderAccount, idReceiverAccount} = req.body
 
     const transaction = new Transaction({
@@ -47,11 +48,10 @@ const getIncomesByDate = (req,res) =>{
     
     let start = new Date (req.params.start)
     let end = new Date (req.params.end)
-    const {id} = req.params
-    console.log()
+    const {id} = req.params    
 
     Transaction.find({ $or:[{idReceiverAccount :id} , {idSenderAccount:id} ] , $and : [{date : {$gte : start}}, { date : {$lte : end}}]} , function(err,data){
-        if(err) res.status(400).send('Sin transferencias')
+        if(err) res.status(400).json({message:'Sin transferencias'})
         let total = 0;
         data.forEach(transfer => {
             if(transfer.idReceiverAccount===id){
@@ -61,7 +61,7 @@ const getIncomesByDate = (req,res) =>{
                 total -= parseFloat(transfer.amount)
             }            
         }  )
-        res.status(200).send('total : ' + total)
+        res.status(200).json({message:`balanse entre ${req.params.start} y ${req.params.end}`, total: total})
     })
 }
 
