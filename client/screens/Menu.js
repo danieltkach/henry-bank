@@ -104,7 +104,7 @@ const Menu = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 17, marginLeft: 42}}>
             <Image source={Perfil}/>
-            <Text style={{textAlign:'center', color:'white'}}>Perfil</Text>
+            <Text style={{textAlign:'center', color:'white'}}>Cuenta</Text>
         </TouchableOpacity>
         </View>
     </View>
