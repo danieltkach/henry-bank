@@ -10,6 +10,7 @@ import {
 
 
 export const registerUserFetch = (dataForm) => {
+  console.log(dataForm)
   return new Promise((resolve, reject) => {
     fetch(POST_REGISTER_USER, {
       method: 'POST',
@@ -17,7 +18,7 @@ export const registerUserFetch = (dataForm) => {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
       },
-      body: dataForm
+      body: JSON.stringify(dataForm)
     })
     .then(response => {
       resolve(response.json());
