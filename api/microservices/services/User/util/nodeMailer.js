@@ -34,7 +34,7 @@ let sendEmail = props => {
     from: "Inro",
     to: `${email}`,
     subject: "Verificacion de email",
-    html: `Codigo de verificacion: <a href='http://localhost:4001/user/verify/${token}'>Click aca</a>`,
+    html: `Codigo de verificacion: ${token}`,
   };
 
   return new Promise((resolve, reject) => {

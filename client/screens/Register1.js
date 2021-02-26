@@ -6,7 +6,7 @@ import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
 
 
-const Register3 = ({ navigation }) => {
+const Register1 = ({ navigation }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const tipoRef = useRef();
   const docRef = useRef();
@@ -14,7 +14,7 @@ const Register3 = ({ navigation }) => {
   const apellidoRef = useRef ();
   const nacimientoRef = useRef ();
   const confirmPasswordRef = useRef();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => navigation.navigate('Register2');
 
   return (
     <View style={styles.container}>
@@ -36,7 +36,6 @@ const Register3 = ({ navigation }) => {
       <Controller
         control={control}
         onFocus={() => {
-          emailRef.current.focus();
         }}
         render={({ onChange, onBlur,value }) => (
           <TextInput
@@ -143,20 +142,18 @@ const Register3 = ({ navigation }) => {
  {errors.nacimiento && <Text>Obligatorio</Text>}
 
 
-      <View>
+      {/* <View>
         <IconButton color={Colors.white} mode='contained'style={styles.buttonleft} icon = "arrow-left-bold" onPress={() => navigation.navigate('Register')} > </IconButton>
-      </View>
+      </View> */}
       <View>
         <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
-      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Login')}>
+      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('LoginScreen')}>
         ¿Ya tenes cuenta? Inicia Sesión
       </Button>
     </View>
   );
 };
-
-export default Register3;
 
 const styles = StyleSheet.create({
   label: {
@@ -234,3 +231,5 @@ const styles = StyleSheet.create({
         height: 200,
     }
 });
+
+export default Register1;
