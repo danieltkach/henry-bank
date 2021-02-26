@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
+const crypto = require('crypto')
+
 
 const validateEmail = function(email) {
     let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -77,6 +79,12 @@ const UserSchema = new Schema({
     type : String,
    // validate: [validateAge, 'Ingresa una edad valida'],
   },
+  codeSecurity: {
+    type: String
+  },
+  codeSecurityExp: {
+    type: Date
+  },
   contacts : [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -94,6 +102,8 @@ const UserSchema = new Schema({
 UserSchema.pre('save', async function (next) {
   const hash = await bcrypt.hash(this.password, 10)
   this.password = hash;
+  this.codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
+  this.codeSecurityExp = Date.now() + 3000;
   next();
 })
 
@@ -104,4 +114,3 @@ UserSchema.methods.isValidPassword = async function(password) {
 }
 
 module.exports = mongoose.model('User', UserSchema)
-

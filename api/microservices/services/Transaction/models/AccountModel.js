@@ -8,15 +8,15 @@ const accountSchema = new Schema({
   },
   currency: {
     type: String,
-    default: '' 
+    default: ''
   },
-  CVU: {
+  cvu: {
     type: Number,
     unique: true
   },
   balance: {
-    type: String,
-    default: ''
+    type: Number,
+    default: 0
   },
 });
 
@@ -25,7 +25,7 @@ accountSchema.pre('save', async function (next) {
   let max = 9999999999
   let min = 1000000000
   let aux = Math.floor((Math.random() * (max - min + 1)) + min);
-  this.CVU = aux
+  this.cvu = aux
   next();
 })
 

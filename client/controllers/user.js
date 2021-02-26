@@ -115,10 +115,14 @@ export const readAddressFetch = (queryData) => {
 
 }
 
-export const verifyUserFetch = (token) => {
+export const verifyUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch(`${GET_VERIFY}/${token}`, {
-      method: 'GET',
+    fetch(POST_VERIFY, {
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
     })
     .then(response => {
       resolve(response.json());

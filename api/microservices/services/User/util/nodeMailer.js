@@ -28,13 +28,13 @@ const transporter = nodemailer.createTransport({
 
 
 let sendEmail = props => {
-  const { name, lastName, email, token} = props;
+  const { name, lastName, email, codeSecurity} = props;
 
   const data = {
     from: "Inro",
     to: `${email}`,
     subject: "Verificacion de email",
-    html: `Codigo de verificacion: <a href='http://localhost:4001/user/verify/${token}'>Click aca</a>`,
+    html: `Codigo de verificacion: ${codeSecurity}`,
   };
 
   return new Promise((resolve, reject) => {
