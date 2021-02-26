@@ -9,7 +9,7 @@ export const PUT_USER = `${API_USER_HOST}/user/update`;//:dataId & dataForm
 export const GET_USER_BY_ID = `${API_USER_HOST}/user`;//:dataId
 export const GET_USERS = `${API_USER_HOST}/user`;
 export const GET_ADDRESS = `${API_USER_HOST}/user/address`;//?direccion=:queryData
-export const GET_VERIFY = `${API_USER_HOST}/user/verify`;//:token
+export const GET_VERIFY = `${API_USER_HOST}/user/verify_token`;//:token
 
 
 //Fetchs asociadas a Transactions

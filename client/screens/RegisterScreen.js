@@ -15,24 +15,21 @@ const RegisterScreen = ({ navigation }) => {
     console.log(data)
     registerUserFetch(data)
     .then(response => {
+      navigation.navigate('Token')
       console.log(response)
     });
    }
   
-
-
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
         <View style={styles.circuloNE}/>
-
         <View style={styles.circuloS}/>
         <View style={styles.circuloSE}/>
 
  <View style={styles.foto}>
             <Image style={styles.logo} source={Logo}/>
         </View>
-
       <Text h1 style={styles.welcome}>
         Bienvenido !
       </Text>
@@ -115,7 +112,7 @@ const RegisterScreen = ({ navigation }) => {
       <View>
         <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
-      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('Token')}>
+      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('LoginScreen')}>
         ¿Ya tenes cuenta? Inicia Sesión
       </Button>
     </View>

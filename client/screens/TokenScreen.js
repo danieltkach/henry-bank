@@ -5,15 +5,33 @@ import { TextInput, Button ,useTheme} from "react-native-paper";
 import { verifyUserFetch } from './../controllers/user'
 
 
-export const TokenScreen = () => {
+export const TokenScreen = ({navigation}) => {
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = data => {
-        console.log(data)
-        verifyUserFetch(data)
-        .then(response =>{
-            console.log(response)
-        })
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify(data);
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        fetch("http://localhost:4001/user/verify_token", requestOptions)
+          .then(response => response)
+          .then(result => {
+              if(result.status == 200){
+                navigation.navigate('Register1')
+              }
+            }
+          )
+          .catch(error => console.log('error', error));
     }
+
+
 
     return (
         <View>

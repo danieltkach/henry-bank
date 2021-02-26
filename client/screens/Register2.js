@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form"
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
 
- const FormAlta = () => {
+ const Register2 = () => {
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = data => console.log(data);
     const {colors} = useTheme()
@@ -124,4 +124,4 @@ import { TextInput, Button ,useTheme} from "react-native-paper";
   );
 }
 
-export default FormAlta
+export default Register2;
