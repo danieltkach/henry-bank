@@ -8,19 +8,14 @@ const createUser = async (req, res, next) => {
   const { name, email, lastName } = req.user;
   const body = { _id: req.user._id, email: req.user.email }
   const token = jwt.sign({ user: body }, 'top_secret');
-  axios.post(`http://locaslhost:4002/account/${req.user._id}`)
-   .then((resp) => {
-     res.status(200).json({
-       message:`account created for ${req.user._id}`
-     })
-   })
-   .catch(err => {
-     res.status(400).json({
-       message: err.message || "Some error occurred while creating the Account."
-     })
-   })
+ 
+  //corregir de async
+  //TODO corregir async
   nodeMailer.sendEmail({name, lastName, email, token})
   .then(response => {
+    return axios.post(`http://localhost:4002/account/${req.user._id}`)
+  })
+  .then(resp => {
     res.status(200).json({ message: "Registro inicial completado", user: req.user });
   })
   .catch(err => res.status(400).json({ message: "Error al enviar el email" }))
