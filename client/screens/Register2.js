@@ -4,19 +4,33 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
 import { updateUserFetch } from '../controllers/user';
 
- const Register2 = ({ dataInitial, navigation, idUser }) => {
+ const Register2 = ({ navigation, route  }) => {
   const { control, handleSubmit, errors } = useForm();
+  console.log("soy el route", route);
+  const { userId, dataInitial  } = route.params;
   const onSubmit = data => {
   const dataForm = {...dataInitial, ...data}
-  const dataId = idUser
-  updateUserFetch(dataId, dataForm)
-  .then((responseLogin) =>  {
-    console.log(responseLogin);
-    navigation.navigate('Menu');
-    return
-  })
-  .catch(err => console.log(err));
-};
+  
+  
+  var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    console.log("dataformmmm", dataForm);
+    var raw = JSON.stringify(dataForm);
+
+    var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+    console.log("soy el id", userId)
+    fetch(`http://192.168.0.60:4001/user/${userId}`, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+        navigation.navigate('LoginScreen');
+    })
+    .catch(error => console.log('error', error));
+    };
     const {colors} = useTheme()
   return (
 <View>

@@ -1,6 +1,6 @@
-export const API_USER_HOST = 'http://localhost:4001';
-export const API_TRANSACTION_HOST = 'http://localhost:4002';
-export const CLIENT_HOST = 'http://localhost:19002';
+export const API_USER_HOST = 'http://192.168.0.60:4001';
+export const API_TRANSACTION_HOST = 'http://192.168.0.60:4002';
+export const CLIENT_HOST = 'http://192.168.0.60:19002';
 
 //Fetchs asociadas a User
 export const POST_REGISTER_USER = `${API_USER_HOST}/user/signup`;//#dataForm

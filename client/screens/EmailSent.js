@@ -7,17 +7,18 @@ import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 
 const EmailSent = ({navigation, route}) => {
     const { control, handleSubmit, errors} = useForm();
-    // const { email } = route.params;
+    const { email } = route.params;
 
     const onSubmit = data => {
-        console.log(route)
-        // console.log(email)
-        // verifyUserFetch({...data, email})
-        // .then((responseUser) =>  {
-        //   console.log(route.params);
-        //   navigation.navigate('Register1', {idUser:responseUser._id});
-        // })
-        // .catch(err => console.log(err));
+        console.log(route,"aa")
+         console.log(email)
+
+         verifyUserFetch({...data, email})
+        .then((responseUser) =>  {
+          console.log(responseUser);
+         navigation.navigate('Register1', {userId:responseUser.userId})
+        })
+         .catch(err => console.log(err));
       };
 
     return (

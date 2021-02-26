@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import {useTheme} from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from 'expo-linear-gradient';
 import Logo from "../images/Logo.png"
 import Contactos from "../images/icons/Contactos.png"
@@ -14,12 +15,13 @@ import Operaciones from "../images/icons/Operaciones.png"
 import Recargar from "../images/icons/Recargar.png" 
 
 
-const Menu = () => {
+const Menu = ({navigation}) => {
 
     const {colors} = useTheme()
 
  return (
     <View style={styles.container}>
+        <StatusBar style={'dark'}/> 
         <View style={styles.circuloNE}/>
         <View style={styles.circuloE}/>
         <View style={styles.circuloO}/>
@@ -102,7 +104,7 @@ const Menu = () => {
             <Image source={Contactos}/>
             <Text style={{textAlign:'center', color:'white'}}>Contactos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 17, marginLeft: 42}}>
+        <TouchableOpacity onPress={() => navigation.navigate('AccountScreen')} style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 17, marginLeft: 42}}>
             <Image source={Perfil}/>
             <Text style={{textAlign:'center', color:'white'}}>Cuenta</Text>
         </TouchableOpacity>

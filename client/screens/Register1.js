@@ -6,7 +6,7 @@ import Logo from "../images/Logo.png"
 import { StatusBar }  from 'expo-status-bar';
 
 
-const Register1 = ({ navigation, idUser }) => {
+const Register1 = ({ navigation, route }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const tipoRef = useRef();
   const docRef = useRef();
@@ -14,7 +14,9 @@ const Register1 = ({ navigation, idUser }) => {
   const apellidoRef = useRef ();
   const nacimientoRef = useRef ();
   const confirmPasswordRef = useRef();
-  const onSubmit = (data) => navigation.navigate('Register2', {dataInitial:data, idUser});
+  const { userId } = route.params;
+  console.log("routeregister1", route);
+  const onSubmit = (data) => navigation.navigate('Register2', {dataInitial:data, userId});
 
   return (
     <View style={styles.container}>
@@ -55,9 +57,9 @@ const Register1 = ({ navigation, idUser }) => {
 
       <Controller
         control={control}
-         onFocus={() => {
+         /* onFocus={() => {
           passwordRef.current.focus();
-        }}
+        }} */
         render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
