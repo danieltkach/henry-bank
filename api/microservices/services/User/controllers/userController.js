@@ -106,6 +106,7 @@ const verifyToken = (req, res) => {
   // const token = req.headers.authorization.split(" ")[1];
   const token = req.body.token;
   jwt.verify(token, "top_secret", (err, decode) => {
+    console.log("soy el decode", decode);
       if(err) return res.status(409).json({ message: 'Autorizacion no valida' });
       return res.status(200).json({ user: decode.user, message: 'Correo electrónico autorizado' });
   });

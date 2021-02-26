@@ -12,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import TokenScreen from './screens/TokenScreen';
 import Register1 from './screens/Register1';
 import Register2 from './screens/Register2';
+import EmailSended from './screens/EmailSended';
 
 const Stack = createStackNavigator();
 const theme = {
