@@ -2,12 +2,13 @@ const User = require('../models/UserModel')
 const nodeMailer = require('../util/nodeMailer')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 
 const createUser = async (req, res, next) => {
   const { name, email, lastName } = req.user;
   const body = { _id: req.user._id, email: req.user.email }
   const token = jwt.sign({ user: body }, 'top_secret');
-
+  axios.post(`http://locaslhost:4002/account/${req.user._id}`)
   nodeMailer.sendEmail({name, lastName, email, token})
   .then(response => {
     res.status(200).json({ message: "Registro inicial completado", user: req.user });
