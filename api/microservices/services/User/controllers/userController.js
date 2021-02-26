@@ -2,6 +2,7 @@ const User = require('../models/UserModel')
 const nodeMailer = require('../util/nodeMailer')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 
 const createUser = async (req, res, next) => {
   const { name, email, lastName, codeSecurity } = req.user;
@@ -10,6 +11,9 @@ const createUser = async (req, res, next) => {
 
   nodeMailer.sendEmail({name, lastName, email, codeSecurity})
   .then(response => {
+    return axios.post(`http://localhost:4002/account/${req.user._id}`)
+  })
+  .then(resp => {
     res.status(200).json({ message: "Registro inicial completado", user: req.user });
   })
   .catch(err => res.status(400).json({ message: "Error al enviar el email" }))
@@ -98,6 +102,7 @@ const getUsers = (req, res, next) => {
 
 const verifyCodeSecurity = (req, res) => {
   // const token = req.headers.authorization.split(" ")[1];
+
   const {email, codeSecurity} = req.body
 
   User.findOne({ email })

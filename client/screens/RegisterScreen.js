@@ -4,36 +4,32 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
-import { registerUserFetch } from './../controllers/user'
-
+import { registerUserFetch } from "./../controllers/user"
 
 const RegisterScreen = ({ navigation }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const onSubmit = data => {
+  const onSubmit = (data) => {
+    console.log(data)
     registerUserFetch(data)
-    .then((responseRegister) =>  {
-      console.log(responseRegister);
-      navigation.navigate('EmailSended');
-      return
-    })
-    .catch(err => console.log(err));
-  };
-
+    .then(response => {
+      navigation.navigate('Token')
+      console.log(response)
+    });
+   }
+  
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
         <View style={styles.circuloNE}/>
-
         <View style={styles.circuloS}/>
         <View style={styles.circuloSE}/>
 
  <View style={styles.foto}>
             <Image style={styles.logo} source={Logo}/>
         </View>
-
       <Text h1 style={styles.welcome}>
         Bienvenido !
       </Text>
@@ -85,7 +81,7 @@ const RegisterScreen = ({ navigation }) => {
 
       />
  {errors.password && <Text>Obligatorio</Text>}
-      <Controller
+      {/* <Controller
         control={control}
         onFocus={() => {
           confirmPasswordRef.current.focus();
@@ -106,8 +102,8 @@ const RegisterScreen = ({ navigation }) => {
       />
  {errors.confirmpassword && <Text>Obligatorio</Text>}
 
- {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> }
-
+ {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> } */}
+      
 
 
       <View>

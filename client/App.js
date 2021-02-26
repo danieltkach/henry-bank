@@ -9,7 +9,10 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from './Redux/Store';
 import Menu from './screens/Menu';
 import RegisterScreen from './screens/RegisterScreen';
-import Register3 from './screens/Register3';
+import TokenScreen from './screens/TokenScreen';
+import Register1 from './screens/Register1';
+import Register2 from './screens/Register2';
+import EmailSended from './screens/EmailSended';
 
 const Stack = createStackNavigator();
 const theme = {
@@ -41,13 +44,23 @@ export default function App() {
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="RegisterScreen"
+              name="Register"
               component={RegisterScreen}
             />
             <Stack.Screen
-            options={{headerShown: false }}
-            name="Register3"
-            component={Register3}
+              options={{ headerShown: false }}
+              name="Token"
+              component={TokenScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: true }}
+              name="Register1"
+              component={Register1}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Register2"
+              component={Register2}
             />
           </Stack.Navigator>
         </NavigationContainer>

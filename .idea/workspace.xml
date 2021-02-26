@@ -26,13 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1816c96-76d8-4a98-bbd6-dd89842a1fb7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/screens/Register3.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/screens/RegisterScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,9 +75,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="623" y="255" width="975" height="558" key="AVDManager" timestamp="1614046454712">
+    <state x="623" y="255" width="975" height="558" key="AVDManager" timestamp="1614297117673">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="623" y="255" width="975" height="558" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1614046454712" />
+    <state x="623" y="255" width="975" height="558" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1614297117673" />
   </component>
 </project>
