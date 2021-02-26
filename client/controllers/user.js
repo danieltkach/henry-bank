@@ -117,10 +117,14 @@ export const readAddressFetch = (queryData) => {
 }
 
 export const verifyUserFetch = (token) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fetch('http://localhost:4001/user/verify_token', {
       method: 'POST',
-      body: JSON.stringify(token)
+      body: JSON.stringify(token),
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
     })
     .then(response => {
       resolve(response.json());

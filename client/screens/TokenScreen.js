@@ -21,8 +21,8 @@ export const TokenScreen = ({navigation}) => {
         };
         
         fetch("http://localhost:4001/user/verify_token", requestOptions)
-          .then(response => response)
           .then(result => {
+            console.log("este es el result", result);
               if(result.status == 200){
                 navigation.navigate('Register1')
               }
