@@ -1,22 +1,23 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { updateUserFetch } from '../controllers/user';
+import { verifyUserFetch } from '../controllers/user';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 
-
-const EmailSended = ({navigation}) => {
-
+const EmailSent = ({navigation, route}) => {
     const { control, handleSubmit, errors} = useForm();
+    // const { email } = route.params;
+
     const onSubmit = data => {
-        updateUserFetch(data)
-        .then((responseUser) =>  {
-          console.log(responseUser);
-          navigation.navigate('Register1', {idUser:responseUser._id});
-          return
-        })
-        .catch(err => console.log(err));
+        console.log(route)
+        // console.log(email)
+        // verifyUserFetch({...data, email})
+        // .then((responseUser) =>  {
+        //   console.log(route.params);
+        //   navigation.navigate('Register1', {idUser:responseUser._id});
+        // })
+        // .catch(err => console.log(err));
       };
 
     return (
@@ -33,17 +34,17 @@ const EmailSended = ({navigation}) => {
             render={({ onChange, onBlur, value }) => (
             <TextInput
                 style={{backgroundColor:"white"}}
-                label="Token"
+                label="Codigo de seguridad"
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
                 value={value}
             />
             )}
-            name="token"
+            name="codeSecurity"
             rules={{ required: true }}
             defaultValue=""
         />
-        {errors.email && <Text style={{color:"red"}}>Token requerido.</Text>}
+        {errors.email && <Text style={{color:"red"}}>Codigo de seguridad.</Text>}
 
         <Button
         onPress={handleSubmit(onSubmit)}>
@@ -55,7 +56,7 @@ const EmailSended = ({navigation}) => {
     )
 }
 
-export default EmailSended
+export default EmailSent
 
 const styles = StyleSheet.create({
  circuloNE: {

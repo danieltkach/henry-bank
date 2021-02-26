@@ -6,6 +6,7 @@ import Logo from "../images/Logo.png"
 import { StatusBar } from 'expo-status-bar';
 import { registerUserFetch } from "./../controllers/user"
 
+
 const RegisterScreen = ({ navigation }) => {
   const { control, handleSubmit, errors, watch } = useForm();
   const emailRef = useRef();
@@ -15,11 +16,13 @@ const RegisterScreen = ({ navigation }) => {
     console.log(data)
     registerUserFetch(data)
     .then(response => {
-      navigation.navigate('Token')
       console.log(response)
+      navigation.navigate('EmailSent', {
+        params: { email: 'asdasdasd' }
+      });
     });
    }
-  
+
   return (
     <View style={styles.container}>
        <StatusBar style='dark' />
@@ -103,7 +106,7 @@ const RegisterScreen = ({ navigation }) => {
  {errors.confirmpassword && <Text>Obligatorio</Text>}
 
  {((watch('password')) === (watch('confirmPassword'))) ?  <Text></Text> : <Text>Contraseña no coinciden</Text> } */}
-      
+
 
 
       <View>
@@ -112,7 +115,7 @@ const RegisterScreen = ({ navigation }) => {
       <View>
         <IconButton color={Colors.white} mode='contained'style={styles.buttonright} icon = "arrow-right-bold" title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
-      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('LoginScreen')}>
+      <Button color={Colors.black} h1 style={{ marginTop: 50 }} onPress={() => navigation.navigate('EmailSent')}>
         ¿Ya tenes cuenta? Inicia Sesión
       </Button>
     </View>

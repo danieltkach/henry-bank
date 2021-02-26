@@ -5,7 +5,7 @@ import {
   GET_USER_BY_ID,
   GET_USERS,
   GET_ADDRESS,
-  GET_VERIFY
+  POST_CODE
 } from './index';
 
 
@@ -32,7 +32,7 @@ export const registerUserFetch = (dataForm) => {
 
 export const loginUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:4001/user/login', {
+    fetch(POST_LOGIN_USER, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -118,7 +118,8 @@ export const readAddressFetch = (queryData) => {
 
 export const verifyUserFetch = (dataForm) => {
   return new Promise((resolve, reject) => {
-    fetch(POST_VERIFY, {
+    fetch(POST_CODE, {
+      method: 'POST',
       headers: {
         Accept: '*/*',
         'Content-Type': 'application/json'

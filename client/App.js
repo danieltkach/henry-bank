@@ -12,7 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import TokenScreen from './screens/TokenScreen';
 import Register1 from './screens/Register1';
 import Register2 from './screens/Register2';
-import EmailSended from './screens/EmailSended';
+import EmailSent from './screens/EmailSent';
 
 const Stack = createStackNavigator();
 const theme = {
@@ -49,8 +49,8 @@ export default function App() {
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="Token"
-              component={TokenScreen}
+              name="EmailSent"
+              component={EmailSent}
             />
             <Stack.Screen
               options={{ headerShown: true }}
