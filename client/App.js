@@ -39,8 +39,8 @@ class App extends React.Component {
               <Stack.Navigator>
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Login"
-                  component={Login}
+                  name="Boilerplate"
+                  component={Boilerplate}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}

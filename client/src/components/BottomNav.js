@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { BottomNavigation, IconButton, Colors, Text, Surface } from 'react-native-paper';
+import { palette, rgba } from './palette';
 
+const disableColor = palette.text.disabled;
+const activeColor = palette.primary.main;
 
 export default function BottomNav({ navigation, init }) {
   const [indexClick, setIndexClick] = React.useState(init && init || 0);
@@ -13,9 +16,6 @@ export default function BottomNav({ navigation, init }) {
     { index: 2, label: 'Cuenta', icon: 'bank', route: 'Account'},
     { index: 3, label: 'Yo', icon: 'account', route: 'Profile'}
   ];
-
-  const disableColor = '#BDBDBD';
-  const activeColor = '#3551F2';
 
   const handleClick = value => {
     console.log(value);
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
   bottomNavigation: {
     position: 'absolute',
     width: '100%',
-    bottom: '0px'
+    bottom: '0px',
+    zIndex: 1
   },
   button          : {
     flexDirection : 'column',

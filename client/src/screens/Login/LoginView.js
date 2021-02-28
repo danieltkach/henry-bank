@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { useForm, Controller } from "react-hook-form"
-import { TextInput, Text, Button } from "react-native-paper";
+import { Text, Button } from "react-native-paper";
+import { TextInput } from '../../components';
 import styles from './styles';
 
 export default function LoginView({ handleFinalSubmit }) {
@@ -10,28 +11,30 @@ export default function LoginView({ handleFinalSubmit }) {
   const onSubmit = data => handleFinalSubmit(data);
 
   const textInputs = [
-    {name: 'email', label: 'Correo electrónico', error: 'Correo electrónico requerido'},
-    {name: 'password', label: 'Contraseña', error: 'Contraseña requerido'}
+    {name: 'email', placeholder: 'Correo electrónico', error: 'Correo electrónico requerido'},
+    {name: 'password', placeholder: 'Contraseña', error: 'Contraseña requerido'}
   ];
 
-  const CustomTextInput = ({ name, label }) => (
+  const CustomTextInput = ({ name, placeholder, errorLabel }) => (
     <View>
     <Controller
         control={control}
         rules={{required:true}}
-        render={({ onChange, onBlur, value }) => (
+        render={({ onChange, value }) => (
         <TextInput
-            label={label}
-            onBlur={onBlur}
+            placeholder={placeholder}
             onChangeText={value => onChange(value)}
             value={value}
+            error={{
+              label: errorLabel,
+              value: errors[name]
+            }}
         />
         )}
         name={name}
         rules={{ required: true }}
         defaultValue=""
     />
-    {errors[name] && <Text style={{color:"red"}}>{error}</Text>}
   </View>
   );
 
@@ -39,9 +42,9 @@ export default function LoginView({ handleFinalSubmit }) {
     <>
       <View style={{flex: 1, backgroundColor: 'blue'}}></View>
 
-      <View style={{width: '100%', backgroundColor: 'blue'}}>
-        {textInputs.map(e => (
-          <CustomTextInput name={e.name} label={e.label} />
+      <View style={{width: '100%'}}>
+        {textInputs.map((e, index) => (
+          <CustomTextInput key={index} name={e.name} placeholder={e.placeholder} />
         ))
         }
       </View>

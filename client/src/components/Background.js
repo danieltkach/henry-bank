@@ -1,5 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { palette, rgba } from './palette';
+
+
+const backgroundColor = palette.accent.light;
+const primaryColor = palette.primary.main;
+const secondaryColor = palette.secondary.main;
 
 const between = (min, max) => Math.floor(Math.random() * ((max + 1) - min) + min);
 
@@ -13,10 +19,6 @@ const setTiles = (size, num=10) => {
   }
   return tiles;
 }
-
-const backgroundColor = '#F5F5F5'
-const primaryColor = '#3551F2';
-const secondaryColor = '#E52B2B';
 
 export default function Background({ navigation, init }) {
 
