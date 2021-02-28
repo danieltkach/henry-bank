@@ -17,19 +17,6 @@ export default function Header({ type = 'default' }) {
     <Drawer />
   );
 
-  // const Settings = () => (
-  //   <View style={styles.header}>
-  //
-  //     <IconButton
-  //       icon="menu"
-  //       size={24}
-  //       color={color}
-  //       onPress={() => <Drawer />}
-  //     />
-  //     <Text style={styles.text}>Hola Usuario !</Text>
-  //   </View>
-  // );
-
   const Default = () => (
     <View style={styles.header}>
       <IconButton

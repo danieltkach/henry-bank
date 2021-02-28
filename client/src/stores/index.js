@@ -3,9 +3,12 @@ import { createStore, combineReducers } from "redux";
 
 import rootReducer from "./userStore/userReducers";
 
-const reducer = combineReducers({
+const reducers = combineReducers({
   user: rootReducer,
 });
 
-const store = createStore(reducer);
+const store = createStore(
+  reducers
+);
+
 export default store;
