@@ -1,23 +1,138 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useWindowDimensions } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Boilerplate } from '../screens';
+import { IconButton, Text } from 'react-native-paper';
+import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
 
-const Drawer = createDrawerNavigator();
+const darkColor = '#1B263D';
+const primaryColor = '#3551F2';
 
-export default function MyDrawer() {
+export default function Drawer({ navigation }) {
   const dimensions = useWindowDimensions();
+  const [toggle, setToggle] = useState(false);
 
-  const isLargeScreen = dimensions.width >= 768;
+  const handleClick = () => {
+    setToggle(!toggle);
+  }
+  const buttons = [
+    { index: 0, label: 'Recargar dinero', icon: 'arrow-collapse-up', route: '' },
+    { index: 1, label: 'Enviar dinero', icon: 'subdirectory-arrow-right', route: '' },
+    { index: 2, label: 'Transacciones', icon: 'cube-send', route: '' },
+    { index: 3, label: 'Estadísticas', icon: 'poll', route: '' },
+    { index: 4, label: 'Mis tarjetas', icon: 'credit-card', route: '' },
+    { index: 5, label: 'Soporte', icon: 'help-circle', route: '' },
+    { index: 6, label: 'Salir', icon: 'logout', route: '' },
+  ]
+
+  const renderItem = ({ item }) => (
+    <Item title={item.title} />
+  );
+
+  const DATA = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Item',
+    },
+  ];
+
+  const IconButtonText = ({ label, icon, route }) => (
+    <TouchableOpacity onPress={() => navigation.navigate(route)} style={styles.iconButtonText}>
+      <IconButton
+        icon={icon}
+        size={20}
+        color="white"
+        onPress={handleClick}
+      />
+      <Text style={styles.textBody}>{label}</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <Drawer.Navigator
-      openByDefault
-      drawerType={isLargeScreen ? 'permanent' : 'back'}
-      drawerStyle={isLargeScreen ? null : { width: '100%' }}
-      overlayColor="transparent"
-    >
-      <Drawer.Screen name="Feed" component={} />
-      <Drawer.Screen name="Article" component={} />
-    </Drawer.Navigator>
+    <View>
+      <View style={styles.header}>
+        <IconButton
+          icon="menu"
+          size={24}
+          color={darkColor}
+          onPress={handleClick}
+        />
+        <Text style={styles.text}>Hola Usuario !</Text>
+      </View>
+      {/*TODO*/}
+      <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
+        height: dimensions.height,
+        width: dimensions.width,
+        display: toggle && 'inline' || 'none'
+      }]}></TouchableOpacity>
+
+
+      <View style={[styles.navbar, { height: dimensions.height, left: toggle && '0px' || '-75%' }]}>
+        <View style={{width: '100%', alignItems: 'flex-end'}}>
+          <IconButton
+            icon="close"
+            size={24}
+            color="white"
+            onPress={handleClick}
+          />
+        </View>
+
+        <FlatList
+          data={buttons}
+          renderItem={({ item }) => <IconButtonText icon={item.icon} label={item.label} route={item.route} />}
+          keyExtractor={(item) => item.index}
+        />
+
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  header           : {
+    position       : 'sticky',
+    width          : '100%',
+    height         : '48px',
+    alignItems     : 'center',
+    flexDirection  : 'row',
+  },
+  text           : {
+    fontSize     : '20px',
+    letterSpacing: '0.15 px',
+    fontWeight   : 500,
+    lineHeight   : 23
+  },
+  textBody       : {
+    color        : 'white',
+    fontSize     : '16px',
+    letterSpacing: '0.15 px',
+    fontWeight   : 400,
+    lineHeight   : 19,
+    paddingLeft  : '16px'
+  },
+  iconButtonText : {
+    width        : '100%',
+    flexDirection: 'row',
+    alignItems   : 'center',
+    paddingLeft  : '8px'
+  },
+  navbar           : {
+    position       : 'absolute',
+    backgroundColor: `${primaryColor}`,
+    width          : '75%',
+    transition     : '.3s'
+  },
+  backNav          : {
+    position       : 'absolute',
+    backgroundColor: `${darkColor}`,
+    opacity        : '0.5',
+    transition     : '.3s'
+  },
+})

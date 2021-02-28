@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BottomNavigation, IconButton, Colors, Text, Surface, Button } from 'react-native-paper';
+import { BottomNavigation, IconButton, Text, Surface } from 'react-native-paper';
 import Drawer from './Drawer';
 
 const HomeRoute = () => <Text>Inicio</Text>;
@@ -14,17 +14,21 @@ export default function Header({ type = 'default' }) {
   const color = '#1B263D';
 
   const Settings = () => (
-    <View style={styles.header}>
-      
-      <IconButton
-        icon="menu"
-        size={24}
-        color={color}
-        onPress={() => console.log('Pressed')}
-      />
-      <Text style={styles.text}>Hola Usuario !</Text>
-    </View>
+    <Drawer />
   );
+
+  // const Settings = () => (
+  //   <View style={styles.header}>
+  //
+  //     <IconButton
+  //       icon="menu"
+  //       size={24}
+  //       color={color}
+  //       onPress={() => <Drawer />}
+  //     />
+  //     <Text style={styles.text}>Hola Usuario !</Text>
+  //   </View>
+  // );
 
   const Default = () => (
     <View style={styles.header}>

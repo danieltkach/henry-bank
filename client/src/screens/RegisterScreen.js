@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
-import Logo from "../images/Logo.png"
+import Logo from '../../images/Logo.png';
 import { StatusBar } from 'expo-status-bar';
-import { registerUserFetch } from "./../src/controllers/user"
+import { registerUserFetch } from "./../controllers/user"
 
 
 const RegisterScreen = ({ navigation }) => {

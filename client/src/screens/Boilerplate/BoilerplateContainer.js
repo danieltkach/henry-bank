@@ -1,7 +1,7 @@
 import React from "react";
 import { View, SafeAreaView } from "react-native";
 import BoilerplateView from './BoilerplateView'
-import { BottomNav, Header, Background, Drawer } from '../../src/components';
+import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
 
 export default function BoilerplateContainer() {
@@ -10,7 +10,6 @@ export default function BoilerplateContainer() {
     <View style={{flex: 1}}>
       <Background />
       <Header type='settings'/>
-      <Drawer />
       <SafeAreaView style={styles.container}>
 
       </SafeAreaView>

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { verifyUserFetch } from './../src/controllers/user';
+import { verifyUserFetch } from './../controllers/user';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
 

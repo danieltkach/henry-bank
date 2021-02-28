@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
-import store from './Redux/Store';
+import store from './src/stores';
 import theme from './theme';
 import {
   Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, LoginScreen, Boilerplate

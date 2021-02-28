@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Image } from "react-native";
 import { useForm, Controller } from "react-hook-form"
 import { TextInput, Button ,useTheme} from "react-native-paper";
-import { verifyUserFetch } from './../src/controllers/user'
+import { verifyUserFetch } from './../controllers/user'
 
 
 export const TokenScreen = ({navigation}) => {
