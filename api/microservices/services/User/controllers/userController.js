@@ -59,7 +59,7 @@ function calcularEdad(fecha) {
 
 const modifyUser = async(req,res,next) => {
   const user_id = req.params.id
-  if(calcularEdad(req.body.birthdate) >=16){
+  //if(calcularEdad(req.body.birthdate) >=16){
     User.findByIdAndUpdate(user_id ,{
       role : 'client',
       idType : req.body.idType,
@@ -77,10 +77,10 @@ const modifyUser = async(req,res,next) => {
       if(err) res.status(400).send({message: 'Error al terminar de registrar al usuario'})
       res.status(200).send({msg : 'Registro completado'})
     })
-  }
-  else{
+//}
+  /* else{
     res.status(400).send("Menor de edad!!")
-  }
+  } */
 }
 
 const getUser = (req, res, next) => {

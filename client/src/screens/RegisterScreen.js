@@ -16,8 +16,9 @@ const RegisterScreen = ({ navigation }) => {
     console.log(data)
     registerUserFetch(data)
     .then(response => {
+      console.log(response,"response")
       navigation.navigate('EmailSent', {
-        email: data.email
+         email: data.email
       });
     });
    }

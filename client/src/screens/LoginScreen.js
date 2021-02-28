@@ -21,6 +21,10 @@ const LoginScreen = ({ navigation }) => {
 const {colors} = useTheme()
   return (
     <View style={styles.container}>
+      <View style={styles.circuloNE}/>
+      <View style={styles.circuloE}/>
+      <View style={styles.circuloO}/>
+      <View style={styles.circuloSO}/>
       <View style={styles.inputs}>
         <Controller
             control={control}
@@ -102,7 +106,47 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 500,
     left: 137,
-  }
+  },
+  circuloNE: {
+    position: "absolute",
+    top: -280,
+    right: -260,
+    borderRadius: 400,
+    backgroundColor: '#E52B2B',
+    opacity:0.4 ,
+    width: 400,
+    height: 400, 
+},
+circuloE: {
+    position: "absolute",
+    top: 0,
+    left: 350,
+    borderRadius: 400,
+    backgroundColor: '#3551F2',
+    opacity:0.4 ,
+    width: 400,
+    height: 400, 
+},
+circuloO: {
+    position: "absolute",
+    bottom: 380,
+    right: 370,
+    borderRadius: 200,
+    backgroundColor: '#E52B2B',
+    opacity:0.4 ,
+    width: 250,
+    height: 250, 
+},
+circuloSO: {
+    position: "absolute",
+    top: 600,
+    left: -100,
+    borderRadius: 100,
+    backgroundColor: '#3551F2',
+    opacity:0.4 ,
+    width: 200,
+    height: 200, 
+}
 });
 
 export default LoginScreen;
