@@ -19,11 +19,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <Stack.Navigator>
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Boilerplate"
-              component={Boilerplate}
-            />
+            
             <Stack.Screen
               options={{ headerShown: false }}
               name="Login"

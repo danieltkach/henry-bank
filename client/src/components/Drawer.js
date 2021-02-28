@@ -24,25 +24,6 @@ export default function Drawer({ navigation }) {
     { index: 6, label: 'Salir', icon: 'logout', route: '' },
   ]
 
-  const renderItem = ({ item }) => (
-    <Item title={item.title} />
-  );
-
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
-
   const IconButtonText = ({ label, icon, route }) => (
     <TouchableOpacity onPress={() => navigation.navigate(route)} style={styles.iconButtonText}>
       <IconButton
@@ -87,7 +68,7 @@ export default function Drawer({ navigation }) {
         <FlatList
           data={buttons}
           renderItem={({ item }) => <IconButtonText icon={item.icon} label={item.label} route={item.route} />}
-          keyExtractor={(item) => item.index}
+          keyExtractor={(item) => item.index.toString()}
         />
 
       </View>
