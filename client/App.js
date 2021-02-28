@@ -7,7 +7,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from './src/stores';
 import theme from './theme';
 import {
-  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, LoginScreen, Boilerplate
+  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, LoginScreen, Boilerplate, AccountScreen
 } from "./src/screens";
 
 
@@ -19,7 +19,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <Stack.Navigator>
-            
+
             <Stack.Screen
               options={{ headerShown: false }}
               name="Login"
@@ -49,6 +49,11 @@ export default function App() {
               options={{ headerShown: false }}
               name="Register2"
               component={Register2}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="AccountScreen"
+              component={AccountScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

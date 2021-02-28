@@ -16,7 +16,7 @@ import {
 import Logo from '../../images/Logo.png';
 
 
-const Menu = () => {
+const Menu = ({ navigation }) => {
 
     const {colors} = useTheme()
 

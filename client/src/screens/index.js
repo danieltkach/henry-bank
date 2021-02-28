@@ -8,5 +8,6 @@ export { default as Register1 } from './Register1';
 export { default as Register2 } from './Register2';
 export { default as EmailSent } from './EmailSent';
 export { default as LoginScreen } from './LoginScreen';
+export { default as AccountScreen } from './AccountScreen';
 
 export { default as Boilerplate } from './Boilerplate/BoilerplateContainer';
