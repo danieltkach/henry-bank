@@ -3,16 +3,18 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import {useTheme} from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from 'expo-linear-gradient';
-import Logo from "../images/Logo.png"
-import Contactos from "../images/icons/Contactos.png"
-import House from "../images/icons/House.png"
-import Perfil from "../images/icons/Perfil.png"
-import Vector from "../images/icons/Vector.png"
-import Estadisticas from "../images/icons/Estadisticas.png"
-import Caja from "../images/icons/Caja.png"
-import Enviar from "../images/icons/Enviar.png"
-import Operaciones from "../images/icons/Operaciones.png"
-import Recargar from "../images/icons/Recargar.png" 
+import {
+  Contactos,
+  House,
+  Perfil,
+  Vector,
+  Estadisticas,
+  Caja,
+  Enviar,
+  Operaciones,
+  Recargar
+} from '../../images/Logo.png';
+import Logo from '../../images/Logo.png';
 
 
 const Menu = ({navigation}) => {
@@ -21,7 +23,7 @@ const Menu = ({navigation}) => {
 
  return (
     <View style={styles.container}>
-        <StatusBar style={'dark'}/> 
+        <StatusBar style={'dark'}/>
         <View style={styles.circuloNE}/>
         <View style={styles.circuloE}/>
         <View style={styles.circuloO}/>
@@ -43,7 +45,7 @@ const Menu = ({navigation}) => {
             </LinearGradient>
         </View>
 
-        <View style={styles.foto}> 
+        <View style={styles.foto}>
             <Image style={styles.logo} source={Logo}/>
         </View>
             <Text style={styles.saludo}>Hola usuario</Text>
@@ -92,12 +94,12 @@ const Menu = ({navigation}) => {
         </View>
 
 
-        <View style={styles.foto}> 
+        <View style={styles.foto}>
             <Image style={styles.logo} source={Logo}/>
         </View>
         <View style={styles.button}>
         <TouchableOpacity style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 17, marginLeft: 20}}>
-            <Image source={House}/> 
+            <Image source={House}/>
             <Text style={{textAlign:'center', color:'white'}}>Inicio</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 6, marginLeft: 40}}>
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 400,
-        height: 400, 
+        height: 400,
     },
     circuloE: {
         position: "absolute",
@@ -255,7 +257,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3551F2',
         opacity:0.4 ,
         width: 400,
-        height: 400, 
+        height: 400,
     },
     circuloO: {
         position: "absolute",
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E52B2B',
         opacity:0.4 ,
         width: 250,
-        height: 250, 
+        height: 250,
     },
     circuloSO: {
         position: "absolute",
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3551F2',
         opacity:0.4 ,
         width: 200,
-        height: 200, 
+        height: 200,
     }
     });
 

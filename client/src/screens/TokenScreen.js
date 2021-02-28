@@ -10,16 +10,16 @@ export const TokenScreen = ({navigation}) => {
     const onSubmit = data => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        
+
         var raw = JSON.stringify(data);
-        
+
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
           body: raw,
           redirect: 'follow'
         };
-        
+
         fetch("http://localhost:4001/user/verify_token", requestOptions)
           .then(response => response)
           .then(result => {

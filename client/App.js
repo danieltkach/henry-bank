@@ -1,10 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
 import store from './Redux/Store';
 import Menu from './screens/Menu';
@@ -15,33 +13,25 @@ import Register2 from './screens/Register2';
 import EmailSent from './screens/EmailSent';
 import AccountScreen from './screens/AccountScreen';
 
-const Stack = createStackNavigator();
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#00AACF',
-    dark: 'blue',
-    secondary: '#E52B2B',
-  },
-};
 
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <StoreProvider store={store}>
       <PaperProvider theme={theme}>
-        <NavigationContainer>
+        <NavigationContainer theme={theme}>
           <Stack.Navigator>
+
             <Stack.Screen
               options={{ headerShown: false }}
-              name="LoginScreen"
-              component={LoginScreen}
+              name="Login"
+              component={Login}
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="Menu"
-              component={Menu}
+              name="Home"
+              component={Home}
             />
             <Stack.Screen
               options={{ headerShown: false }}
