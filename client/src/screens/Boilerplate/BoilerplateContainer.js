@@ -7,13 +7,13 @@ import styles from './styles';
 export default function BoilerplateContainer() {
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <Background />
       <Header type='settings'/>
-      <SafeAreaView style={styles.container}>
-
-      </SafeAreaView>
+      <View style={styles.container}>
+        <BoilerplateView />
+      </View>
       <BottomNav />
-    </View>
+    </SafeAreaView>
   );
 };

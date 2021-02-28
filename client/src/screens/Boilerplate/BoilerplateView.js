@@ -4,7 +4,7 @@ import styles from './styles';
 
 export default function BoilerplateView() {
   return (
-    <View >
+    <View style={{flex: 1}}>
 
     </View>
   );
