@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm, Controller } from "react-hook-form"
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
-import { updateUserFetch } from '../controllers/user';
+import { updateUserFetch } from './../src/controllers/user';
 
  const Register2 = ({ dataInitial, navigation, idUser }) => {
   const { control, handleSubmit, errors } = useForm();

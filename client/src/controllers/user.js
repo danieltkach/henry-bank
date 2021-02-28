@@ -6,7 +6,7 @@ import {
   GET_USERS,
   GET_ADDRESS,
   POST_CODE
-} from './index';
+} from '../constants/api';
 
 
 export const registerUserFetch = (dataForm) => {

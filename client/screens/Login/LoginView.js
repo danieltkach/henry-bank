@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form"
-import { View, Text, StyleSheet, Image } from "react-native";
-import { TextInput, Button ,useTheme} from "react-native-paper";
+import { View, Text, Image } from "react-native";
+import { TextInput, Button, useTheme } from "react-native-paper";
 import { color } from "react-native-reanimated";
-import { loginUserFetch } from './../src/controllers/user'
-import Logo from "../images/Logo.png"
+import Logo from './../../images/Logo.png';
+import styles from './styles';
 
-const LoginScreen = ({ navigation }) => {
+const LoginView = ({ handleFinalSubmit }) => {
   const { control, handleSubmit, errors } = useForm();
-  const onSubmit = data => {
-    loginUserFetch(data)
-    .then((responseLogin) =>  {
-      console.log(responseLogin);
-      navigation.navigate('Menu');
-      return
-    })
-    .catch(err => console.log(err));
-  };
+  const onSubmit = data => handleFinalSubmit(data);
+  const {colors} = useTheme()
 
-const {colors} = useTheme()
   return (
     <View style={styles.container}>
       <View style={styles.inputs}>
@@ -76,33 +68,4 @@ const {colors} = useTheme()
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: "#fff",
-  },
-  logo: {
-    height: 80,
-    resizeMode: 'contain',
-    width: 150,
-
-  },
-  inputs: {
-    flex:1,
-    justifyContent:'center',
-
-  },
-  foto: {
-    position: "absolute",
-    left: 140,
-    top: 50,
-  },
-  button: {
-    position: "absolute",
-    top: 500,
-    left: 137,
-  }
-});
-
-export default LoginScreen;
+export default LoginView;
