@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     zIndex: 9
   },
   header           : {
-    position       : 'sticky',
+    position       : 'absolute',
     width          : '100%',
     height         : '48px',
     alignItems     : 'center',

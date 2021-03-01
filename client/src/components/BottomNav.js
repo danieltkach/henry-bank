@@ -79,11 +79,11 @@ const styles = StyleSheet.create({
     flexDirection  : 'row',
     justifyContent : 'space-around',
     height         : '48px',
-    borderRadius   : '32px',
+    borderRadius   : 32,
     margin         : '8px',
     paddingTop     : '4px',
     paddingBottom  : '4px',
-    borderRadius   : '32px',
+    borderRadius   : 32,
     shadowColor    : "#000",
     shadowOffset   : {
       width        : 0,

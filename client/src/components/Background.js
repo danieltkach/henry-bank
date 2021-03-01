@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
   background       : {
     width          : '100%',
     height         : '100%',
-    position       : 'fixed',
+    position       : 'absolute',
     backgroundColor: `${backgroundColor}`
   },
   circle        : {
     position    : 'absolute',
-    borderRadius: '100%',
+    borderRadius: 1000,
     opacity     : 0.2
   }
 })

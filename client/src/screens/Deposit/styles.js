@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     },
     uno: {
      fontSize:20,
-     fontWeight:600,
+     fontWeight:"600",
      marginTop:"10%",
      textAlign:"center",
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     tres:{
       fontSize:20,
-     fontWeight:600,
+     fontWeight:"600",
      marginBottom:"30%",
      textAlign:"center",
 
