@@ -10,9 +10,9 @@ const primaryColor = palette.primary.main;
 const secondaryColor = palette.primary.main;
 
 export default function TextInputCustom(props) {
-  const { placeholder, type, style, onChangeText, value, maxLength } = props;
+  const { placeholder, type, style, onChangeText, value, maxLength, errorValue } = props;
   const [focus, setFocus] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(errorValue && errorValue || '');
   const [inputs, setInputs] = useState('');
   const setUnderline = !error ? focus && styles.underlineFocus : styles.underlineError;
 

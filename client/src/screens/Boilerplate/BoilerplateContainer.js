@@ -4,7 +4,7 @@ import BoilerplateView from './BoilerplateView'
 import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
 
-export default function BoilerplateContainer() {
+export default function BoilerplateContainer({ navigation }) {
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -13,7 +13,7 @@ export default function BoilerplateContainer() {
       <View style={styles.container}>
         <BoilerplateView />
       </View>
-      <BottomNav />
+      <BottomNav navigation={navigation}/>
     </SafeAreaView>
   );
 };
