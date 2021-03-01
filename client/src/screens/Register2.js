@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm, Controller } from "react-hook-form"
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
-import { updateUserFetch } from '../controllers/user';
+import { updateUserFetch } from './../controllers/user';
 
  const Register2 = ({ navigation, route  }) => {
   const { control, handleSubmit, errors } = useForm();
@@ -10,8 +10,8 @@ import { updateUserFetch } from '../controllers/user';
   const { userId, dataInitial  } = route.params;
   const onSubmit = data => {
   const dataForm = {...dataInitial, ...data}
-  
-  
+
+
   var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     console.log("dataformmmm", dataForm);

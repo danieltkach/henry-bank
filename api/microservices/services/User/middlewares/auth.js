@@ -33,7 +33,9 @@ passport.use('login', new localStrategy({
             return done(null, false, { message: 'Wrong password' })
         }
 
-        return done(null, user, { message: 'Login successfull' })
+        if (user.role === 'client') {
+          return done(null, user, { message: 'Login successfull' })
+        }
     } catch (e) {
         return done(e)
     }

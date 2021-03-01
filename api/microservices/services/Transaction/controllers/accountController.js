@@ -9,7 +9,7 @@ const createAccount = (req,res) => {
     account.save()
         .then((resp)=>{
             res.status(200).json({
-                message: 'Account created',
+                message: 'Cuenta creada',
                 account
             })
         })
@@ -43,6 +43,7 @@ const updateAccount = (req, res) => {
                 })
             }
             res.status(200).json({
+                message: 'Datos actualizados',
                 account
             })
         })

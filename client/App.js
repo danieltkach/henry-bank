@@ -1,79 +1,88 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+// import { UserController } from './src/controllers';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
-import store from './Redux/Store';
-import Menu from './screens/Menu';
-import RegisterScreen from './screens/RegisterScreen';
-import TokenScreen from './screens/TokenScreen';
-import Register1 from './screens/Register1';
-import Register2 from './screens/Register2';
-import EmailSent from './screens/EmailSent';
-import AccountScreen from './screens/AccountScreen';
+import store from './src/stores';
+import {
+  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
+} from "./src/screens";
+import { Preload } from './src/components';
+
 
 const Stack = createStackNavigator();
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#00AACF',
-    dark: 'blue',
-    secondary: '#E52B2B',
-  },
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      mounted: false
+    }
+  }
+
+  componentDidMount(){
+    console.log(store)
+    // await UserController.getAuthFetch(this.props.getUser);
+    this.setState({ mounted: true });
+  }
+
+  render(){
+    return (
+      <StoreProvider store={store}>
+        <PaperProvider>
+        {this.state.mounted ?
+          (
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Login"
+                  component={Login}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Home"
+                  component={Home}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register"
+                  component={RegisterScreen}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="EmailSent"
+                  component={EmailSent}
+                />
+                <Stack.Screen
+                  options={{ headerShown: true }}
+                  name="Register1"
+                  component={Register1}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register2"
+                  component={Register2}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="AccountScreen"
+                  component={AccountScreen}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          )
+          :(
+            <Preload />
+          )
+        }
+        </PaperProvider>
+      </StoreProvider>
+    );
+  }
 };
-
-
-export default function App() {
-  return (
-    <StoreProvider store={store}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="LoginScreen"
-              component={LoginScreen}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Menu"
-              component={Menu}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Register"
-              component={RegisterScreen}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="EmailSent"
-              component={EmailSent}
-            />
-            <Stack.Screen
-              options={{ headerShown: true }}
-              name="Register1"
-              component={Register1}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Register2"
-              component={Register2}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="AccountScreen"
-              component={AccountScreen}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </StoreProvider>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -83,3 +92,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+
+const mapActionsToProps = dispatch => {
+  return {
+    getUser: (user) => dispatch(getUser(user)),
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    user: state.userStore.user,
+  };
+};
+
+export default App;

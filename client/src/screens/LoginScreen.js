@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TextInput, Button ,useTheme} from "react-native-paper";
 import { color } from "react-native-reanimated";
 import { loginUserFetch } from './../controllers/user'
-import Logo from "../images/Logo.png"
+import Logo from '../../images/Logo.png';
 
 const LoginScreen = ({ navigation }) => {
   const { control, handleSubmit, errors } = useForm();

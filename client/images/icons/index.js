@@ -1,0 +1,9 @@
+export { default as Contactos } from './Contactos.png';
+export { default as Enviar } from './Enviar.png';
+export { default as Caja } from './Caja.png';
+export { default as Estadisticas } from './Estadisticas.png';
+export { default as House } from './House.png';
+export { default as Operaciones } from './Operaciones.png';
+export { default as Perfil } from './Perfil.png';
+export { default as Recargar } from './Recargar.png';
+export { default as Vector } from './Vector.png';
