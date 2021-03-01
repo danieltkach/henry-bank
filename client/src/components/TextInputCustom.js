@@ -10,9 +10,9 @@ const primaryColor = palette.primary.main;
 const secondaryColor = palette.primary.main;
 
 export default function TextInputCustom(props) {
-  const { placeholder, type, style, onChangeText, value, maxLength, errorValue } = props;
+  const { placeholder, type, style, onChangeText, value, maxLength } = props;
   const [focus, setFocus] = useState(false);
-  const [error, setError] = useState(errorValue && errorValue || '');
+  const [error, setError] = useState('');
   const [inputs, setInputs] = useState('');
   const setUnderline = !error ? focus && styles.underlineFocus : styles.underlineError;
 
@@ -53,20 +53,20 @@ const styles = StyleSheet.create({
     width          : '100%',
     height         : '1px',
     backgroundColor: darkColor,
-    opacity        : '0.8',
-    transition     : '.4s',
+    opacity        : 0.8,
+    // transition     : '.4s',
   },
   underlineFocus   : {
     height         : '2px',
-    opacity        : '1',
+    opacity        : 1,
     backgroundColor: primaryColor,
-    transition     : '.4s',
+    // transition     : '.4s',
   },
   underlineError   : {
     height         : '2px',
-    opacity        : '1',
+    opacity        : 1,
     backgroundColor: 'red',
-    transition     : '.4s',
+    // transition     : '.4s',
   },
   text           : {
     marginTop    : '12px',
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     right     : '0px',
     bottom    : '-8px',
     color     : 'red',
-    transition: '.3s'
+    // transition: '.3s'
   },
   placeholder: {
     color    : 'rgba(255, 0, 255, 1.0)'

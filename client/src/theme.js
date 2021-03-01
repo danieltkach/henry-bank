@@ -27,64 +27,65 @@ export const palette = {
 export const fontSystem = StyleSheet.create({
   title: {
     fontSize     : 20,
-    letterSpacing: '0.15 px',
-    fontWeight   : 500,
+    letterSpacing: 0.15,
+    fontWeight   : "500",
     lineHeight   : 23,
     fontFamily   : font
   },
   subtitle1      : {
     fontSize     : 16,
-    letterSpacing: '0.15 px',
-    fontWeight   : 400,
+    letterSpacing: 0.15,
+    fontWeight   : "400",
     lineHeight   : 19,
     fontFamily   : font
   },
   subtitle2      : {
     fontSize     : 14,
-    letterSpacing: '0.1 px',
-    fontWeight   : 500,
+
+    letterSpacing: 0.1,
+    fontWeight   : '500',
     lineHeight   : 16,
     fontFamily   : font
   },
   body1          : {
     fontSize     : 16,
-    letterSpacing: '0.5 px',
-    fontWeight   : 400,
+    letterSpacing: 0.5,
+    fontWeight   : '400',
     lineHeight   : 19,
     fontFamily   : font
   },
   body2          : {
     fontSize     : 14,
-    letterSpacing: '0.25 px',
-    fontWeight   : 400,
+    letterSpacing: 0.25 ,
+    fontWeight   : "400",
     lineHeight   : 16  ,
     fontFamily   : font
   },
   body3          : {
     fontSize     : 12,
-    letterSpacing: '0 px',
-    fontWeight   : 400,
+    letterSpacing: 0 ,
+    fontWeight   : "400",
     lineHeight   : 14,
     fontFamily   : font
   },
   button         : {
     fontSize     : 14,
-    letterSpacing: '1.25 px',
-    fontWeight   : 500,
+    letterSpacing: 1.25,
+    fontWeight   : "500",
     lineHeight   : 16,
     fontFamily   : font
   },
   caption        : {
     fontSize     : 12,
-    letterSpacing: '0.4 px',
-    fontWeight   : 400,
+    letterSpacing: 0.4,
+    fontWeight   : "400",
     lineHeight   : 14,
     fontFamily   : font
   },
   overline       : {
     fontSize     : 10,
-    letterSpacing: '1.5 px',
-    fontWeight   : 400,
+    letterSpacing: 1.5 ,
+    fontWeight   : "400",
     lineHeight   : 12,
     fontFamily   : font
   },

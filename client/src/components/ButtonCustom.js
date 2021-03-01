@@ -20,7 +20,7 @@ export default function ButtonCustom({ type, color, style, onPress, label }) {
 
 const styles = StyleSheet.create({
   button          : {
-    borderRadius  : '12px',
+    borderRadius  : 12,
     alignItems    : 'center',
     justifyContent: 'center',
     height        : '36px',

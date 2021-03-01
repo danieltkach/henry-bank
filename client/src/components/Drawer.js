@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     zIndex: 999999999
   },
   header           : {
-    position       : 'sticky',
+    position       : "absolute",
     width          : '100%',
     height         : '48px',
     alignItems     : 'center',
@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
     position       : 'absolute',
     backgroundColor: `${primaryColor}`,
     width          : '75%',
-    transition     : '.3s'
+    // transition     : '.3s'
   },
   backNav          : {
     position       : 'absolute',
     backgroundColor: `${darkColor}`,
-    opacity        : '0.5',
-    transition     : '.5s'
+    opacity        : 0.5,
+    // transition     : '.5s'
   },
 })
