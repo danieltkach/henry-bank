@@ -114,11 +114,21 @@ const verifyCodeSecurity = (req, res) => {
   .catch(err => res.status(400).json({ message: "Email inexistente" }))
 }
 
+const getContacts = (req, res) => {
+  const user = req.params.id
+
+  User.findById(user,(error, data) => {
+    if(error) res.status(400).send('Error al obtener los contactos')
+    res.status(200).send(data.contacts)
+  })
+}
+
 module.exports= {
     createUser,
     loginUser,
     modifyUser,
     getUser,
     getUsers,
-    verifyCodeSecurity
+    verifyCodeSecurity,
+    getContacts
 }

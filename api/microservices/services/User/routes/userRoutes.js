@@ -13,6 +13,7 @@ router.post('/verify', userController.verifyCodeSecurity);
 router.put('/:id', userController.modifyUser);
 router.get('/:id', userController.getUser);
 router.get('/', userController.getUsers);
+router.get('/contact/:id' , userController.getContacts);
 
 
 module.exports = router;
