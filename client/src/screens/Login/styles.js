@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     padding: '4px'
   },
   googleButton     : {
-    padding: '4px',
+    padding        : '4px',
     width          : 40,
     height         : 40,
     borderRadius   : '100%',
