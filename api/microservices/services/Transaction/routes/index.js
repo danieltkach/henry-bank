@@ -4,7 +4,7 @@ const { Router } = require('express');
 const router = Router();
 
 //todas las rutas de transacciones
-router.use('/transaction', require('./transactionRoutes'))
+router.use('/', require('./transactionRoutes'))
 router.use('/account', require('./accountRoutes'))
 
 module.exports = router
