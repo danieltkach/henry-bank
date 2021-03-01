@@ -8,7 +8,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import store from './src/stores';
 import theme from './theme';
 import {
-  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen
+  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
 } from "./src/screens";
 import { Preload } from './src/components';
 
@@ -37,6 +37,11 @@ class App extends React.Component {
           (
             <NavigationContainer theme={theme}>
               <Stack.Navigator>
+              <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Deposit"
+                  component={Deposit}
+                />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"
