@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Surface, IconButton } from "react-native-paper";
 import { TextInput, Text, Button } from '../../components';
-import LogoSvg from '../../media/LogoSvg.svg';
+// import LogoSvg from '../../media/LogoSvg.js';
 import styles from './styles';
 
 export default function LoginView({ handleFinalSubmit }) {
@@ -68,7 +68,7 @@ export default function LoginView({ handleFinalSubmit }) {
 
   return (
     <View style={styles.body}>
-      <View style={{flex: 1}}><LogoSvg /></View>
+      <View style={{flex: 1}}></View>
       <View style={{flex: 3}}><Content /></View>
     </View>
   );
