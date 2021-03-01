@@ -53,7 +53,6 @@ export const loginUserFetch = (dataForm) => {
 
 export const updateUserFetch = (dataId, dataForm) => {
   return new Promise((resolve, reject) => {
-    console.log("soy el id", dataId);
     fetch(`${PUT_USER}/${dataId}`, {
       method: 'PUT',
       headers: {

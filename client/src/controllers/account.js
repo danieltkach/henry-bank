@@ -3,7 +3,7 @@ import {
   GET_ACCOUNTS,
   GET_ACCOUNT_BY_ID,
   PUT_ACCOUNT_BY_ID,
-  GET_BALANCE
+  GET_BALANCE_BY_ID
 } from '../constants/api';
 
 
@@ -24,7 +24,7 @@ export const createAccountFetch = (dataId) => {
       console.log(err.message)
     });
   })
- 
+
 }
 
 export const readAccountsFetch = () => {
@@ -71,19 +71,19 @@ export const updateAccountFetch = (dataId, dataForm) => {
     .catch(err => {
        console.log(err.message)
     });
-  }) 
+  })
 }
 
-// export const readAccountsByIdFetch = (dataId) => {
-//   return new Promise((resolve, reject) => {
-//     fetch(`${GET_BALANCE}/${dataId}`, {
-//       method: 'GET'
-//     })
-//   })
-//   .then(response => {
-//     resolve(response.json());
-//   })
-//   .catch(err => {
-//     console.log(err.message)
-//   });
-// }
+export const readBalanceByIdFetch = (dataId) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${GET_BALANCE_BY_ID}/${dataId}`, {
+      method: 'GET'
+    })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
+  })
+}

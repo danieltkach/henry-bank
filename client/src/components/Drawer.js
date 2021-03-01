@@ -34,7 +34,7 @@ export default function Drawer({ navigation, label }) {
         color="white"
         onPress={handleClick}
       />
-      <Text style={styles.textBody} text={labelButton} />
+      <Text style={styles.textBody} type='subtitle2' text={labelButton} />
     </TouchableOpacity>
   );
 
@@ -47,7 +47,7 @@ export default function Drawer({ navigation, label }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <Text style={styles.text} text={label} />
+        <Text type='title' text={label} />
       </View>
       <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
         height: dimensions.height,
@@ -85,18 +85,8 @@ const styles = StyleSheet.create({
     alignItems     : 'center',
     flexDirection  : 'row',
   },
-  text           : {
-    fontSize     : '20px',
-    letterSpacing: '0.15 px',
-    fontWeight   : 500,
-    lineHeight   : 23
-  },
   textBody       : {
     color        : 'white',
-    fontSize     : '16px',
-    letterSpacing: '0.15 px',
-    fontWeight   : 400,
-    lineHeight   : 19,
     paddingLeft  : '16px'
   },
   iconButtonText : {

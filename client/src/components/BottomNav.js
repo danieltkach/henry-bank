@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BottomNavigation, IconButton, Surface } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { Text } from './index';
 import { palette, rgba } from '../theme';
 
@@ -25,7 +25,7 @@ export default function BottomNav({ navigation, init }) {
 
   return(
     <View style={styles.bottomNavigation}>
-      <Surface style={styles.surface}>
+      <View style={styles.surface}>
         {buttons.map((bt, index) => (
           <TouchableOpacity
             style={styles.button}
@@ -46,7 +46,7 @@ export default function BottomNav({ navigation, init }) {
           </TouchableOpacity>
           ))
         }
-      </Surface>
+      </View>
     </View>
   );
 }

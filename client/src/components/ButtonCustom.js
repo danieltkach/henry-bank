@@ -5,16 +5,16 @@ import { Text } from './index'
 
 
 export default function ButtonCustom({ type, color, style, onPress, label }) {
-  const genColor = setColor[color] || setColor['accent'] ;
-  const genFont = type && fontSystem[type] || fontSystem['button'];
+  const genColor = color && setColor[color] || setColor['accent'] ;
+  // const genType =
   /*TODO agregar type outlined, text*/
 
   return (
-    <TouchableOpacity onPress = {() => {/* do this */}}>
-      <View style = {styles.button}>
-          <Text type='button' text={label.toUpperCase()}/>
-      </View>
-  </TouchableOpacity>
+    <TouchableOpacity
+      onPress = {() => onPress}
+      style={[styles.surface, {backgroundColor: genColor}, styles.button, style]}>
+        <Text type='button' text={label.toUpperCase()} style={{color: 'white'}}/>
+    </TouchableOpacity>
   );
 }
 
@@ -25,9 +25,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height        : '36px',
   },
-  circle        : {
-    position    : 'absolute',
-    borderRadius: '100%',
-    opacity     : 0.2
+  surface          : {
+    shadowColor    : "#000",
+    shadowOffset   : {
+      width        : 0,
+      height       : 4,
+    },
+    shadowOpacity: 0.30,
+    shadowRadius : 4.65,
+    elevation    : 8,
   }
 })

@@ -86,10 +86,9 @@ class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
-    backgroundColor: '#1954C2',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
