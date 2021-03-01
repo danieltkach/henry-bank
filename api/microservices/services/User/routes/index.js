@@ -4,7 +4,7 @@ const { Router } = require('express');
 const router = Router();
 
 //todas las rutas de transacciones
-router.use('/', require('./transactionRoutes'))
-router.use('/account', require('./accountRoutes'))
+router.use('/', require('./userRoutes'));
+router.use('/validate-address', require('./addressRoutes'));
 
 module.exports = router

@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const { dbConnection } = require('./database/config');
-const routes = require('./routes/userRoutes.js');
-const addressRoutes = require('./routes/addressRoutes.js');
+const routes = require('./routes')
 
 let app = express();
 
@@ -22,8 +21,8 @@ app.use((req, res, next) => {   res.header("Access-Control-Allow-Origin", "*"); 
 //db connection
 dbConnection();
 
-app.use('/', routes);
-app.use('/validate-address', addressRoutes);
+//routes
+app.use('/user', routes);
 
 app.listen(4001, () => {
   console.log('Server running on 4001');

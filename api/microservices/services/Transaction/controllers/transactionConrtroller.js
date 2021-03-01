@@ -23,7 +23,7 @@ const getIncomes = (req,res) =>{
 
 const createTransfer = (req,res ) => { 
     const {currency, amount, idSenderAccount, idReceiverAccount} = req.body
-
+//TODO validar cuentas
     const transaction = new Transaction({
         currency,
         amount,

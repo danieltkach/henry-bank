@@ -11,7 +11,7 @@ const createUser = async (req, res, next) => {
 
   nodeMailer.sendEmail({name, lastName, email, codeSecurity})
   .then(response => {
-    return axios.post(`http://localhost:4002/account/${req.user._id}`)
+    return axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
   })
   .then(resp => {
     res.status(200).json({ message: "Registro inicial completado", user: req.user });

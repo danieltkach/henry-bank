@@ -9,15 +9,17 @@ apiEndpoints:
     paths: '/ip'
   user:
     host: localhost
-    path: ['/users','/users/*']
-  transction:
+    path: ['/user','/user/*']
+  transaction:
     host: localhost
-    path: ['/transactions','/transactions/*']
+    path: ['/transaction','/transaction/*']
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
   userService:
-    url: 'http://localhost:3000'
+    url: 'http://localhost:4001'
+  transactionService:
+    url: 'http://localhost:4002'
 policies:
   - basic-auth
   - cors
@@ -47,4 +49,15 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: userService
+              changeOrigin: true
+
+  transactionPipeline:
+    apiEndpoints:
+      - transaction
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: transactionService
               changeOrigin: true

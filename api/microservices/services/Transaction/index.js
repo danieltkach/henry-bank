@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   });
 
 //routes
-app.use('/', routes);
+app.use('/transaction', routes);
 
 //db connection
 dbConnection()
