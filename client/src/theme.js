@@ -67,7 +67,7 @@ export const fontSystem = StyleSheet.create({
     lineHeight   : 14,
     fontFamily   : font
   },
-  button      : {
+  button         : {
     fontSize     : '14px',
     letterSpacing: '1.25 px',
     fontWeight   : 500,

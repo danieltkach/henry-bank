@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BottomNavigation, IconButton, Text, Surface } from 'react-native-paper';
-import Drawer from './Drawer';
+import { BottomNavigation, IconButton, Surface } from 'react-native-paper';
+import { palette } from '../theme';
+import { Drawer, Text } from './index';
+
 
 const HomeRoute = () => <Text>Inicio</Text>;
 const ContactsRoute = () => <Text>Contactos</Text>;
@@ -11,34 +13,31 @@ const ProfileRoute = () => <Text>You</Text>;
 
 export default function Header({ type = 'default', label, navigation }) {
 
-  const color = '#1B263D';
-
   const Settings = () => (
-    <Drawer />
+    <Drawer label={label} />
   );
 
-  const Default = (label) => (
+  const Default = () => (
     <View style={styles.header}>
       <IconButton
         icon="arrow-left"
         size={24}
-        color={color}
+        color={palette.accent.dark}
         onPress={() => navigation.goBack()}
       />
       <View style={{margin: 'auto'}}>
-        <Text style={styles.text}>{label}</Text>
+        <Text type='title' text={label} />
       </View>
-
     </View>
   );
 
   return(
     <View style={styles.nav}>
       {type !== 'default' ? (
-          <Settings />
+          <Settings/>
         ):
         (
-          <Default />
+          <Default/>
         )
       }
     </View>
@@ -55,11 +54,5 @@ const styles = StyleSheet.create({
     height         : '48px',
     alignItems     : 'center',
     flexDirection  : 'row',
-  },
-  text           : {
-    fontSize     : '20px',
-    letterSpacing: '0.15 px',
-    fontWeight   : 500,
-    lineHeight   : 23
   }
 })

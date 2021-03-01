@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { palette, rgba } from './theme';
+import { palette, rgba } from '../theme';
 
 
 const backgroundColor = palette.accent.light;

@@ -6,7 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
 import store from './src/stores';
-import theme from './theme';
 import {
   Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
 } from "./src/screens";
@@ -32,16 +31,11 @@ class App extends React.Component {
   render(){
     return (
       <StoreProvider store={store}>
-        <PaperProvider theme={theme}>
+        <PaperProvider>
         {this.state.mounted ?
           (
-            <NavigationContainer theme={theme}>
+            <NavigationContainer>
               <Stack.Navigator>
-              <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Deposit"
-                  component={Deposit}
-                />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"

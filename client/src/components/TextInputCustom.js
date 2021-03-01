@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { TextInput } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import { palette, rgba, fontSystem } from './theme';
+import { palette, rgba, fontSystem } from '../theme';
+import { validations } from '../validations/index';
 import { Text } from './index';
 
 const darkColor = palette.accent.dark;
@@ -9,30 +10,34 @@ const primaryColor = palette.primary.main;
 const secondaryColor = palette.primary.main;
 
 export default function TextInputCustom(props) {
-  const { placeholder, type, style, onChangeText, value, error, maxLength } = props;
+  const { placeholder, type, style, onChangeText, value, maxLength } = props;
   const [focus, setFocus] = useState(false);
-  //type equal to validations
+  const [error, setError] = useState('');
+  const [inputs, setInputs] = useState('');
+  const setUnderline = !error ? focus && styles.underlineFocus : styles.underlineError;
 
-  if (error.value === false) error.label = '';
-
-  const setUnderline = focus && styles.underlineFocus
-  console.log(setUnderline)
+  const handleInputChange = text => {setInputs(text)}
+  const handleErrors = () => setError(validations[type](inputs, placeholder));
 
   return (
     <View style={[styles.box, style]}>
-      <TextInput
-        maxLength={maxLength || 80}
+    <TextInput
+        secureTextEntry={type === 'password' ? true : false}
+        maxLength={!maxLength ? maxLength : 50}
         style={[fontSystem.body1, styles.text]}
         placeholder={placeholder}
         placeholderTextColor={rgba(darkColor, 0.5)}
         underlineColorAndroid='transparent'
         onFocus={(p) => {setFocus(!focus)}}
-        onBlur={() => {setFocus(!focus)}}
-        onChangeText={onChangeText}
+        onBlur={() => {
+          setFocus(!focus)
+          handleErrors()
+        }}
+        onChangeText={!onChangeText ? onChangeText : handleInputChange}
       >
       </TextInput >
       <View style={[styles.underlineBlur, setUnderline]}></View>
-      <Text text={error.label} type='body3' style={styles.helperText}/>
+      <Text text={error} type='body3' style={styles.helperText}/>
     </View>
   );
 }
@@ -48,22 +53,20 @@ const styles = StyleSheet.create({
     width          : '100%',
     height         : '1px',
     backgroundColor: darkColor,
-    opacity        : '0.2',
-    transition     : '.3s',
-    animation: "$errorEffect .2s ease-in-out"
+    opacity        : '0.8',
+    transition     : '.4s',
   },
   underlineFocus   : {
     height         : '2px',
-    transition     : '.3s',
     opacity        : '1',
     backgroundColor: primaryColor,
-    transition     : '.3s',
+    transition     : '.4s',
   },
   underlineError   : {
     height         : '2px',
-    transition     : '.3s',
     opacity        : '1',
-    backgroundColor: 'red'
+    backgroundColor: 'red',
+    transition     : '.4s',
   },
   text           : {
     marginTop    : '12px',
@@ -79,21 +82,4 @@ const styles = StyleSheet.create({
   placeholder: {
     color    : 'rgba(255, 0, 255, 1.0)'
   },
-
-  animatedItem: {
-    animation: "$errorEffect .2s ease-in-out"
-  },
-  animatedItemExiting: {
-    animation: "$errorEffect .2s ease-in-out",
-    opacity: 0,
-    transform: "translateY(-200%)"
-  },
-  "@keyframes errorEffect": {
-    "0%": {
-      transform: "scale(0, 1)"
-    },
-    "100%": {
-      transform: "scale(1, 1)"
-    }
-  }
 });

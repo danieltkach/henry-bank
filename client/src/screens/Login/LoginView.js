@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { useForm, Controller } from "react-hook-form"
-import { Text, Button } from "react-native-paper";
-import { TextInput } from '../../components';
+import { Surface, IconButton } from "react-native-paper";
+import { TextInput, Text, Button } from '../../components';
 import styles from './styles';
 
 export default function LoginView({ handleFinalSubmit }) {
@@ -11,54 +11,54 @@ export default function LoginView({ handleFinalSubmit }) {
   const onSubmit = data => handleFinalSubmit(data);
 
   const textInputs = [
-    {name: 'email', placeholder: 'Correo electrónico', error: 'Correo electrónico requerido'},
-    {name: 'password', placeholder: 'Contraseña', error: 'Contraseña requerido'}
+    {name: 'email', placeholder: 'Correo electrónico', error: 'Correo electrónico requerido', type: 'email'},
+    {name: 'password', placeholder: 'Contraseña', error: 'Contraseña requerido', type: 'password'}
   ];
 
-  const CustomTextInput = ({ name, placeholder, errorLabel }) => (
+  const CustomTextInput = ({ name, placeholder, errorLabel, type }) => (
     <View style={{paddingVertical: 8}}>
     <Controller
-        control={control}
-        rules={{required:true}}
-        render={({ onChange, value }) => (
+      control={control}
+      rules={{required:true}}
+      render={({ onChange, value }) => (
         <TextInput
-            placeholder={placeholder}
-            onChangeText={value => onChange(value)}
-            value={value}
-            error={{
-              label: errorLabel,
-              value: errors[name]
-            }}
+          placeholder={placeholder}
+          onChangeText={value => onChange(value)}
+          value={value}
+          type={type}
         />
-        )}
-        name={name}
-        rules={{ required: true }}
-        defaultValue=""
+      )}
+      name={name}
+      rules={{ required: true }}
+      defaultValue=""
     />
   </View>
   );
 
   const Content = () => (
     <>
-      <View style={{flex: 1, backgroundColor: 'blue'}}></View>
-
-      <Text color='primary' type='title' />
-
-      <View style={{width: '100%'}}>
+      <Text type='title' text='Bienvenido !' style={styles.topText} />
+      <Text type='subtitle1' text='Iniciar Sesión para continuar' style={styles.topText} />
+      <View style={styles.textInputs}>
         {textInputs.map((e, index) => (
           <CustomTextInput
             key={index}
             name={e.name}
             placeholder={e.placeholder}
             errorLabel={e.error}
+            type={e.type}
           />
         ))
         }
       </View>
+      <View style={styles.midText}><Text type='subtitle2' text='¿Olvidaste tu contraseña?' /></View>
 
-      <View style={{width: '100%', backgroundColor: 'blue'}}></View>
-      <View style={{width: '100%', backgroundColor: 'blue'}}></View>
-      <View style={{width: '100%', backgroundColor: 'blue'}}></View>
+      <Button label='entrar' color='primary' />
+      <Button label='no tengo cuenta' />
+      <View style={styles.midText}><Text type='subtitle2' text='O Inicia Sesión con' /></View>
+      <View style={{alignItems: 'center'}}>
+        <Surface style={styles.googleButton}><IconButton icon='google' color='black' size={24}/></Surface>
+      </View>
     </>
   );
 

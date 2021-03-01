@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
 import { useWindowDimensions } from 'react-native';
-import { Boilerplate } from '../screens';
-import { IconButton, Text } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
-import { palette, rgba } from './theme';
+import { palette, rgba } from '../theme';
+import { Text } from './index';
 
 
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation }) {
+export default function Drawer({ navigation, label }) {
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
 
@@ -26,7 +26,7 @@ export default function Drawer({ navigation }) {
     { index: 6, label: 'Salir', icon: 'logout', route: '' },
   ]
 
-  const IconButtonText = ({ label, icon, route }) => (
+  const IconButtonText = ({ labelButton, icon, route }) => (
     <TouchableOpacity onPress={() => navigation.navigate(route)} style={styles.iconButtonText}>
       <IconButton
         icon={icon}
@@ -34,7 +34,7 @@ export default function Drawer({ navigation }) {
         color="white"
         onPress={handleClick}
       />
-      <Text style={styles.textBody}>{label}</Text>
+      <Text style={styles.textBody} text={labelButton} />
     </TouchableOpacity>
   );
 
@@ -47,15 +47,13 @@ export default function Drawer({ navigation }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <Text style={styles.text}>Hola Usuario !</Text>
+        <Text style={styles.text} text={label} />
       </View>
-      {/*TODO*/}
       <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
         height: dimensions.height,
         width: dimensions.width,
         display: toggle && 'inline' || 'none'
       }]}></TouchableOpacity>
-
 
       <View style={[styles.navbar, { height: dimensions.height, left: toggle && '0px' || '-75%' }]}>
         <View style={{width: '100%', alignItems: 'flex-end'}}>
@@ -66,13 +64,11 @@ export default function Drawer({ navigation }) {
             onPress={handleClick}
           />
         </View>
-
         <FlatList
           data={buttons}
-          renderItem={({ item }) => <IconButtonText icon={item.icon} label={item.label} route={item.route} />}
+          renderItem={({ item }) => <IconButtonText icon={item.icon} labelButton={item.label} route={item.route} />}
           keyExtractor={(item) => item.index.toString()}
         />
-
       </View>
     </View>
   );
@@ -119,6 +115,6 @@ const styles = StyleSheet.create({
     position       : 'absolute',
     backgroundColor: `${darkColor}`,
     opacity        : '0.5',
-    transition     : '.3s'
+    transition     : '.5s'
   },
 })

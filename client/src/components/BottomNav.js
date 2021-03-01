@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BottomNavigation, IconButton, Colors, Text, Surface } from 'react-native-paper';
-import { palette, rgba } from './theme';
+import { BottomNavigation, IconButton, Surface } from 'react-native-paper';
+import { Text } from './index';
+import { palette, rgba } from '../theme';
+
 
 const disableColor = palette.text.disabled;
 const activeColor = palette.primary.main;
@@ -36,9 +38,11 @@ export default function BottomNav({ navigation, init }) {
               size={indexClick === index && 20 || 24}
               color={indexClick === index && activeColor || disableColor}
             />
-            <Text style={[styles.text, {color: indexClick === index && `${activeColor}` || `${disableColor}`}]} >
-              {bt.label}
-            </Text>
+            <Text
+              text={bt.label}
+              type='subtitle2'
+              style={[styles.text, {color: indexClick === index && `${activeColor}` || `${disableColor}`}]}
+            />
           </TouchableOpacity>
           ))
         }
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
     height        : 14,
   },
   surface          : {
+    backgroundColor: 'white',
     flexDirection  : 'row',
     justifyContent : 'space-around',
     height         : '48px',

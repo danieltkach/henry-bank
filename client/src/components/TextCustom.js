@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { TextInput } from 'react-native';
 import { Text } from 'react-native';
-import { palette, rgba, setColor, fontSystem } from './theme';
+import { palette, rgba, setColor, fontSystem } from '../theme';
 
 const setWeight = {
   tin: 100,

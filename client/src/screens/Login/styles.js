@@ -7,8 +7,22 @@ const styles = StyleSheet.create({
       flexDirection  : 'row',
       flexWrap       : 'wrap',
     },
-    body: {
-
+    textInputs: {
+      width   : '100%'
+    },
+    topText          : {
+      paddingVertical: '2px',
+    },
+    midText         : {
+      alignItems    : 'center'
+    },
+    googleButton     : {
+      width          : 40,
+      height         : 40,
+      borderRadius   : '100%',
+      backgroundColor: 'white',
+      justifyContent : 'center',
+      alignItems     : 'center'
     }
 });
 

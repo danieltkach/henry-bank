@@ -9,7 +9,7 @@ export default function BoilerplateContainer() {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Background />
-      <Header type='settings'/>
+      <Header type='settings' label='Hola pibe' />
       <View style={styles.container}>
         <BoilerplateView />
       </View>

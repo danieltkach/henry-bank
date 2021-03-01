@@ -17,10 +17,6 @@ export default function LoginContainer({ navigation }) {
     .catch(err => console.log(err));
   }
 
-  const onSubmit = data => {
-
-  };
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Background />
