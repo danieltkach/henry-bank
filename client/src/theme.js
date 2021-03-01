@@ -41,6 +41,7 @@ export const fontSystem = StyleSheet.create({
   },
   subtitle2      : {
     fontSize     : 14,
+
     letterSpacing: 0.1,
     fontWeight   : '500',
     lineHeight   : 16,
