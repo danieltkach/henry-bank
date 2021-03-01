@@ -3,9 +3,11 @@ import { useWindowDimensions } from 'react-native';
 import { Boilerplate } from '../screens';
 import { IconButton, Text } from 'react-native-paper';
 import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
+import { palette, rgba } from './theme';
 
-const darkColor = '#1B263D';
-const primaryColor = '#3551F2';
+
+const darkColor = palette.accent.dark;
+const primaryColor = palette.primary.main;
 
 export default function Drawer({ navigation }) {
   const dimensions = useWindowDimensions();
@@ -77,6 +79,9 @@ export default function Drawer({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  drawer  : {
+    zIndex: 999999999
+  },
   header           : {
     position       : 'sticky',
     width          : '100%',

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { palette, rgba } from './theme';
 
 
-const backgroundColor = '#F5F5F5'
-const primaryColor = '#3551F2';
-const secondaryColor = '#E52B2B';
+const backgroundColor = palette.accent.dark;
+const primaryColor = palette.primary.main;
+const secondaryColor = palette.secondary.main;
 
 export default function Preload({ navigation, init }) {
 

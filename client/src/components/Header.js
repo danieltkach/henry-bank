@@ -9,7 +9,7 @@ const ContactsRoute = () => <Text>Contactos</Text>;
 const AccountRoute = () => <Text>Cuenta</Text>;
 const ProfileRoute = () => <Text>You</Text>;
 
-export default function Header({ type = 'default' }) {
+export default function Header({ type = 'default', label, navigation }) {
 
   const color = '#1B263D';
 
@@ -17,23 +17,23 @@ export default function Header({ type = 'default' }) {
     <Drawer />
   );
 
-  const Default = () => (
+  const Default = (label) => (
     <View style={styles.header}>
       <IconButton
-        icon="menu"
+        icon="arrow-left"
         size={24}
         color={color}
-        onPress={() => console.log('Pressed')}
+        onPress={() => navigation.goBack()}
       />
       <View style={{margin: 'auto'}}>
-        <Text style={styles.text}>Header component</Text>
+        <Text style={styles.text}>{label}</Text>
       </View>
 
     </View>
   );
 
   return(
-    <View>
+    <View style={styles.nav}>
       {type !== 'default' ? (
           <Settings />
         ):
@@ -46,6 +46,9 @@ export default function Header({ type = 'default' }) {
 }
 
 const styles = StyleSheet.create({
+  nav: {
+    zIndex: 9
+  },
   header           : {
     position       : 'sticky',
     width          : '100%',
