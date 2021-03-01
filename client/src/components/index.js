@@ -4,3 +4,4 @@ export { default as Background } from './Background';
 export { default as Drawer } from './Drawer';
 export { default as Preload } from './Preload';
 export { default as TextInput } from './TextInputCustom';
+export { default as Text } from './TextCustom';

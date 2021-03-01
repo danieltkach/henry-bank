@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { BottomNavigation, IconButton, Colors, Text, Surface } from 'react-native-paper';
-import { palette, rgba } from './palette';
+import { palette, rgba } from './theme';
 
 const disableColor = palette.text.disabled;
 const activeColor = palette.primary.main;

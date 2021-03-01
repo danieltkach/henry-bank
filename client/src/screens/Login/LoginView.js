@@ -16,7 +16,7 @@ export default function LoginView({ handleFinalSubmit }) {
   ];
 
   const CustomTextInput = ({ name, placeholder, errorLabel }) => (
-    <View>
+    <View style={{paddingVertical: 8}}>
     <Controller
         control={control}
         rules={{required:true}}
@@ -42,9 +42,16 @@ export default function LoginView({ handleFinalSubmit }) {
     <>
       <View style={{flex: 1, backgroundColor: 'blue'}}></View>
 
+      <Text color='primary' type='title' />
+
       <View style={{width: '100%'}}>
         {textInputs.map((e, index) => (
-          <CustomTextInput key={index} name={e.name} placeholder={e.placeholder} />
+          <CustomTextInput
+            key={index}
+            name={e.name}
+            placeholder={e.placeholder}
+            errorLabel={e.error}
+          />
         ))
         }
       </View>
@@ -58,7 +65,7 @@ export default function LoginView({ handleFinalSubmit }) {
   return (
     <View style={{flex: 1}}>
       <View style={{height: 64, width: '100%', backgroundColor: 'red'}}></View>
-      <View style={{width: '100%', backgroundColor: 'white'}}>
+      <View style={{width: '100%'}}>
         <Content />
       </View>
     </View>

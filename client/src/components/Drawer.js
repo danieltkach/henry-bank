@@ -3,7 +3,7 @@ import { useWindowDimensions } from 'react-native';
 import { Boilerplate } from '../screens';
 import { IconButton, Text } from 'react-native-paper';
 import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
-import { palette, rgba } from './palette';
+import { palette, rgba } from './theme';
 
 
 const darkColor = palette.accent.dark;
