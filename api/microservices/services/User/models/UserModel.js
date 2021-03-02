@@ -2,22 +2,23 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-
-const validateEmail = function(email) {
-    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
+const validateEmail = function (email) {
+  let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
 };
-
 
 const UserSchema = new Schema({
   email: {
     type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        required: [true, 'Ingresa un email valido'],
-        validate: [validateEmail, 'Ingresa un email valido'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Ingresa un email valido']
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: [true, 'Ingresa un email valido'],
+    validate: [validateEmail, 'Ingresa un email valido'],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Ingresa un email valido'
+    ]
   },
   password: {
     type: String,
@@ -32,12 +33,12 @@ const UserSchema = new Schema({
   },
   idType: {
     type: String,
-    enum: ['dni'],
+    enum: ['dni']
     /* required: true */
   },
   idNumber: {
     type: Number,
-    trim: true,
+    trim: true
     // min: [8, 'Numero fuera de rango'],
     // max: [8, 'Numero fuera de rango'],
     /* required: true */
@@ -75,11 +76,11 @@ const UserSchema = new Schema({
     trim: true
   },
   birthdate: {
-    type : String,
-   // validate: [validateAge, 'Ingresa una edad valida'],
+    type: String
+    // validate: [validateAge, 'Ingresa una edad valida'],
   },
   document: {
-    type: String,
+    type: String
   },
   codeSecurity: {
     type: String
@@ -87,31 +88,31 @@ const UserSchema = new Schema({
   codeSecurityExp: {
     type: Date
   },
-  contacts : [
+  contacts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Contact'
+      ref: 'User'
     }
   ],
-  accounts : [
+  accounts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Contact'
+      ref: 'Account'
     }
-  ],
+  ]
 });
 
 UserSchema.pre('save', async function (next) {
-  const hash = await bcrypt.hash(this.password, 10)
+  const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   this.codeSecurityExp = Date.now() + 600000;
   next();
-})
+});
 
-UserSchema.methods.isValidPassword = async function(password) {
+UserSchema.methods.isValidPassword = async function (password) {
   const user = this;
   const compare = await bcrypt.compare(password, user.password);
   return compare;
-}
+};
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema);
