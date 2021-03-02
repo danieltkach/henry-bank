@@ -1,20 +1,38 @@
 import React, { useRef, useState } from "react";
+import { IconButton } from 'react-native-paper';
 import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { palette, rgba, setColor, fontSystem } from '../theme';
 import { Text } from './index'
 
 
-export default function ButtonCustom({ type, color, style, onPress, label }) {
+export default function ButtonCustom({ type, color, style, onPress, label, icon }) {
   const genColor = color && setColor[color] || setColor['accent'] ;
-  // const genType =
-  /*TODO agregar type outlined, text*/
+  // const genFont = type === 'text' ? fontSystem['subtitle2'] : fontSystem['button'];
+  const genStyleButton = type === 'text' ? styles.text : styles.button;
+
 
   return (
-    <TouchableOpacity
-      onPress = {() => onPress}
-      style={[styles.surface, {backgroundColor: genColor}, styles.button, style]}>
-        <Text type='button' text={label.toUpperCase()} style={{color: 'white'}}/>
-    </TouchableOpacity>
+    <>
+    {type === 'icon' ?
+      (
+        <TouchableOpacity
+          style={[genStyleButton, style, {background: genColor}]}>
+            <IconButton
+              icon={icon}
+              size={20}
+              color="white"
+              onPress={onPress}
+            />
+        </TouchableOpacity>
+      ):(
+        <TouchableOpacity
+          onPress={onPress}
+          style={[genStyleButton, style, {background: type === 'text' || genColor}]}>
+            <Text type={type === 'text' && 'subtitle2' || 'button' } text={type === 'text' ? label : label.toUpperCase()} style={{color: type === 'text' && genColor || 'white'}}/>
+        </TouchableOpacity>
+      )
+    }
+    </>
   );
 }
 
@@ -24,8 +42,6 @@ const styles = StyleSheet.create({
     alignItems    : 'center',
     justifyContent: 'center',
     height        : '36px',
-  },
-  surface          : {
     shadowColor    : "#000",
     shadowOffset   : {
       width        : 0,
@@ -34,5 +50,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.30,
     shadowRadius : 4.65,
     elevation    : 2,
-  }
+  },
+  text            : {
+    alignItems    : 'center',
+    justifyContent: 'center',
+  },
 })

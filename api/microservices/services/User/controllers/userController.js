@@ -23,7 +23,6 @@ const loginUser = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
       if (err || !user) {
-        console.log(err)
         const error = new Error('new Error')
         return next(error)
       }
@@ -33,7 +32,7 @@ const loginUser = async (req, res, next) => {
         const body = { _id: user._id, email: user.email }
 
         const token = jwt.sign({ user: body }, 'top_secret')
-        return res.json({ token })
+        return res.status(202).json({ user, token })
       })
     }
     catch(e) {
@@ -41,7 +40,6 @@ const loginUser = async (req, res, next) => {
     }
   })(req, res, next)
 }
-
 
 function calcularEdad(fecha) {
   var hoy = new Date();
@@ -55,7 +53,6 @@ function calcularEdad(fecha) {
 
   return edad;
 }
-
 
 const modifyUser = async(req,res,next) => {
   const user_id = req.params.id
@@ -101,14 +98,13 @@ const getUsers = (req, res, next) => {
 }
 
 const verifyCodeSecurity = (req, res) => {
-  // const token = req.headers.authorization.split(" ")[1];
-
   const {email, codeSecurity} = req.body
-  console.log(email, codeSecurity)
 
   User.findOne({ email })
   .then(responseUser => {
-    if (responseUser.codeSecurity === codeSecurity) res.status(200).json({ message: "Codigo verificado", userId: responseUser._id });
+    if (responseUser.codeSecurity === codeSecurity && responseUser.codeSecurityExp > Date.now()) {
+      res.status(200).json({ message: "Codigo verificado", userId: responseUser._id });
+    }
     else res.status(400).json({ message: "Error de verificacion" });
   })
   .catch(err => res.status(400).json({ message: "Email inexistente" }))

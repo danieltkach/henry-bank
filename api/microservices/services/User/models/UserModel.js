@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const crypto = require('crypto')
 
 
 const validateEmail = function(email) {
@@ -79,6 +78,9 @@ const UserSchema = new Schema({
     type : String,
    // validate: [validateAge, 'Ingresa una edad valida'],
   },
+  document: {
+    type: String,
+  },
   codeSecurity: {
     type: String
   },
@@ -102,8 +104,7 @@ const UserSchema = new Schema({
 UserSchema.pre('save', async function (next) {
   const hash = await bcrypt.hash(this.password, 10)
   this.password = hash;
-  this.codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
-  this.codeSecurityExp = Date.now() + 3000;
+  this.codeSecurityExp = Date.now() + 600000;
   next();
 })
 

@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form"
 import { View, TextInput } from "react-native";
 import { Surface, IconButton } from "react-native-paper";
-import { Text, Button } from '../../components';
-import styles from './styles';
-import { validations, REGEX } from '../../validations/index';
-import { palette, rgba, fontSystem } from '../../theme';
+import { Text, Button } from '../../../components';
+import styles from './../styles';
+import { validations, REGEX } from '../../../validations/index';
+import { palette, rgba, fontSystem } from '../../../theme';
 
 const darkColor = palette.accent.dark;
 
 
 const textInputs = [
-  {name: 'email', placeholder: 'Correo electrónico', type: 'email', error: 'Correo electrónico invalido', pattern: REGEX.EMAIL, },
-  {name: 'password', placeholder: 'Contraseña', type: 'password', error: 'Minimo 8 caracteres (al menos una letra y número).', pattern: REGEX.PASSWORD, maxLength: 20, minLength: 8}
+  {name: 'code', placeholder: 'Codigo de verificación', error: 'Codigo inválido', maxLength: 6, minLength: 6}
 ];
 
-export default function LoginView({ navigation, handleFinalSubmit }) {
+export default function RegisterSecondView({ navigation, handleFinalSubmit }) {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => handleFinalSubmit(data);
 
   return (
     <View style={styles.body}>
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 2}}></View>
 
       <View style={[styles.content, {flex: 3}]}>
         <View>
-          <Text type='title' text='Bienvenido !' style={styles.topText} />
-          <Text type='subtitle1' text='Iniciar Sesión para continuar' style={styles.topText} />
+          <Text type='title' text='Confirma tu correo electrónico !' style={styles.topText} />
+          <Text type='disabled' text='Tu cuenta se ha registrado correctamente. Para completar el proceso de tu ceunta, consulte su correo electrónico para obtener un codigo de validación.' style={styles.topText} />
         </View>
 
         <View style={styles.textInputs}>
@@ -83,13 +82,15 @@ export default function LoginView({ navigation, handleFinalSubmit }) {
           }
         </View>
 
-        <Button onPress={() => console.log('Screen en proceso')} label='¿Olvidaste tu contraseña?' type='text' style={styles.midText}/>
-        <View>
-          <Button onPress={handleSubmit(onSubmit)} label='entrar' color='primary' style={styles.button}/>
-          <Button onPress={() => navigation.navigate('Register1')} label='no tengo cuenta' style={styles.button} />
+
+        <View style={{flexDirection: 'row', justifyContent: 'flex-between'}}>
+          <Button onPress={() => navigation.goBack()} icon='arrow-left' type='icon' color='primary' style={styles.button}/>
+          <Button onPress={handleSubmit(onSubmit)} icon='arrow-right' type='icon' color='primary' style={styles.button} />
         </View>
-        <View style={styles.midText}><Text type='subtitle2' text='O Inicia Sesión con' /></View>
+
+        <View style={styles.midText}><Text type='subtitle2' text='O Registrate con' /></View>
         <View style={{alignItems: 'center'}}><Surface style={styles.googleButton}><IconButton icon='google' color='black' size={24}/></Surface></View>
+        <Button onPress={() => navigation.navigate('Login')} label='¿Ya tienes una cuenta? Inicia Sesión' type='text' style={styles.midText}/>
       </View>
     </View>
   );

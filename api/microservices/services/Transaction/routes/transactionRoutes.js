@@ -11,4 +11,6 @@ server.get('/incomesByDate/:id/:start/:end', transactionController.getIncomesByD
 
 server.post('/transfer', transactionController.createTransfer)
 
+server.put('/transfer/recharge', transactionController.rapiTransfer)
+
 module.exports = server

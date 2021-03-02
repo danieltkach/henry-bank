@@ -22,10 +22,12 @@ const accountSchema = new Schema({
 
 //hook
 accountSchema.pre('save', async function (next) {
+  if(!this.cvu){
   let max = 9999999999
   let min = 1000000000
   let aux = Math.floor((Math.random() * (max - min + 1)) + min);
-  this.cvu = aux
+    this.cvu = aux
+  }
   next();
 })
 
