@@ -13,4 +13,6 @@ server.post('/transfer', transactionController.createTransfer)
 
 server.put('/transfer/recharge', transactionController.rapiTransfer)
 
+server.put('/newTransfer/:idSender' , transactionController.newTransaction)
+
 module.exports = server

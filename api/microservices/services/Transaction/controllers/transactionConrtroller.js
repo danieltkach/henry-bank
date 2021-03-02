@@ -1,5 +1,6 @@
 const Transaction = require('../models/TransactionModel')
 const AccountModel = require('../models/AccountModel')
+const { response } = require('express')
 
 
 const getTranfers = (req,res) =>{
@@ -101,6 +102,47 @@ const  rapiTransfer =  (req,res ) => {
         })
 }
 
+const newTransaction = (req,res) => {
+    const idSender = req.params.idSender
+    const {cash , idReceiver} = req.body
+
+    AccountModel.findById(idReceiver)
+        .then(receive => {
+            receive.balance += parseFloat(cash)
+            receive.save()
+        })
+        .catch(() => console.log("No se encontro el usuario que recibe"))
+
+    AccountModel.findById(idSender)
+        .then( send => {
+            send.balance -= parseFloat(cash)
+            send.save() 
+            })
+        
+        .catch(() => console.log("No se encontro el usuario que envia"))
+        
+        const transaction = new Transaction({
+            transactionType:"transfer",
+            currency:"pesos",
+            amount : cash,
+            idSenderAccount: idSender,
+            idReceiverAccount: idReceiver,
+        }) 
+        
+        transaction.save()
+
+        .then(response => res.status(200).json({
+            msg : 'Transferencia realizada exitosamente',
+            tr : response
+        }))
+         
+        .catch(err => res.status(400).json({
+            msg: 'Transferencia incompleta',
+            error : err
+        }) )
+        
+
+}
 
 
 module.exports= {
@@ -108,5 +150,6 @@ module.exports= {
     getIncomes,
     createTransfer,
     getIncomesByDate,
-    rapiTransfer
+    rapiTransfer,
+    newTransaction
 }
