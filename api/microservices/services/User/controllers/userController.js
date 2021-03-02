@@ -137,17 +137,24 @@ const addContact = (req, res) => {
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      if (foundUser.contacts.includes(contact._id)) {
-        res.status(400).json({ message: 'Contacto ya existe.', contact });
-      } else {
-        console.log('>>> contact: ', contact);
-        foundUser.contacts.push(contact);
-        foundUser.save();
-        return res.status(201).json({
-          message: 'Contacto agregado.',
-          contacts: foundUser.contacts
-        });
+      if (foundUser._id.toString() === contact._id.toString()) {
+        return res
+          .status(400)
+          .json({ message: 'No te puedes agregar a tí mismo.' });
       }
+      if (foundUser.contacts.includes(contact._id)) {
+        return res
+          .status(400)
+          .json({ message: 'Contacto ya existe.', contact });
+      }
+
+      console.log('>>> contact: ', contact);
+      foundUser.contacts.push(contact);
+      foundUser.save();
+      return res.status(201).json({
+        message: 'Contacto agregado.',
+        contacts: foundUser.contacts
+      });
     })
     .catch((error) => {
       res.status(400).json({ message: 'Error.', error });
