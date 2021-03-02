@@ -94,6 +94,7 @@ const UserSchema = new Schema({
       ref: 'User'
     }
   ],
+  contactsAlias: [{ email: String, alias: String }],
   accounts: [
     {
       type: mongoose.Schema.Types.ObjectId,
