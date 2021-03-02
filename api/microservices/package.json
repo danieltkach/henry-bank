@@ -9,6 +9,7 @@
     "start": "babel-node $1"
   },
   "dependencies": {
+    "babel-node": "^0.0.1-security",
     "express": "^4.17.1",
     "express-gateway": "^1.16.10"
   },

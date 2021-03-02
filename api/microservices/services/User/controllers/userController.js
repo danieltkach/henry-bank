@@ -151,6 +151,10 @@ const addContact = (req, res) => {
 
       // Adding contact to user
       foundUser.contacts.push(contact);
+      foundUser.contactsAlias.push({
+        email: contact.email,
+        alias: contact.name
+      });
       foundUser.save();
       return res.status(201).json({
         message: 'Contacto agregado.',
@@ -176,6 +180,26 @@ const deleteContact = (req, res) => {
     .catch((e) => res.send(404).json(e));
 };
 
+const modifyAlias = (req, res) => {
+  const userId = req.params.id;
+  const { contactEmail, contactAlias } = req.body;
+  User.findOne({ _id: userId })
+    .then((user) => {
+      // const contact = {
+      //   email: contactEmail,
+      //   alias: contactAlias
+      // };
+      // user.contactsAlias.push(contact);
+      contact = user.contactsAlias.find((c) => c.email === contactEmail);
+      contact.alias = contactAlias;
+      user.save();
+      return res.status(200).json({ message: 'Alias changed.', contact });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'No se pudo cambiar el alias.' })
+    );
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -184,5 +208,6 @@ module.exports = {
   getUsers,
   verifyCodeSecurity,
   addContact,
-  deleteContact
+  deleteContact,
+  modifyAlias
 };
