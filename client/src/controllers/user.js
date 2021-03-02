@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import {
   POST_REGISTER_USER,
   POST_LOGIN_USER,
@@ -5,12 +6,12 @@ import {
   GET_USER_BY_ID,
   GET_USERS,
   GET_ADDRESS,
-  POST_CODE
+  POST_CODE,
+  GET_PROFILE_AUTH
 } from '../constants/api';
 
 
 export const registerUserFetch = (dataForm) => {
-  console.log(dataForm)
   return new Promise((resolve, reject) => {
     fetch(POST_REGISTER_USER, {
       method: 'POST',
@@ -103,7 +104,7 @@ export const readUsersFetch = () => {
 
 export const readAddressFetch = (queryData) => {
   return new Promise((resolve, reject) => {
-    fetch(`${GET_ADDRESS}/?direccion=${queryData}`, {
+    fetch(`${GET_ADDRESS}?direccion=${queryData}`, {
       method: 'GET',
     })
     .then(response => {
@@ -117,7 +118,6 @@ export const readAddressFetch = (queryData) => {
 }
 
 export const verifyUserFetch = (dataForm) => {
-  console.log(dataForm);
   return new Promise((resolve) => {
     fetch(POST_CODE, {
       method: 'POST',
@@ -126,6 +126,20 @@ export const verifyUserFetch = (dataForm) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(dataForm)
+    })
+    .then(response => {
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
+  })
+}
+
+export const profileAuthFetch = (token) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${GET_PROFILE_AUTH}?token=${token}`, {
+      method: 'GET',
     })
     .then(response => {
       resolve(response.json());

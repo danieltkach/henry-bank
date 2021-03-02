@@ -41,7 +41,6 @@ export const fontSystem = StyleSheet.create({
   },
   subtitle2      : {
     fontSize     : 14,
-
     letterSpacing: 0.1,
     fontWeight   : '500',
     lineHeight   : 16,
@@ -100,5 +99,6 @@ export const rgba = (color, opacity) => {
 export const setColor = {
   primary  : palette.primary.main,
   secondary: palette.secondary.main,
-  accent   : palette.accent.dark
+  accent   : palette.accent.dark,
+  disabled : palette.text.disabled
 }

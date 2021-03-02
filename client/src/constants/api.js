@@ -9,6 +9,7 @@ export const PUT_USER = `${API_USER_HOST}/user`;//:dataId & dataForm
 export const GET_USER_BY_ID = `${API_USER_HOST}/user`;//:dataId
 export const GET_USERS = `${API_USER_HOST}/user`;
 export const POST_CODE = `${API_USER_HOST}/user/verify`;//:token
+export const GET_PROFILE_AUTH = `${API_USER_HOST}/user/profile`;
 
 export const GET_ADDRESS = `${API_USER_HOST}/user/validate-address`;//?direccion=:queryData
 

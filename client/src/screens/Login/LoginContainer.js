@@ -1,20 +1,21 @@
 import React from "react";
+import { AsyncStorage } from 'react-native';
 import { View, SafeAreaView } from "react-native";
 import LoginView from './LoginView';
-import TestLogin from './TestLogin';
 import { Background } from '../../components';
 import { loginUserFetch } from '../../controllers/user';
+import { addSession } from '../../stores/userStore/userActions';
 import styles from './styles';
 
 export default function LoginContainer({ navigation }) {
 
   const handleFinalSubmit = inputs => {
-    console.log(inputs)
+    console.log('dataForm: ', inputs)
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
-      //TODO add to local storage
-      console.log('login: ',responseLogin)
-      navigation.navigate('Menu');
+      console.log('login: ', responseLogin);
+      addSession(responseLogin.token);
+      navigation.navigate('Home');
     })
     .catch(err => console.log(err));
   }
@@ -23,7 +24,7 @@ export default function LoginContainer({ navigation }) {
     <SafeAreaView style={{flex: 1}}>
       <Background />
       <View style={styles.container}>
-        <LoginView handleFinalSubmit={handleFinalSubmit}/>
+        <LoginView handleFinalSubmit={handleFinalSubmit} navigation={navigation}/>
       </View>
     </SafeAreaView>
   );

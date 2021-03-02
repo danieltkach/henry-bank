@@ -4,13 +4,15 @@ const User = require('../models/UserModel')
 const bcrypt = require('bcrypt');
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
+const crypto = require('crypto');
 
 passport.use('signup', new localStrategy({
     usernameField: 'email',
     passwordField: 'password'
 }, async (email, password, done) => {
     try {
-        const user = await User.create({ email, password })
+        const codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
+        const user = await User.create({ email, password, codeSecurity })
         return done(null, user)
     } catch (e) {
         done(e)
@@ -33,9 +35,8 @@ passport.use('login', new localStrategy({
             return done(null, false, { message: 'Wrong password' })
         }
 
-        if (user.role === 'client') {
-          return done(null, user, { message: 'Login successfull' })
-        }
+        return done(null, user, { message: 'Login successfull' })
+
     } catch (e) {
         return done(e)
     }
@@ -43,7 +44,7 @@ passport.use('login', new localStrategy({
 
 passport.use(new JWTStrategy({
     secretOrKey: 'top_secret',
-    jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+    jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
 }, async (token, done) => {
     try {
         return done(null, token.user)

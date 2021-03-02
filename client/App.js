@@ -4,13 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // import { UserController } from './src/controllers';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { Provider as StoreProvider } from 'react-redux';
-import store from './src/stores';
+import { connect } from 'react-redux';
+import configureStore from './src/stores';
 import {
-  Home, Login, Menu, RegisterScreen, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
+  Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
 } from "./src/screens";
 import { Preload } from './src/components';
 
+console.log(Register)
 
 const Stack = createStackNavigator();
 
@@ -23,15 +24,14 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log(store)
+    console.log(this.props)
     // await UserController.getAuthFetch(this.props.getUser);
     this.setState({ mounted: true });
   }
 
   render(){
     return (
-      <StoreProvider store={store}>
-        <PaperProvider>
+      <PaperProvider>
         {this.state.mounted ?
           (
             <NavigationContainer>
@@ -41,30 +41,39 @@ class App extends React.Component {
                   name="Login"
                   component={Login}
                 />
+
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register1"
+                  component={Register.RegisterFirst}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register2"
+                  component={Register.RegisterSecond}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register3"
+                  component={Register.RegisterThird}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register4"
+                  component={Register.RegisterFourth}
+                />
+
+
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Home"
                   component={Home}
                 />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Register"
-                  component={RegisterScreen}
-                />
+
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="EmailSent"
                   component={EmailSent}
-                />
-                <Stack.Screen
-                  options={{ headerShown: true }}
-                  name="Register1"
-                  component={Register1}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Register2"
-                  component={Register2}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
@@ -78,8 +87,7 @@ class App extends React.Component {
             <Preload />
           )
         }
-        </PaperProvider>
-      </StoreProvider>
+      </PaperProvider>
     );
   }
 };
@@ -105,3 +113,4 @@ const mapStateToProps = state => {
 };
 
 export default App;
+// export default connect(mapStateToProps, mapActionsToProps)(App);

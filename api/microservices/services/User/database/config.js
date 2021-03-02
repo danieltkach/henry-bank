@@ -5,7 +5,6 @@ const {
 } = process.env;
 
 const dbConnection = async () => {
-    console.log(DB_HOST,DB_NAME,DB_PORT)
     try {
         await mongoose.connect(`mongodb://localhost:27017/henry_bank_user`,{
             useNewUrlParser:true,
