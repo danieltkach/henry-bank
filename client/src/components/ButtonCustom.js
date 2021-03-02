@@ -11,7 +11,7 @@ export default function ButtonCustom({ type, color, style, onPress, label }) {
 
   return (
     <TouchableOpacity
-      onPress = {() => onPress}
+      onPress={onPress}
       style={[styles.surface, {backgroundColor: genColor}, styles.button, style]}>
         <Text type='button' text={label.toUpperCase()} style={{color: 'white'}}/>
     </TouchableOpacity>

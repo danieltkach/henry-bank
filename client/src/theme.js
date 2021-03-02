@@ -25,7 +25,7 @@ export const palette = {
 }
 
 export const fontSystem = StyleSheet.create({
-  title: {
+  title          : {
     fontSize     : 20,
     letterSpacing: 0.15,
     fontWeight   : "500",

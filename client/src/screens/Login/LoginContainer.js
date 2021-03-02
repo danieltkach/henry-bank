@@ -1,13 +1,15 @@
 import React from "react";
 import { View, SafeAreaView } from "react-native";
-import LoginView from './LoginView'
+import LoginView from './LoginView';
+import TestLogin from './TestLogin';
 import { Background } from '../../components';
-import { loginUserFetch } from '../../controllers/user'
+import { loginUserFetch } from '../../controllers/user';
 import styles from './styles';
 
 export default function LoginContainer({ navigation }) {
 
   const handleFinalSubmit = inputs => {
+    console.log(inputs)
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
       //TODO add to local storage

@@ -18,7 +18,7 @@ const transactionSchema = new Schema({
 	},
   idSenderAccount: {
 		type: String,
-		required: true
+		required: false
 	},
 	idReceiverAccount: {
 		type: String,

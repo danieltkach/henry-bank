@@ -15,10 +15,14 @@ const textInputs = [
   {name: 'password', placeholder: 'Contraseña', type: 'password', error: 'Minimo 8 caracteres (al menos una letra y número).', pattern: REGEX.PASSWORD, maxLength: 20, minLength: 8}
 ];
 
-export default function LoginScreen({ navigation, handleFinalSubmit }) {
+export default function LoginScreen({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
 
-  const onSubmit = data => handleFinalSubmit(data);
+  const onSubmit = data => {
+
+
+    console.log(data)
+  };
 
   return (
     <View style={styles.body}>
