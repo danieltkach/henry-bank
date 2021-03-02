@@ -104,23 +104,23 @@ const  rapiTransfer =  (req,res ) => {
 
 const newTransaction = (req,res) => {
     const idSender = req.params.idSender
-    const {cash , idReceiver} = req.body
+    const {cash , cvu , idReceiver} = req.body
 
-    AccountModel.findById(idReceiver)
-        .then(receive => {
-            receive.balance += parseFloat(cash)
-            receive.save()
-        })
-        .catch(() => console.log("No se encontro el usuario que recibe"))
+    let accountLocal ;
 
     AccountModel.findById(idSender)
-        .then( send => {
-            send.balance -= parseFloat(cash)
-            send.save() 
-            })
-        
-        .catch(() => console.log("No se encontro el usuario que envia"))
-        
+    .then( send => {
+        if(send.balance < cash) return new Error('Saldo insuficiente')
+        accountLocal = send
+        if(!cvu) return AccountModel.findById(idReceiver)
+        else return AccountModel.findOne({cvu : cvu})
+    })
+    .then(receive => {
+        receive.balance += parseFloat(cash)
+        receive.save()
+        accountLocal.balance -= parseFloat(cash)
+        accountLocal.save() 
+
         const transaction = new Transaction({
             transactionType:"transfer",
             currency:"pesos",
@@ -131,16 +131,19 @@ const newTransaction = (req,res) => {
         
         transaction.save()
 
-        .then(response => res.status(200).json({
-            msg : 'Transferencia realizada exitosamente',
+        res.status(200).json({
+            message : 'Transferencia realizada exitosamente',
             tr : response
-        }))
-         
-        .catch(err => res.status(400).json({
-            msg: 'Transferencia incompleta',
-            error : err
-        }) )
-        
+        })  
+    })    
+     
+    .catch(err => res.status(400).json({
+        message: 'Transferencia incompleta',
+        error : err
+    }) )
+
+
+
 
 }
 
