@@ -28,7 +28,7 @@ export default function RegisterFirstView({ navigation, handleFinalSubmit }) {
       <View style={[styles.content, {flex: 3}]}>
         <View>
           <Text type='title' text='Bienvenido !' style={styles.topText} />
-          <Text type='subtitle1' text='Iniciar Sesión para continuar' style={styles.topText} />
+          <Text type='subtitle1' text='Registrate para continuar' style={styles.topText} />
         </View>
 
         <View style={styles.textInputs}>

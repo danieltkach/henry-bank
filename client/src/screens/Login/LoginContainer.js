@@ -6,15 +6,17 @@ import { Background } from '../../components';
 import { loginUserFetch } from '../../controllers/user';
 import { addSession } from '../../stores/userStore/userActions';
 import styles from './styles';
+import { connect } from 'react-redux';
 
-export default function LoginContainer({ navigation }) {
 
+function LoginContainer({ navigation }) {
+  
   const handleFinalSubmit = inputs => {
     console.log('dataForm: ', inputs)
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
       console.log('login: ', responseLogin);
-      addSession(responseLogin.token);
+      // addSession(responseLogin.token);
       navigation.navigate('Home');
     })
     .catch(err => console.log(err));
@@ -29,3 +31,17 @@ export default function LoginContainer({ navigation }) {
     </SafeAreaView>
   );
 };
+
+const mapActionsToProps = dispatch => {
+  return {
+    addSession: (user) => dispatch(getUser(user)),
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    user: state.userStore,
+  };
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(LoginContainer);
