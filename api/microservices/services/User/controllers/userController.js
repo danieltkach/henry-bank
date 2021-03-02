@@ -137,21 +137,43 @@ const addContact = (req, res) => {
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      if (foundUser.contacts.includes(contact._id)) {
-        res.status(400).json({ message: 'Contacto ya existe.', contact });
-      } else {
-        console.log('>>> contact: ', contact);
-        foundUser.contacts.push(contact);
-        foundUser.save();
-        return res.status(201).json({
-          message: 'Contacto agregado.',
-          contacts: foundUser.contacts
-        });
+      // Validations
+      if (foundUser._id.toString() === contact._id.toString()) {
+        return res
+          .status(400)
+          .json({ message: 'No te puedes agregar a tí mismo.' });
       }
+      if (foundUser.contacts.includes(contact._id)) {
+        return res
+          .status(400)
+          .json({ message: 'Contacto ya existe.', contact });
+      }
+
+      // Adding contact to user
+      foundUser.contacts.push(contact);
+      foundUser.save();
+      return res.status(201).json({
+        message: 'Contacto agregado.',
+        contacts: foundUser.contacts
+      });
     })
     .catch((error) => {
       res.status(400).json({ message: 'Error.', error });
     });
+};
+
+const deleteContact = (req, res) => {
+  const userId = req.params.id;
+  const contactEmail = req.body.contactEmail;
+
+  User.findOne({ _id: userId })
+    .populate('contacts')
+    .then((user) => {
+      user.contacts = user.contacts.filter((c) => c.email !== contactEmail);
+      user.save();
+      res.status(200).json(user);
+    })
+    .catch((e) => res.send(404).json(e));
 };
 
 module.exports = {
@@ -161,5 +183,6 @@ module.exports = {
   getUser,
   getUsers,
   verifyCodeSecurity,
-  addContact
+  addContact,
+  deleteContact
 };
