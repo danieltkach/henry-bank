@@ -137,6 +137,7 @@ const addContact = (req, res) => {
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
+      // Validations
       if (foundUser._id.toString() === contact._id.toString()) {
         return res
           .status(400)
@@ -148,7 +149,7 @@ const addContact = (req, res) => {
           .json({ message: 'Contacto ya existe.', contact });
       }
 
-      console.log('>>> contact: ', contact);
+      // Adding contact to user
       foundUser.contacts.push(contact);
       foundUser.save();
       return res.status(201).json({
@@ -161,6 +162,20 @@ const addContact = (req, res) => {
     });
 };
 
+const deleteContact = (req, res) => {
+  const userId = req.params.id;
+  const contactEmail = req.body.contactEmail;
+
+  User.findOne({ _id: userId })
+    .populate('contacts')
+    .then((user) => {
+      user.contacts = user.contacts.filter((c) => c.email !== contactEmail);
+      user.save();
+      res.status(200).json(user);
+    })
+    .catch((e) => res.send(404).json(e));
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -168,5 +183,6 @@ module.exports = {
   getUser,
   getUsers,
   verifyCodeSecurity,
-  addContact
+  addContact,
+  deleteContact
 };
