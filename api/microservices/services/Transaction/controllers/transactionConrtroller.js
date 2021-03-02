@@ -1,4 +1,5 @@
 const Transaction = require('../models/TransactionModel')
+const AccountModel = require('../models/AccountModel')
 
 
 const getTranfers = (req,res) =>{
@@ -65,6 +66,40 @@ const getIncomesByDate = (req,res) =>{
     })
 }
 
+const  rapiTransfer =  (req,res ) => { 
+    const { amount, cvu} = req.body
+
+     AccountModel.findOne({cvu:cvu})
+        .then((acc)=>{                 
+            acc.balance +=amount        
+            acc.save() 
+            return acc
+        }) 
+        .then(trans => {
+            console.log(trans) 
+            
+        const transaction = new Transaction({
+            transactionType:"recharge",
+            currency:"pesos",
+            amount,
+            idSenderAccount:-1,
+            idReceiverAccount:trans._id    
+        }) 
+        transaction.save()
+        return transaction
+        })
+        .then(trans => {          
+            res.status(200).json({
+                message: 'Transfer complete',
+                trans
+            })
+        })                  
+        .catch(err => {
+            res.status(400).json({
+                message: err.message || 'Error in transfer'
+            })
+        })
+}
 
 
 
@@ -72,5 +107,6 @@ module.exports= {
     getTranfers,
     getIncomes,
     createTransfer,
-    getIncomesByDate
+    getIncomesByDate,
+    rapiTransfer
 }
