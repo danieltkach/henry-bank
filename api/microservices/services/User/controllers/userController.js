@@ -137,8 +137,17 @@ const addContact = (req, res) => {
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      foundUser.contacts.push(contact);
-      res.status(201).json({ message: 'Contacto agregado.', contact });
+      if (foundUser.contacts.includes(contact._id)) {
+        res.status(400).json({ message: 'Contacto ya existe.', contact });
+      } else {
+        console.log('>>> contact: ', contact);
+        foundUser.contacts.push(contact);
+        foundUser.save();
+        return res.status(201).json({
+          message: 'Contacto agregado.',
+          contacts: foundUser.contacts
+        });
+      }
     })
     .catch((error) => {
       res.status(400).json({ message: 'Error.', error });

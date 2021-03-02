@@ -13,7 +13,7 @@ router.post(
 router.post('/login', userController.loginUser);
 router.post('/verify', userController.verifyCodeSecurity);
 router.put('/:id', userController.modifyUser);
-router.put('/contact/:id, userController.addContact');
+router.put('/contact/:id', userController.addContact);
 router.get('/:id', userController.getUser);
 router.get('/', userController.getUsers);
 router.get(
