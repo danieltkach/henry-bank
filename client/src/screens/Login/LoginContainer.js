@@ -12,10 +12,9 @@ export default function LoginContainer({ navigation }) {
   const dispatch = useDispatch();
 
   const handleFinalSubmit = inputs => {
-    var myHeaders = new Headers();
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
-      dispatch({ type: 'ADD_SESSION' })
+      // dispatch({ type: 'ADD_SESSION' })
       navigation.navigate('Home');
     })
     .catch(err => console.log(err));
