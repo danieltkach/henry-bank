@@ -51,6 +51,7 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
+  streetName: String,
   streetNumber: {
     type: Number,
     trim: true
@@ -63,11 +64,11 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
-  phone: {
+  cellphone: {
     type: Number,
     trim: true
   },
-  street: {
+  streetName: {
     type: String,
     trim: true
   },
@@ -78,9 +79,6 @@ const UserSchema = new Schema({
   birthdate: {
     type: String
     // validate: [validateAge, 'Ingresa una edad valida'],
-  },
-  document: {
-    type: String
   },
   codeSecurity: {
     type: String
