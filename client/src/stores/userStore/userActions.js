@@ -10,6 +10,7 @@ export const addSession = token => dispatch => {
   profileAuthFetch(token)
   .then(responseProfile => {
     user = responseProfile.user
+    console.log('ADD_SESSION',responseProfile.token)
     return AsyncStorage.setItem('session', responseProfile.token);
   })
   .then(response => {
@@ -22,6 +23,7 @@ export const addSession = token => dispatch => {
 };
 
 export const setSession = () => dispatch => {
+  console.log('SET_SESSION');
   AsyncStorage.getItem('session')
   .then(responseToken => {
     return profileAuthFetch(responseToken);

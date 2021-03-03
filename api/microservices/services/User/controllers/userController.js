@@ -115,6 +115,21 @@ const getUsers = (req, res, next) => {
   });
 };
 
+const getProfileByToken = (req, res, next) => {
+  res.status(200).json({
+    message: 'Informacion del perfil',
+    user: req.user,
+    token: req.query.token
+  });
+}
+
+// const getProfileByToken = (req, res, next) => {
+//   User.find((error, data) => {
+//     if (error) res.status(400).send('Error al cargar');
+//     res.status(200).send(data);
+//   });
+// };
+
 const verifyCodeSecurity = (req, res) => {
   const { email, codeSecurity } = req.body;
 
@@ -215,5 +230,6 @@ module.exports = {
   verifyCodeSecurity,
   addContact,
   deleteContact,
-  modifyAlias
+  modifyAlias,
+  getProfileByToken
 };

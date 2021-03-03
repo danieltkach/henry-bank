@@ -15,7 +15,6 @@ export default function LoginContainer({ navigation }) {
     var myHeaders = new Headers();
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
-      console.log('STATUS OK', responseLogin);
       dispatch({ type: 'ADD_SESSION' })
       navigation.navigate('Home');
     })

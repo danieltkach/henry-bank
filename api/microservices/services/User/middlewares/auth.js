@@ -42,7 +42,7 @@ passport.use('login', new localStrategy({
     }
 }))
 
-passport.use(new JWTStrategy({
+passport.use('jwt', new JWTStrategy({
     secretOrKey: 'top_secret',
     jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
 }, async (token, done) => {

@@ -7,8 +7,13 @@ import { API_KEY, ANOTHER_CONFIG } from 'react-native-dotenv'
 // PORT_API_TRANSACTION=4002
 // PORT_API_GATEWAY=8080
 
-export const API_USER_HOST = `http://${process.env.HOST}:${process.env.PORT_API_USER}`;
-export const API_TRANSACTION_HOST = `http://${process.env.HOST}:${process.env.PORT_API_TRANSACTION}`;
+const HOST='192.168.1.40'
+const PORT_API_USER='4001'
+const PORT_API_TRANSACTION='4002'
+const PORT_API_GATEWAY='8080'
+
+export const API_USER_HOST = `http://${HOST}:${PORT_API_USER}`;
+export const API_TRANSACTION_HOST = `http://${HOST}:${PORT_API_TRANSACTION}`;
 
 //Fetchs asociadas a User
 export const POST_REGISTER_USER = `${API_USER_HOST}/user/signup`;//#dataForm
