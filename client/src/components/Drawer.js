@@ -39,7 +39,7 @@ export default function Drawer({ navigation, label }) {
   );
 
   return (
-    <View>
+    <View style={styles.drawer}>
       <View style={styles.header}>
         <IconButton
           icon="menu"

@@ -5,7 +5,7 @@ import { palette, rgba, setColor, fontSystem } from '../theme';
 import { Text } from './index'
 
 
-export default function ButtonCustom({ type, color, style, onPress, label, icon }) {
+export default function ButtonCustom({ type, color, style, onPress, label, icon, size }) {
   const genColor = color && setColor[color] || setColor['accent'] ;
   // const genFont = type === 'text' ? fontSystem['subtitle2'] : fontSystem['button'];
   const genStyleButton = type === 'text' ? styles.text : styles.button;
@@ -19,8 +19,8 @@ export default function ButtonCustom({ type, color, style, onPress, label, icon 
           style={[genStyleButton, style, {background: genColor}]}>
             <IconButton
               icon={icon}
-              size={20}
-              color="white"
+              size={size || 20}
+              color={color || "white" }
               onPress={onPress}
             />
         </TouchableOpacity>
