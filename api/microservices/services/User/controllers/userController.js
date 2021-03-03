@@ -7,7 +7,7 @@ const axios = require('axios');
 const createUser = async (req, res, next) => {
   const { name, email, lastName, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
-  // const token = jwt.sign({ user: body }, 'top_secret');
+  const token = jwt.sign({ user: body }, 'top_secret');
 
   nodeMailer
     .sendEmail({ name, lastName, email, codeSecurity })

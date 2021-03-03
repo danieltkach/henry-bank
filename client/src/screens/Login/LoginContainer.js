@@ -10,11 +10,10 @@ import styles from './styles';
 export default function LoginContainer({ navigation }) {
 
   const handleFinalSubmit = inputs => {
-    console.log('dataForm: ', inputs)
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
-      console.log('login: ', responseLogin);
-      addSession(responseLogin.token);
+      console.log('STATUS OK', responseLogin);
+      // addSession(responseLogin.token);
       navigation.navigate('Home');
     })
     .catch(err => console.log(err));

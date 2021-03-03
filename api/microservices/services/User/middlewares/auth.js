@@ -36,7 +36,6 @@ passport.use('login', new localStrategy({
         }
 
         return done(null, user, { message: 'Login successfull' })
-
     } catch (e) {
         return done(e)
     }

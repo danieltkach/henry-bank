@@ -5,11 +5,7 @@ const userController = require('../controllers/userController');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-router.post(
-  '/signup',
-  passport.authenticate('signup', { session: false }),
-  userController.createUser
-);
+router.post('/signup', passport.authenticate('signup', { session: false }),userController.createUser);
 router.put('/alias/:id', userController.modifyAlias);
 router.post('/login', userController.loginUser);
 router.post('/verify', userController.verifyCodeSecurity);
