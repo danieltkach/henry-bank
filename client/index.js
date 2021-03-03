@@ -1,13 +1,29 @@
-import { AppRegistery } from 'react-native';
-import App from './App';
-import { name as appName } from './app.json';
-import { Provider } from 'react-redux';
+import React from 'react'
+import App from './App.js'
+import store from './src/stores'
+import { Provider } from 'react-redux'
+import { registerRootComponent } from 'expo';
 
-import store from './src/stores';
+const NewRootComponent = () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
 
-const ReactNativeRender = () =>
-  <Provider store={store}>
-    {() => <App />}
-  </Provider>
+export default NewRootComponent;
 
-AppRegistery.registerComponent('Inro', () => ReactNativeRender);
+// import { AppRegistery } from 'react-native';
+// import App from './App';
+// import { name as appName } from './app.json';
+// import { Provider } from 'react-redux';
+//
+// import store from './src/stores';
+//
+// const ReactNativeRender = () =>
+//   <Provider store={store}>
+//     {() => <App />}
+//   </Provider>
+//
+// AppRegistery.registerComponent('Inro', () => ReactNativeRender);

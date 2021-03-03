@@ -8,7 +8,7 @@ import { Text } from './index';
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label }) {
+export default function Drawer({ navigation, label, align }) {
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
 
@@ -46,7 +46,10 @@ export default function Drawer({ navigation, label }) {
   );
 
   return (
-    <View>
+    <View style={styles.drawer}>
+      <View style={{alignItems: align || 'flex-start', justifyContent: 'center', height: 48, width: '100%', zIndex: 0, position: 'absolute', paddingHorizontal: 16}}>
+        <Text type='title' text={label} />
+      </View>
       <View style={styles.header}>
         <IconButton
           icon="menu"
@@ -54,7 +57,6 @@ export default function Drawer({ navigation, label }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <Text type="title" text={label} />
       </View>
       <TouchableOpacity
         onPress={handleClick}
@@ -99,15 +101,15 @@ export default function Drawer({ navigation, label }) {
 }
 
 const styles = StyleSheet.create({
-  drawer: {
-    zIndex: 999999999
+  drawer  : {
+    zIndex: 9999
   },
-  header: {
-    position: 'relative',
-    width: '100%',
-    height: '48px',
-    alignItems: 'center',
-    flexDirection: 'row'
+  header           : {
+    position       : "relative",
+    width          : '100%',
+    height         : '48px',
+    alignItems     : 'center',
+    flexDirection  : 'row',
   },
   textBody: {
     color: 'white',
@@ -122,13 +124,13 @@ const styles = StyleSheet.create({
   navbar: {
     position: 'absolute',
     backgroundColor: `${primaryColor}`,
-    width: '75%'
-    // transition     : '.3s'
+    width          : '75%',
+    transition     : '.3s'
   },
   backNav: {
     position: 'absolute',
     backgroundColor: `${darkColor}`,
-    opacity: 0.5
-    // transition     : '.5s'
-  }
-});
+    opacity        : 0.5,
+    transition     : '.5s'
+  },
+})

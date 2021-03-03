@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import { UserController } from './src/controllers';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { connect } from 'react-redux';
-import configureStore from './src/stores';
+// import { setSession } from './src/stores/userStore/userActions';
 import {
   Home,
   Login,
@@ -22,7 +22,6 @@ import {
 } from './src/screens';
 import { Preload } from './src/components';
 
-console.log(Register);
 
 const Stack = createStackNavigator();
 
@@ -34,9 +33,8 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props);
-    // await UserController.getAuthFetch(this.props.getUser);
+  componentDidMount(){
+    // this.props.setSession();
     this.setState({ mounted: true });
   }
 
@@ -51,7 +49,6 @@ class App extends React.Component {
                 name="Login"
                 component={Login}
               />
-
               <Stack.Screen
                 options={{ headerShown: false }}
                 name="Register1"
@@ -114,15 +111,15 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
-    getUser: (user) => dispatch(getUser(user))
+    setSession: () => dispatch(setSession()),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userStore.user
+    user: state.userStore
   };
 };
 
-export default App;
-// export default connect(mapStateToProps, mapActionsToProps)(App);
+// export default App;
+export default connect(mapStateToProps, mapActionsToProps)(App);
