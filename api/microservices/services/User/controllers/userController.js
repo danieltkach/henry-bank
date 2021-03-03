@@ -61,36 +61,42 @@ function calcularEdad(fecha) {
 }
 
 const modifyUser = async (req, res, next) => {
-  const user_id = req.params.id;
-  //if(calcularEdad(req.body.birthdate) >=16){
-  User.findByIdAndUpdate(
-    user_id,
-    {
-      role: 'client',
-      idType: req.body.idType,
-      idNumber: req.body.idNumber,
-      name: req.body.name,
-      lastName: req.body.lastName,
-      streetNumber: req.body.streetNumber,
-      zipCode: req.body.zipCode,
-      country: req.body.country,
-      phone: req.body.phone,
-      street: req.body.street,
-      city: req.body.city,
-      birthdate: req.body.birthdate
-    },
-    (err, userUpdated) => {
-      if (err)
-        res
-          .status(400)
-          .send({ message: 'Error al terminar de registrar al usuario' });
-      res.status(200).send({ msg: 'Registro completado' });
-    }
-  );
-  //}
-  /* else{
-    res.status(400).send("Menor de edad!!")
-  } */
+  const userId = req.params.id;
+  const {
+    idType,
+    idNumber,
+    name,
+    lastName,
+    birthdate,
+    cellphone,
+    streetName,
+    streetNumber,
+    city,
+    province,
+    country
+  } = req.body;
+
+  User.findByIdAndUpdate(userId, {
+    role: 'client',
+    idType: idType,
+    idNumber: idNumber,
+    name: name,
+    lastName: lastName,
+    birthdate: birthdate,
+    cellphone: cellphone,
+    streetName: streetName,
+    streetNumber: streetNumber,
+    city: city,
+    province: province,
+    country: country
+  })
+    .then((user) => {
+      user.save();
+      res.status(200).json({ message: 'Usuario actualizado.', userId });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'Error al actualizar usuario.' })
+    );
 };
 
 const getUser = (req, res, next) => {
