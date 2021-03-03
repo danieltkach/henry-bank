@@ -112,5 +112,5 @@ const mapStateToProps = state => {
   };
 };
 
-export default App;
-// export default connect(mapStateToProps, mapActionsToProps)(App);
+// export default App;
+export default connect(mapStateToProps, mapActionsToProps)(App);
