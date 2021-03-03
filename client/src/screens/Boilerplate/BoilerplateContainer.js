@@ -9,11 +9,11 @@ export default function BoilerplateContainer({ navigation }) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Background />
-      <Header type='settings' label='Hola pibe' />
+      <Header type='settings' label='Contactos' align='center'/>
       <View style={styles.container}>
         <BoilerplateView />
       </View>
-      <BottomNav navigation={navigation}/>
+      <BottomNav navigation={navigation} init={1}/>
     </SafeAreaView>
   );
 };
