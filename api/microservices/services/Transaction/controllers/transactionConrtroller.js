@@ -1,5 +1,6 @@
 const Transaction = require('../models/TransactionModel')
 const AccountModel = require('../models/AccountModel')
+const { response } = require('express')
 
 
 const getTranfers = (req,res) =>{
@@ -101,6 +102,50 @@ const  rapiTransfer =  (req,res ) => {
         })
 }
 
+const newTransaction = (req,res) => {
+    const idSender = req.params.idSender
+    const {cash , cvu , idReceiver} = req.body
+
+    let accountLocal ;
+
+    AccountModel.findById(idSender)
+    .then( send => {
+        if(send.balance < cash) return new Error('Saldo insuficiente')
+        accountLocal = send
+        if(!cvu) return AccountModel.findById(idReceiver)
+        else return AccountModel.findOne({cvu : cvu})
+    })
+    .then(receive => {
+        receive.balance += parseFloat(cash)
+        receive.save()
+        accountLocal.balance -= parseFloat(cash)
+        accountLocal.save() 
+
+        const transaction = new Transaction({
+            transactionType:"transfer",
+            currency:"pesos",
+            amount : cash,
+            idSenderAccount: idSender,
+            idReceiverAccount: idReceiver,
+        }) 
+        
+        transaction.save()
+
+        res.status(200).json({
+            message : 'Transferencia realizada exitosamente',
+            tr : response
+        })  
+    })    
+     
+    .catch(err => res.status(400).json({
+        message: 'Transferencia incompleta',
+        error : err
+    }) )
+
+
+
+
+}
 
 
 module.exports= {
@@ -108,5 +153,6 @@ module.exports= {
     getIncomes,
     createTransfer,
     getIncomesByDate,
-    rapiTransfer
+    rapiTransfer,
+    newTransaction
 }
