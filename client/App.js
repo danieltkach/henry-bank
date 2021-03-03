@@ -102,13 +102,13 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = dispatch => {
   return {
-    getUser: (user) => dispatch(getUser(user)),
+    setSession: () => dispatch(setSession()),
   };
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.userStore.user,
+    user: state.userStore,
   };
 };
 
