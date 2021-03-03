@@ -20,72 +20,16 @@ const DATA = [
     },
   ];
   
-  const Item = ({ item, onPress, style }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-       <View style={{height:5}} >
-       <Text style={styles.alias}>{item.alias}</Text>
-       <Text style={styles.title}> {item.title} </Text>
-       </View>
-       <View style={{alignItems:"flex-end"}}>
-       <Button size={24} type="icon" icon="trash-can" />
-       </View>
-    </TouchableOpacity>
-  );
   
   const ContactView = ({navigation}) => {
-    const [selectedId, setSelectedId] = useState(null);
-  
-    const renderItem = ({ item }) => {
-      const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-  
-      return (
-        <Item
-          item={item}
-          onPress={() => setSelectedId(item.id)}
-          style={{ backgroundColor }}
-        />
-      );
-    };
+
   
     return (
-      <SafeAreaView style={{flex: 1}}>
-        <Background />  
-        <Drawer/>
-        <View style={styles.container}>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          extraData={selectedId}
-        />
-        </View>
-        <BottomNav navigation={navigation}/>
-      </SafeAreaView>
+     <div></div>
     );
   };
   
-  const styles = StyleSheet.create({
-    container          : {
-      flex             : 1,
-      paddingHorizontal: '16px',
-      flexDirection    : 'row',
-      flexWrap         : 'wrap',
-      marginTop        : 40
-    },
-    item: {
-      height:48,
-      marginVertical: 8,
-    },
-    title: {
-      fontSize: 15,
-    },
-    alias:{
-      marginHorizontal:4,
-      fontSize: 20,
-      marginBottom:5
-    }
-  });
-
+  
 export default ContactView;
 
   

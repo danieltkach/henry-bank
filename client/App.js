@@ -10,7 +10,7 @@ import {
   Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
 } from "./src/screens";
 import { Preload } from './src/components';
-
+import ContactView from "./src/screens/Contact/ContactView"
 
 const Stack = createStackNavigator();
 
@@ -38,7 +38,7 @@ class App extends React.Component {
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"
-                  component={Login}
+                  component={ContactView}
                 />
 
                 <Stack.Screen
