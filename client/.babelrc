@@ -1,5 +1,8 @@
 {
-  "plugins": [
-    ["module:react-native-dotenv"]
-  ]
+  "presets": ["module:metro-react-native-babel-preset", "module:react-native-dotenv", {
+    "include": [
+        "NODE_ENV",
+        "API_KEY"
+      ]
+    }]
 }
