@@ -7,7 +7,7 @@ const axios = require('axios');
 const createUser = async (req, res, next) => {
   const { name, email, lastName, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
-  // const token = jwt.sign({ user: body }, 'top_secret');
+  const token = jwt.sign({ user: body }, 'top_secret');
 
   nodeMailer
     .sendEmail({ name, lastName, email, codeSecurity })
@@ -61,36 +61,42 @@ function calcularEdad(fecha) {
 }
 
 const modifyUser = async (req, res, next) => {
-  const user_id = req.params.id;
-  //if(calcularEdad(req.body.birthdate) >=16){
-  User.findByIdAndUpdate(
-    user_id,
-    {
-      role: 'client',
-      idType: req.body.idType,
-      idNumber: req.body.idNumber,
-      name: req.body.name,
-      lastName: req.body.lastName,
-      streetNumber: req.body.streetNumber,
-      zipCode: req.body.zipCode,
-      country: req.body.country,
-      phone: req.body.phone,
-      street: req.body.street,
-      city: req.body.city,
-      birthdate: req.body.birthdate
-    },
-    (err, userUpdated) => {
-      if (err)
-        res
-          .status(400)
-          .send({ message: 'Error al terminar de registrar al usuario' });
-      res.status(200).send({ msg: 'Registro completado' });
-    }
-  );
-  //}
-  /* else{
-    res.status(400).send("Menor de edad!!")
-  } */
+  const userId = req.params.id;
+  const {
+    idType,
+    idNumber,
+    name,
+    lastName,
+    birthdate,
+    cellphone,
+    streetName,
+    streetNumber,
+    city,
+    province,
+    country
+  } = req.body;
+
+  User.findByIdAndUpdate(userId, {
+    role: 'client',
+    idType: idType,
+    idNumber: idNumber,
+    name: name,
+    lastName: lastName,
+    birthdate: birthdate,
+    cellphone: cellphone,
+    streetName: streetName,
+    streetNumber: streetNumber,
+    city: city,
+    province: province,
+    country: country
+  })
+    .then((user) => {
+      user.save();
+      res.status(200).json({ message: 'Usuario actualizado.', userId });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'Error al actualizar usuario.' })
+    );
 };
 
 const getUser = (req, res, next) => {
@@ -102,11 +108,21 @@ const getUser = (req, res, next) => {
   });
 };
 
-const getUsers = (req, res, next) => {
-  User.find((error, data) => {
-    if (error) res.status(400).send('Error al cargar');
-    res.status(200).send(data);
-  });
+const getUsers = (req, res) => {
+  const order = req.body.order || 1;
+
+  User.find({})
+    .sort({ name: order })
+    .populate('contacts')
+    .then((users) => {
+      return res.status(200).json(users);
+    })
+    .catch((e) =>
+      res.status(404).json({
+        message: 'No se pudieron cargar los usuarios.',
+        error: e.message
+      })
+    );
 };
 
 const verifyCodeSecurity = (req, res) => {
@@ -151,6 +167,10 @@ const addContact = (req, res) => {
 
       // Adding contact to user
       foundUser.contacts.push(contact);
+      foundUser.contactsAlias.push({
+        email: contact.email,
+        alias: contact.name
+      });
       foundUser.save();
       return res.status(201).json({
         message: 'Contacto agregado.',
@@ -176,6 +196,26 @@ const deleteContact = (req, res) => {
     .catch((e) => res.send(404).json(e));
 };
 
+const modifyAlias = (req, res) => {
+  const userId = req.params.id;
+  const { contactEmail, contactAlias } = req.body;
+  User.findOne({ _id: userId })
+    .then((user) => {
+      // const contact = {
+      //   email: contactEmail,
+      //   alias: contactAlias
+      // };
+      // user.contactsAlias.push(contact);
+      contact = user.contactsAlias.find((c) => c.email === contactEmail);
+      contact.alias = contactAlias;
+      user.save();
+      return res.status(200).json({ message: 'Alias changed.', contact });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'No se pudo cambiar el alias.' })
+    );
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -184,5 +224,6 @@ module.exports = {
   getUsers,
   verifyCodeSecurity,
   addContact,
-  deleteContact
+  deleteContact,
+  modifyAlias
 };

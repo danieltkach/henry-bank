@@ -22,8 +22,6 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    // min: [8, 'Contraseña demasiado corta'],
-    // max: [16, 'Contraseña demasiado larga'],
     required: [true, 'Contraseña requerida']
   },
   role: {
@@ -33,21 +31,21 @@ const UserSchema = new Schema({
   },
   idType: {
     type: String,
-    enum: ['dni']
-    /* required: true */
+    enum: ['DNI']
   },
   idNumber: {
     type: Number,
     trim: true
-    // min: [8, 'Numero fuera de rango'],
-    // max: [8, 'Numero fuera de rango'],
-    /* required: true */
   },
   name: {
     type: String,
     trim: true
   },
   lastName: {
+    type: String,
+    trim: true
+  },
+  streetName: {
     type: String,
     trim: true
   },
@@ -63,12 +61,8 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
-  phone: {
+  cellphone: {
     type: Number,
-    trim: true
-  },
-  street: {
-    type: String,
     trim: true
   },
   city: {
@@ -76,10 +70,6 @@ const UserSchema = new Schema({
     trim: true
   },
   birthdate: {
-    type: String
-    // validate: [validateAge, 'Ingresa una edad valida'],
-  },
-  document: {
     type: String
   },
   codeSecurity: {
@@ -94,6 +84,7 @@ const UserSchema = new Schema({
       ref: 'User'
     }
   ],
+  contactsAlias: [{ email: String, alias: String }],
   accounts: [
     {
       type: mongoose.Schema.Types.ObjectId,
