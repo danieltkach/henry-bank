@@ -9,7 +9,7 @@ import { Text } from './index';
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label }) {
+export default function Drawer({ navigation, label, align }) {
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
 
@@ -39,7 +39,7 @@ export default function Drawer({ navigation, label }) {
   );
 
   return (
-    <View>
+    <View style={styles.drawer}>
       <View style={styles.header}>
         <IconButton
           icon="menu"
@@ -47,7 +47,9 @@ export default function Drawer({ navigation, label }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <Text type='title' text={label} />
+        <View style={{alignItems: align || 'flex-start', width: '100%', position: 'absolute', paddingHorizontal: 16}}>
+          <Text type='title' text={label} />
+        </View>
       </View>
       <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
         height: dimensions.height,
@@ -76,10 +78,10 @@ export default function Drawer({ navigation, label }) {
 
 const styles = StyleSheet.create({
   drawer  : {
-    zIndex: 999999999
+    zIndex: 9999
   },
   header           : {
-    position       : "absolute",
+    position       : "relative",
     width          : '100%',
     height         : '48px',
     alignItems     : 'center',

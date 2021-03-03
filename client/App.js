@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import { UserController } from './src/controllers';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { connect } from 'react-redux';
-import configureStore from './src/stores';
+// import { setSession } from './src/stores/userStore/userActions';
 import {
   Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
 } from "./src/screens";
@@ -23,8 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.props)
-    // await UserController.getAuthFetch(this.props.getUser);
+    // this.props.setSession();
     this.setState({ mounted: true });
   }
 
@@ -37,8 +36,8 @@ class App extends React.Component {
               <Stack.Navigator>
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Login"
-                  component={Login}
+                  name="Boilerplate"
+                  component={Boilerplate}
                 />
 
                 <Stack.Screen
