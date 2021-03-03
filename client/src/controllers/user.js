@@ -12,6 +12,7 @@ import {
 
 
 export const registerUserFetch = (dataForm) => {
+  console.log('POST', dataForm);
   return new Promise((resolve, reject) => {
     fetch(POST_REGISTER_USER, {
       method: 'POST',
@@ -22,6 +23,7 @@ export const registerUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -32,6 +34,7 @@ export const registerUserFetch = (dataForm) => {
 }
 
 export const loginUserFetch = (dataForm) => {
+  console.log('POST', dataForm);
   return new Promise((resolve, reject) => {
     fetch(POST_LOGIN_USER, {
       method: 'POST',
@@ -42,7 +45,7 @@ export const loginUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log(response)
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -53,6 +56,7 @@ export const loginUserFetch = (dataForm) => {
 }
 
 export const updateUserFetch = (dataId, dataForm) => {
+  console.log('PUT', dataId, dataForm);
   return new Promise((resolve, reject) => {
     fetch(`${PUT_USER}/${dataId}`, {
       method: 'PUT',
@@ -63,6 +67,7 @@ export const updateUserFetch = (dataId, dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -75,11 +80,13 @@ export const updateUserFetch = (dataId, dataForm) => {
 // export const readAuthFetch = () => {}
 
 export const readUserByIdFetch = (dataId) => {
+  console.log('GET', dataId);
   return new Promise((resolve, reject) => {
     fetch(`${GET_USER_BY_ID}/${dataId}`, {
       method: 'GET',
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -89,11 +96,13 @@ export const readUserByIdFetch = (dataId) => {
 }
 
 export const readUsersFetch = () => {
+  console.log('GET');
   return new Promise((resolve, reject) => {
     fetch(GET_USERS, {
       method: 'GET',
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -103,6 +112,7 @@ export const readUsersFetch = () => {
 }
 
 export const readAddressFetch = (queryData) => {
+  console.log('GET', queryData);
   return new Promise((resolve, reject) => {
     fetch(`${GET_ADDRESS}?direccion=${queryData}`, {
       method: 'GET',
@@ -118,6 +128,7 @@ export const readAddressFetch = (queryData) => {
 }
 
 export const verifyUserFetch = (dataForm) => {
+  console.log('GET', dataForm);
   return new Promise((resolve) => {
     fetch(POST_CODE, {
       method: 'POST',
@@ -128,6 +139,7 @@ export const verifyUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -137,11 +149,13 @@ export const verifyUserFetch = (dataForm) => {
 }
 
 export const profileAuthFetch = (token) => {
+  console.log('GET', token);
   return new Promise((resolve, reject) => {
     fetch(`${GET_PROFILE_AUTH}?token=${token}`, {
       method: 'GET',
     })
     .then(response => {
+      console.log('STATUS OK');
       resolve(response.json());
     })
     .catch(err => {

@@ -11,7 +11,6 @@ import {
 } from "./src/screens";
 import { Preload } from './src/components';
 
-console.log(Register)
 
 const Stack = createStackNavigator();
 
