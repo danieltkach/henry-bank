@@ -22,8 +22,6 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    // min: [8, 'Contraseña demasiado corta'],
-    // max: [16, 'Contraseña demasiado larga'],
     required: [true, 'Contraseña requerida']
   },
   role: {
@@ -34,14 +32,10 @@ const UserSchema = new Schema({
   idType: {
     type: String,
     enum: ['DNI']
-    /* required: true */
   },
   idNumber: {
     type: Number,
     trim: true
-    // min: [8, 'Numero fuera de rango'],
-    // max: [8, 'Numero fuera de rango'],
-    /* required: true */
   },
   name: {
     type: String,
@@ -51,7 +45,10 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
-  streetName: String,
+  streetName: {
+    type: String,
+    trim: true
+  },
   streetNumber: {
     type: Number,
     trim: true
@@ -68,17 +65,12 @@ const UserSchema = new Schema({
     type: Number,
     trim: true
   },
-  streetName: {
-    type: String,
-    trim: true
-  },
   city: {
     type: String,
     trim: true
   },
   birthdate: {
     type: String
-    // validate: [validateAge, 'Ingresa una edad valida'],
   },
   codeSecurity: {
     type: String

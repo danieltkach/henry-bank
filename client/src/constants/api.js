@@ -1,6 +1,7 @@
-export const API_USER_HOST = 'http://192.168.0.60:4001';
-export const API_TRANSACTION_HOST = 'http://192.168.0.60:4002';
-export const CLIENT_HOST = 'http://192.168.0.60:19002';
+import {HOST, PORT_API_USER, PORT_API_TRANSACTION} from "@env";
+console.log(HOST)
+export const API_USER_HOST = `http://${process.env.HOST}:${process.env.PORT_API_USER}`;
+export const API_TRANSACTION_HOST = `http://${process.env.HOST}:${process.env.PORT_API_TRANSACTION}`;
 
 //Fetchs asociadas a User
 export const POST_REGISTER_USER = `${API_USER_HOST}/user/signup`;//#dataForm

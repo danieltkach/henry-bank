@@ -5,15 +5,18 @@ import LoginView from './LoginView';
 import { Background } from '../../components';
 import { loginUserFetch } from '../../controllers/user';
 import { addSession } from '../../stores/userStore/userActions';
+import { useDispatch } from 'react-redux';
 import styles from './styles';
 
 export default function LoginContainer({ navigation }) {
+  const dispatch = useDispatch();
 
   const handleFinalSubmit = inputs => {
+    var myHeaders = new Headers();
     loginUserFetch(inputs)
     .then((responseLogin) =>  {
       console.log('STATUS OK', responseLogin);
-      // addSession(responseLogin.token);
+      dispatch({ type: 'ADD_SESSION' })
       navigation.navigate('Home');
     })
     .catch(err => console.log(err));
