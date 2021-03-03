@@ -6,3 +6,4 @@ export { default as Preload } from './Preload';
 export { default as Button } from './ButtonCustom';
 export { default as TextInput } from './TextInputCustom';
 export { default as Text } from './TextCustom';
+export { default as Avatar } from './AvatarCustom';

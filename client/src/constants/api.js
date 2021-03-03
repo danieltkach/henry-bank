@@ -1,11 +1,16 @@
-import { API_KEY, ANOTHER_CONFIG } from 'react-native-dotenv'
+// import {
+// HOST,
+// PORT_API_USER,
+// PORT_API_TRANSACTION,
+// PORT_API_GATEWAY
+// } from 'react-native-dotenv'
 
-// ApiClient.init(API_KEY, ANOTHER_CONFIG)
-// No estaria funcionando lo de .env :) , asi que aqui les dejo mi .env config
-// HOST=192.168.1.40
-// PORT_API_USER=4001
-// PORT_API_TRANSACTION=4002
-// PORT_API_GATEWAY=8080
+require('dotenv').config();
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+console.log(process.env);
 
 export const API_USER_HOST = `http://${process.env.HOST}:${process.env.PORT_API_USER}`;
 export const API_TRANSACTION_HOST = `http://${process.env.HOST}:${process.env.PORT_API_TRANSACTION}`;
