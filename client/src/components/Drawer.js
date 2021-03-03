@@ -40,6 +40,9 @@ export default function Drawer({ navigation, label, align }) {
 
   return (
     <View style={styles.drawer}>
+      <View style={{alignItems: align || 'flex-start', justifyContent: 'center', height: 48, width: '100%', zIndex: 0, position: 'absolute', paddingHorizontal: 16}}>
+        <Text type='title' text={label} />
+      </View>
       <View style={styles.header}>
         <IconButton
           icon="menu"
@@ -47,9 +50,6 @@ export default function Drawer({ navigation, label, align }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <View style={{alignItems: align || 'flex-start', width: '100%', position: 'absolute', paddingHorizontal: 16}}>
-          <Text type='title' text={label} />
-        </View>
       </View>
       <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
         height: dimensions.height,
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
     position       : 'absolute',
     backgroundColor: `${primaryColor}`,
     width          : '75%',
-    // transition     : '.3s'
+    transition     : '.3s'
   },
   backNav          : {
     position       : 'absolute',
     backgroundColor: `${darkColor}`,
     opacity        : 0.5,
-    // transition     : '.5s'
+    transition     : '.5s'
   },
 })
