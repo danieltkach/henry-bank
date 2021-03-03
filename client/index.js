@@ -5,14 +5,11 @@ import { Provider } from 'react-redux'
 import { registerRootComponent } from 'expo';
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 const NewRootComponent = () => {
-    return (
-      
-      <Provider store={store}>
-        <SafeAreaProvider>
-        <App />
-        </SafeAreaProvider>
-      </Provider>
-    )
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 }
 
 export default NewRootComponent;

@@ -9,7 +9,7 @@ import { Text } from './index';
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label }) {
+export default function Drawer({ navigation, label, align }) {
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
 
@@ -40,6 +40,9 @@ export default function Drawer({ navigation, label }) {
 
   return (
     <View style={styles.drawer}>
+      <View style={{alignItems: align || 'flex-start', justifyContent: 'center', height: 48, width: '100%', zIndex: 0, position: 'absolute', paddingHorizontal: 16}}>
+        <Text type='title' text={label} />
+      </View>
       <View style={styles.header}>
         <IconButton
           icon="menu"
@@ -47,7 +50,6 @@ export default function Drawer({ navigation, label }) {
           color={darkColor}
           onPress={handleClick}
         />
-        <Text type='title' text={label} />
       </View>
       <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
         height: dimensions.height,
@@ -76,10 +78,10 @@ export default function Drawer({ navigation, label }) {
 
 const styles = StyleSheet.create({
   drawer  : {
-    zIndex: 999999999
+    zIndex: 9999
   },
   header           : {
-    position       : "absolute",
+    position       : "relative",
     width          : '100%',
     height         : '48px',
     alignItems     : 'center',
@@ -99,12 +101,12 @@ const styles = StyleSheet.create({
     position       : 'absolute',
     backgroundColor: `${primaryColor}`,
     width          : '75%',
-    // transition     : '.3s'
+    transition     : '.3s'
   },
   backNav          : {
     position       : 'absolute',
     backgroundColor: `${darkColor}`,
     opacity        : 0.5,
-    // transition     : '.5s'
+    transition     : '.5s'
   },
 })

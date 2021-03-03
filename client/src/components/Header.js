@@ -11,10 +11,10 @@ const ContactsRoute = () => <Text>Contactos</Text>;
 const AccountRoute = () => <Text>Cuenta</Text>;
 const ProfileRoute = () => <Text>You</Text>;
 
-export default function Header({ type = 'default', label, navigation }) {
+export default function Header({ type = 'default', label, navigation, align }) {
 
   const Settings = () => (
-    <Drawer label={label} />
+    <Drawer label={label} align={align}/>
   );
 
   const Default = () => (
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     zIndex: 9
   },
   header           : {
-    position       : 'absolute',
+    position       : 'relative',
     width          : '100%',
     height         : '48px',
     alignItems     : 'center',
