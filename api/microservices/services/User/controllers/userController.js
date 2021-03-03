@@ -108,11 +108,21 @@ const getUser = (req, res, next) => {
   });
 };
 
-const getUsers = (req, res, next) => {
-  User.find((error, data) => {
-    if (error) res.status(400).send('Error al cargar');
-    res.status(200).send(data);
-  });
+const getUsers = (req, res) => {
+  const order = req.body.order || 1;
+
+  User.find({})
+    .sort({ name: order })
+    .populate('contacts')
+    .then((users) => {
+      return res.status(200).json(users);
+    })
+    .catch((e) =>
+      res.status(404).json({
+        message: 'No se pudieron cargar los usuarios.',
+        error: e.message
+      })
+    );
 };
 
 const verifyCodeSecurity = (req, res) => {
