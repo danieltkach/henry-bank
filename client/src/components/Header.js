@@ -14,7 +14,7 @@ const ProfileRoute = () => <Text>You</Text>;
 export default function Header({ type = 'default', label, navigation, align }) {
 
   const Settings = () => (
-    <Drawer label={label} align={align}/>
+    <Drawer label={label} align={align} navigation={navigation}/>
   );
 
   const Default = () => (
