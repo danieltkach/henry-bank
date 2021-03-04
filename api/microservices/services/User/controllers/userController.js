@@ -207,11 +207,6 @@ const modifyAlias = (req, res) => {
   const { contactEmail, contactAlias } = req.body;
   User.findOne({ _id: userId })
     .then((user) => {
-      // const contact = {
-      //   email: contactEmail,
-      //   alias: contactAlias
-      // };
-      // user.contactsAlias.push(contact);
       contact = user.contactsAlias.find((c) => c.email === contactEmail);
       contact.alias = contactAlias;
       user.save();
