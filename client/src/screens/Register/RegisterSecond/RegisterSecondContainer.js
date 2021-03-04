@@ -11,7 +11,7 @@ export default function RegisterSecondContainer({ navigation, route }) {
 
   const handleFinalSubmit = inputs => {
     const data = {
-      codeSecurity: inputs,
+      codeSecurity: inputs.code,
       email: email
     }
     verifyUserFetch(data)

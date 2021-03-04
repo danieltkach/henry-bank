@@ -20,7 +20,7 @@ export default function ButtonCustom({ type, color, style, onPress, label, icon,
             <IconButton
               icon={icon}
               size={size || 20}
-              color={color || "white" }
+              color={"white" }
               onPress={onPress}
             />
         </TouchableOpacity>

@@ -4,7 +4,6 @@ import RegisterFirstView from './RegisterFirstView';
 import { Background } from '../../../components';
 import { registerUserFetch } from '../../../controllers/user';
 import styles from './../styles';
-import { registerUserFetch } from "../../../controllers/user";
 
 export default function RegisterFirstContainer({ navigation }) {
 

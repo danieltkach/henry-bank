@@ -14,7 +14,7 @@ export const POST_LOGIN_USER = `${API_USER_HOST}/user/login`; //#dataForm
 export const PUT_USER = `${API_USER_HOST}/user`; //:dataId & dataForm
 export const GET_USER_BY_ID = `${API_USER_HOST}/user`; //:dataId
 export const GET_USERS = `${API_USER_HOST}/user`;
-
+export const ADD_CONTACT=`${API_USER_HOST}/user/contact` //dataId
 export const POST_CODE = `${API_USER_HOST}/user/verify`; //:token
 export const GET_PROFILE_AUTH = `${API_USER_HOST}/profile`;
 
