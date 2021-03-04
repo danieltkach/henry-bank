@@ -19,7 +19,8 @@ import {
   Boilerplate,
   AccountScreen,
   Deposit,
-  Transfer
+  Transfer,
+  MyData
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -69,6 +70,11 @@ class App extends React.Component {
                   {!this.state.isLogin ?
                     (
                     <>
+                      <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="MyData"
+                        component={MyData}
+                      />
                       <Stack.Screen
                         options={{ headerShown: false }}
                         name="Login"
