@@ -8,8 +8,19 @@ import { addSession } from './src/stores/userStore/userActions';
 import { getData } from './src/controllers/storage';
 import { connect } from 'react-redux';
 import {
-  Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
-} from "./src/screens";
+  Home,
+  Login,
+  Menu,
+  Register,
+  TokenScreen,
+  Register1,
+  Register2,
+  EmailSent,
+  Boilerplate,
+  AccountScreen,
+  Deposit,
+  Transfer
+} from './src/screens';
 import { Preload } from './src/components';
 
 
@@ -17,7 +28,7 @@ const Stack = createStackNavigator();
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       mounted: false,
       isLogin: false
@@ -112,25 +123,25 @@ class App extends React.Component {
       </PaperProvider>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 });
 
-const mapActionsToProps = dispatch => {
+const mapActionsToProps = (dispatch) => {
   return {
     addSession: (user) => dispatch(addSession(user)),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.userStore,
+    user: state.userStore
   };
 };
 

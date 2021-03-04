@@ -26,7 +26,7 @@ export default function Drawer({ navigation, label, align }) {
 
   const handleClick = () => {
     setToggle(!toggle);
-  }
+  };
   const buttons = [
     { index: 0, label: 'Recargar dinero', icon: 'arrow-collapse-up', route: 'Recharge' },
     { index: 1, label: 'Enviar dinero', icon: 'subdirectory-arrow-right', route: 'Transfer' },
@@ -73,14 +73,25 @@ export default function Drawer({ navigation, label, align }) {
           onPress={handleClick}
         />
       </View>
-      <TouchableOpacity onPress={handleClick} style={[styles.backNav, {
-        height: dimensions.height,
-        width: dimensions.width,
-        display: toggle && 'inline' || 'none'
-      }]}></TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleClick}
+        style={[
+          styles.backNav,
+          {
+            height: dimensions.height,
+            width: dimensions.width,
+            display: (toggle && 'inline') || 'none'
+          }
+        ]}
+      ></TouchableOpacity>
 
-      <View style={[styles.navbar, { height: dimensions.height, left: toggle && '0px' || '-75%' }]}>
-        <View style={{width: '100%', alignItems: 'flex-end'}}>
+      <View
+        style={[
+          styles.navbar,
+          { height: dimensions.height, left: (toggle && '0px') || '-75%' }
+        ]}
+      >
+        <View style={{ width: '100%', alignItems: 'flex-end' }}>
           <IconButton
             icon="close"
             size={24}
@@ -90,7 +101,13 @@ export default function Drawer({ navigation, label, align }) {
         </View>
         <FlatList
           data={buttons}
-          renderItem={({ item }) => <IconButtonText icon={item.icon} labelButton={item.label} route={item.route} />}
+          renderItem={({ item }) => (
+            <IconButtonText
+              icon={item.icon}
+              labelButton={item.label}
+              route={item.route}
+            />
+          )}
           keyExtractor={(item) => item.index.toString()}
         />
       </View>
@@ -109,24 +126,24 @@ const styles = StyleSheet.create({
     alignItems     : 'center',
     flexDirection  : 'row',
   },
-  textBody       : {
-    color        : 'white',
-    paddingLeft  : '16px'
+  textBody: {
+    color: 'white',
+    paddingLeft: '16px'
   },
-  iconButtonText : {
-    width        : '100%',
+  iconButtonText: {
+    width: '100%',
     flexDirection: 'row',
-    alignItems   : 'center',
-    paddingLeft  : '8px'
+    alignItems: 'center',
+    paddingLeft: '8px'
   },
-  navbar           : {
-    position       : 'absolute',
+  navbar: {
+    position: 'absolute',
     backgroundColor: `${primaryColor}`,
     width          : '75%',
     transition     : '.3s'
   },
-  backNav          : {
-    position       : 'absolute',
+  backNav: {
+    position: 'absolute',
     backgroundColor: `${darkColor}`,
     opacity        : 0.5,
     transition     : '.5s'
