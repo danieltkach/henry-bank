@@ -7,7 +7,8 @@ import {
   GET_USERS,
   GET_ADDRESS,
   POST_CODE,
-  GET_PROFILE_AUTH
+  GET_PROFILE_AUTH,
+  ADD_CONTACT
 } from '../constants/api';
 
 
@@ -97,7 +98,7 @@ export const readUserByIdFetch = (dataId) => {
 
 export const readUsersFetch = () => {
   console.log('GET');
-  return new Promise((resolve, reject) => {
+  return  new Promise((resolve, reject) => {
     fetch(GET_USERS, {
       method: 'GET',
     })
@@ -160,6 +161,27 @@ export const profileAuthFetch = (token) => {
     })
     .catch(err => {
       console.log(err.message)
+    });
+  })
+}
+
+export const addContactFetch = (dataId,dataForm)=>{
+  console.log("PUT",dataId,dataForm);
+  return new Promise((resolve,reject) =>{
+    fetch(`${ADD_CONTACT}${dataId}`,{
+      method: 'PUT',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
+    })
+    .then(response => {
+      console.log('STATUS OK');
+      resolve(response.json());
+    })
+    .catch(err => {
+       console.log(err.message)
     });
   })
 }

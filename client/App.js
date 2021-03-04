@@ -7,7 +7,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { connect } from 'react-redux';
 // import { setSession } from './src/stores/userStore/userActions';
 import {
-  Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit
+  Home, Login, Menu, Register, TokenScreen, Register1, Register2, EmailSent, Boilerplate, AccountScreen, Deposit,Contact
 } from "./src/screens";
 import { Preload } from './src/components';
 import ContactView from "./src/screens/Contact/ContactView"
@@ -37,7 +37,7 @@ class App extends React.Component {
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"
-                  component={ContactView}
+                  component={Contact}
                 />
 
                 <Stack.Screen

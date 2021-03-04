@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { BottomNav, Header, Background,Button,Drawer} from '../../components';
+import { BottomNav, Header, Background,Button,Drawer,Avatar} from '../../components';
+import { readUsersFetch } from "../../controllers/user";
 
 const DATA = [
     {
@@ -21,11 +22,17 @@ const DATA = [
   ];
   
   
-  const ContactView = ({navigation}) => {
-
-  
+  const ContactView = ({navigation,data}) => {
+    console.log(data,"data")
     return (
-     <div></div>
+     <View>
+       <Drawer/>
+       {DATA.map((d,key) => (
+         <View>
+         <Avatar key={key} title={d.alias} subtitle={d.title} />
+         </View>
+       ))}
+     </View>
     );
   };
   
