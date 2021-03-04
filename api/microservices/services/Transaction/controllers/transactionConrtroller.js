@@ -9,7 +9,7 @@ const getTranfers = (req,res) =>{
         if(err) res.status(400).send('Sin transferencias')
         let total = 0;
         data.forEach(transfer =>  total += parseFloat(transfer.amount) )
-        res.status(200).send('total : ' + total)
+        res.status(200).send(total)
     })
 }
 
@@ -19,7 +19,7 @@ const getIncomes = (req,res) =>{
         if(err) res.status(400).send('Sin ingresos')
         let total = 0;
         data.forEach(income =>  total += parseFloat(income.amount) )
-        res.status(200).send('total : ' + total)
+        res.status(200).send(total)
     })
 }
 
