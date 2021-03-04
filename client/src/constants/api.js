@@ -1,10 +1,10 @@
 
-import {
+/* import {
   HOST,
   PORT_API_USER,
   PORT_API_TRANSACTION,
   PORT_API_GATEWAY
-} from '@env';
+} from '@env'; */
 
 require('dotenv').config();
 
