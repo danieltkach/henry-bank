@@ -22,7 +22,6 @@ import {
 } from './src/screens';
 import { Preload } from './src/components';
 
-
 const Stack = createStackNavigator();
 
 class App extends React.Component {
@@ -33,7 +32,7 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // this.props.setSession();
     this.setState({ mounted: true });
   }
@@ -48,6 +47,11 @@ class App extends React.Component {
                 options={{ headerShown: false }}
                 name="Login"
                 component={Login}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Transfer"
+                component={Transfer}
               />
               <Stack.Screen
                 options={{ headerShown: false }}
@@ -86,11 +90,6 @@ class App extends React.Component {
                 name="AccountScreen"
                 component={AccountScreen}
               />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="Transfer"
-                component={Transfer}
-              />
             </Stack.Navigator>
           </NavigationContainer>
         ) : (
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
-    setSession: () => dispatch(setSession()),
+    setSession: () => dispatch(setSession())
   };
 };
 
