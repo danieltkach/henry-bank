@@ -19,7 +19,7 @@ export const getData = async () => {
   }
 }
 
-async deleteData() {
+export const deleteData = async () => {
     try {
         await AsyncStorage.removeItem('session');
         return true;
