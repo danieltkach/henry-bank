@@ -4,8 +4,11 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { dbConnection } = require('./database/config');
 const routes = require('./routes')
-
 const corsMiddle = require('./middlewares/cors');
+
+const userController = require('./controllers/userController');
+const passport = require('passport');
+
 
 let app = express();
 
@@ -27,6 +30,14 @@ dbConnection();
 
 //routes
 app.use('/user', routes);
+
+
+app.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  res.status(200).json({
+    message: 'Informacion del perfil',
+    user: req.user,
+  });
+});
 
 app.listen(4001, () => {
   console.log('Server running on 4001');
