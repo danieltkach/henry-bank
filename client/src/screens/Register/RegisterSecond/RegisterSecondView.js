@@ -26,7 +26,7 @@ export default function RegisterSecondView({ navigation, handleFinalSubmit }) {
       <View style={[styles.content, {flex: 3}]}>
         <View>
           <Text type='title' text='Confirma tu correo electrónico !' style={styles.topText} />
-          <Text type='disabled' text='Tu cuenta se ha registrado correctamente. Para completar el proceso de tu ceunta, consulte su correo electrónico para obtener un codigo de validación.' style={styles.topText} />
+          <Text type='subtitle2' color='disabled' text='Tu cuenta se ha registrado correctamente. Para completar el proceso de tu ceunta, consulte su correo electrónico para obtener un codigo de validación.' style={styles.topText} />
         </View>
 
         <View style={styles.textInputs}>
@@ -83,7 +83,7 @@ export default function RegisterSecondView({ navigation, handleFinalSubmit }) {
         </View>
 
 
-        <View style={{flexDirection: 'row', justifyContent: 'flex-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Button onPress={() => navigation.goBack()} icon='arrow-left' type='icon' color='primary' style={styles.button}/>
           <Button onPress={handleSubmit(onSubmit)} icon='arrow-right' type='icon' color='primary' style={styles.button} />
         </View>

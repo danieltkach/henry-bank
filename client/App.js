@@ -30,24 +30,28 @@ class App extends React.Component {
     }
   }
 
+  handleIsLogin(value) {
+    console.log('handle', value);
+    this.state.setState({ isLogin: value });
+  }
 
   componentDidMount(){
     getData()
     .then(responseToken => {
+      // if(!responseToken) return new Error();
       return profileAuthFetch(responseToken);
     })
     .then(responseProfile => {
       this.setState({ isLogin: true });
       this.props.addSession(responseProfile.user);
     })
-
     this.setState({ mounted: true });
   }
 
   render(){
+    console.log(this.state.isLogin)
     return (
       <PaperProvider>
-
         <NavigationContainer>
           <Stack.Navigator>
             {!this.state.mounted ?
@@ -67,6 +71,7 @@ class App extends React.Component {
                         options={{ headerShown: false }}
                         name="Login"
                         component={Login}
+                        initialParams={{ handleIsLogin: (value) => this.setState({ isLogin: value }) }}
                       />
                       <Stack.Screen
                         options={{ headerShown: false }}
@@ -120,7 +125,6 @@ class App extends React.Component {
             }
           </Stack.Navigator>
         </NavigationContainer>
-
       </PaperProvider>
     );
   }

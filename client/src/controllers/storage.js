@@ -15,7 +15,7 @@ export const getData = async () => {
       return value;
     }
   } catch(e) {
-    console.log(e)
+    console.log(e);
   }
 }
 

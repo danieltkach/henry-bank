@@ -10,7 +10,7 @@ export default function RegisterFirstContainer({ navigation }) {
   const handleFinalSubmit = inputs => {
     registerUserFetch(inputs)
     .then(responseUser => {
-      navigation.navigate('Register2', {email: responseUser.email});
+      navigation.navigate('Register2', {email: responseUser.user.email});
     })
     .catch(err => {
       console.log(err);

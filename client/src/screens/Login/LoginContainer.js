@@ -9,10 +9,11 @@ import { useDispatch } from 'react-redux';
 import styles from './styles';
 
 
-export default function LoginContainer({ navigation }) {
+export default function LoginContainer({ navigation, route }) {
   const dispatch = useDispatch();
   const [data, setData] = useState();
-
+  const { handleIsLogin } = route.params;
+  console.log(route)
   const handleFinalSubmit = inputs => {
     let token;
     loginUserFetch(inputs)
@@ -23,6 +24,8 @@ export default function LoginContainer({ navigation }) {
     .then(responseUser => {
       storeData(token);
       dispatch({type: "ADD_SESSION", payload: responseUser});
+      console.log(handleIsLogin)
+      handleIsLogin(true);
     })
     .catch(err => console.log(err));
   }
