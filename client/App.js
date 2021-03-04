@@ -66,11 +66,6 @@ class App extends React.Component {
                     <>
                       <Stack.Screen
                         options={{ headerShown: false }}
-                        name="MyData"
-                        component={MyData}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
                         name="Login"
                         component={Login}
                       />
@@ -117,6 +112,11 @@ class App extends React.Component {
                         options={{ headerShown: false }}
                         name="Deposit"
                         component={Deposit}
+                      />
+                      <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="MyData"
+                        component={MyData}
                       />
                     </>
                   )
