@@ -1,23 +1,28 @@
-import React from "react";
-import { AsyncStorage } from 'react-native';
+import React, { useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, SafeAreaView } from "react-native";
 import LoginView from './LoginView';
 import { Background } from '../../components';
-import { loginUserFetch } from '../../controllers/user';
-import { addSession } from '../../stores/userStore/userActions';
+import { loginUserFetch, profileAuthFetch } from '../../controllers/user';
+import { storeData } from '../../controllers/storage';
 import { useDispatch } from 'react-redux';
 import styles from './styles';
 
+
 export default function LoginContainer({ navigation }) {
   const dispatch = useDispatch();
+  const [data, setData] = useState();
 
   const handleFinalSubmit = inputs => {
-    var myHeaders = new Headers();
+    let token;
     loginUserFetch(inputs)
-    .then((responseLogin) =>  {
-      console.log('STATUS OK', responseLogin);
-      dispatch({ type: 'ADD_SESSION' })
-      navigation.navigate('Home');
+    .then(responseLogin =>  {
+      token = responseLogin.token;
+      return profileAuthFetch(responseLogin.token);
+    })
+    .then(responseUser => {
+      storeData(token);
+      dispatch({type: "ADD_SESSION", payload: responseUser});
     })
     .catch(err => console.log(err));
   }

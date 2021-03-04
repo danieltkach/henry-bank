@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { ADD_SESSION, SET_SESSION, REMOVE_SESSION } from "./userActions";
+import { ADD_SESSION, REMOVE_SESSION } from "./userActions";
 
 
 const initialState = {
@@ -9,15 +9,11 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_SESSION:
-      return {user: action.payload};
-      break;
-
-    case SET_SESSION:
-      return {user: action.payload};
+      return {...state, user: action.payload && action.payload || {}};
       break;
 
     case REMOVE_SESSION:
-      return {user: action.payload};
+      return {};
       break;
 
     default:
