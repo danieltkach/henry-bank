@@ -129,7 +129,7 @@ export const readAddressFetch = (queryData) => {
 }
 
 export const verifyUserFetch = (dataForm) => {
-  console.log('GET', dataForm);
+  console.log('POST', dataForm);
   return new Promise((resolve) => {
     fetch(POST_CODE, {
       method: 'POST',
@@ -140,7 +140,7 @@ export const verifyUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log('RESPONSE GET < STATUS OK');
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {

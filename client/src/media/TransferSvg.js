@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { Circle, Ellipse, Path } from "react-native-svg";
 
-function Transfer(props) {
+function TransferSvg(props) {
   return (
     <Svg
       data-name="Layer 1"
@@ -284,5 +284,5 @@ function Transfer(props) {
   );
 }
 
-const MemoTransfer = React.memo(Transfer);
+const MemoTransfer = React.memo(TransferSvg);
 export default MemoTransfer;

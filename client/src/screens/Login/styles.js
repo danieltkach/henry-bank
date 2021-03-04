@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems     : 'center'
   },
-
-
-
-
-
+  logo: {
+    resizeMode : 'contain',
+    height: 64,
+  },
+  
   //TEXT STYLES
   underlineBlur    : {
     position       : 'absolute',

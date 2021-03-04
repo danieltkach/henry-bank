@@ -8,16 +8,12 @@ import { addSession } from './src/stores/userStore/userActions';
 import { getData } from './src/controllers/storage';
 import { connect } from 'react-redux';
 import {
-  Home,
   Login,
-  Menu,
   Register,
+  Home,
   TokenScreen,
-  Register1,
-  Register2,
-  EmailSent,
   Boilerplate,
-  AccountScreen,
+  Account,
   Deposit,
   Transfer,
   MyData
@@ -50,8 +46,6 @@ class App extends React.Component {
   }
 
   render(){
-    console.log('Render', this.state.isLogin)
-    console.log('Render', this.props)
     return (
       <PaperProvider>
 
@@ -106,19 +100,23 @@ class App extends React.Component {
                     <>
                       <Stack.Screen
                         options={{ headerShown: false }}
-                        name="Boilerplate"
-                        component={Boilerplate}
-                      />
-
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="EmailSent"
-                        component={EmailSent}
+                        name="Home"
+                        component={Home}
                       />
                       <Stack.Screen
                         options={{ headerShown: false }}
-                        name="AccountScreen"
-                        component={AccountScreen}
+                        name="Account"
+                        component={Account}
+                      />
+                      <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="Transfer"
+                        component={Transfer}
+                      />
+                      <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="Deposit"
+                        component={Deposit}
                       />
                     </>
                   )

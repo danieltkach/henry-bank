@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form"
-import { View, TextInput } from "react-native";
+import { View, TextInput, Image } from "react-native";
 import { Surface, IconButton } from "react-native-paper";
 import { Text, Button } from '../../../components';
 import styles from './../styles';
@@ -23,7 +23,9 @@ export default function RegisterFirstView({ navigation, handleFinalSubmit }) {
 
   return (
     <View style={styles.body}>
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Image style={styles.logo} source={{uri: "https://res.cloudinary.com/dcen68vrk/image/upload/v1614840097/WalletLogo_-_Inro_logo_xxaihg.png"}} />
+      </View>
 
       <View style={[styles.content, {flex: 3}]}>
         <View>
