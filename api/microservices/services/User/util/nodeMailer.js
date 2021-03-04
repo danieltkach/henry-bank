@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const sendGridTransport = require('nodemailer-sendgrid-transport');
-// const { SENDGRID_API, EMAIL_PRUEBA } = process.env;
+const { htmlTemplate } = require('./htmlTemplate');
 
 const EMAIL_PRUEBA = 'inro-wallet@outlook.com';
 const SENDGRID_API = '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';
@@ -34,7 +34,7 @@ let sendEmail = props => {
     from: "Inro",
     to: `${email}`,
     subject: "Verificacion de email",
-    html: `Codigo de verificacion: ${codeSecurity}`,
+    html: htmlTemplate(codeSecurity)
   };
 
   return new Promise((resolve, reject) => {
