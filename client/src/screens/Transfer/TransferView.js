@@ -6,7 +6,7 @@ import { Text, Button } from '../../components';
 import styles from './styles';
 import { validations, REGEX } from '../../validations/index';
 import { palette, rgba, fontSystem } from '../../theme';
-import Transfer from '../../media/Transfer.js';
+import TransferSvg from '../../media/TransferSvg.js';
 
 const darkColor = palette.accent.dark;
 
@@ -34,7 +34,7 @@ export default function TransferView({ handleFinalSubmit, navigation }) {
   const onSubmit = (data) => handleFinalSubmit(data);
   return (
     <View style={[styles.content, { flex: 1 }]}>
-      <Transfer style={styles.imgTransfer} />
+      <TransferSvg style={styles.imgTransfer} />
       <View style={styles.textInputs}>
         <Controller
           name="cash"

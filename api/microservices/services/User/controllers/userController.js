@@ -8,22 +8,28 @@ const createUser = async (req, res, next) => {
   const { name, email, lastName, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
   const token = jwt.sign({ user: body }, 'top_secret');
+  const messages = {
+    message1: '',
+    message2: ''
+  };
 
-  nodeMailer
-    .sendEmail({ name, lastName, email, codeSecurity })
-    .then((response) => {
-      return axios.post(
-        `http://localhost:4002/transaction/account/${req.user._id}`
-      );
-    })
-    .then((resp) => {
-      res
-        .status(200)
-        .json({ message: 'Registro inicial completado', user: req.user });
-    })
-    .catch((err) =>
-      res.status(400).json({ message: 'Error al enviar el email' })
-    );
+  axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
+  .then((resp) => {
+    messages.message1 = 'Registro inicial completado, cuenta asociada';
+  })
+  .catch((err) => {
+    messages.message1 = 'Error al comunicar api transaction';
+  });
+
+  nodeMailer.sendEmail({ name, lastName, email, codeSecurity })
+  .then((resp) => {
+    messages.message2 = 'Registro inicial completado';
+    res.status(200).json({ ...messages, user: req.user });
+  })
+  .catch((err) => {
+    messages.message2 = 'Ya existe una cuenta con este correo';
+    res.status(400).json({ ...messages })
+  });
 };
 
 const loginUser = async (req, res, next) => {
@@ -72,7 +78,7 @@ const modifyUser = async (req, res, next) => {
     streetName,
     streetNumber,
     city,
-    province,
+    zipCode,
     country
   } = req.body;
 
@@ -87,8 +93,8 @@ const modifyUser = async (req, res, next) => {
     streetName: streetName,
     streetNumber: streetNumber,
     city: city,
-    province: province,
-    country: country
+    country: country,
+    zipCode: zipCode
   })
     .then((user) => {
       user.save();
@@ -129,17 +135,17 @@ const verifyCodeSecurity = (req, res) => {
   const { email, codeSecurity } = req.body;
 
   User.findOne({ email })
-    .then((responseUser) => {
-      if (
-        responseUser.codeSecurity === codeSecurity &&
-        responseUser.codeSecurityExp > Date.now()
-      ) {
-        res
-          .status(200)
-          .json({ message: 'Codigo verificado', userId: responseUser._id });
-      } else res.status(400).json({ message: 'Error de verificacion' });
-    })
-    .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
+  .then((responseUser) => {
+    if (
+      responseUser.codeSecurity === codeSecurity &&
+      responseUser.codeSecurityExp > Date.now()
+    ){
+      responseUser.codeSecurity = 'active';
+      responseUser.save();
+      res.status(200).json({ message: 'Codigo verificado', userId: responseUser._id });
+    } else res.status(400).json({ message: 'Error de verificacion' });
+  })
+  .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
 };
 
 const addContact = (req, res) => {
