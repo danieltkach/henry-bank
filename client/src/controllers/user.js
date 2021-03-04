@@ -168,7 +168,7 @@ export const profileAuthFetch = (token) => {
 export const addContactFetch = (dataId,dataForm)=>{
   console.log("PUT",dataId,dataForm);
   return new Promise((resolve,reject) =>{
-    fetch(`${ADD_CONTACT}${dataId}`,{
+    fetch(`${ADD_CONTACT}/${dataId}`,{
       method: 'PUT',
       headers: {
         Accept: '*/*',
