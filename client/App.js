@@ -19,7 +19,6 @@ import {
 } from './src/screens';
 import { Preload } from './src/components';
 
-
 const Stack = createStackNavigator();
 
 class App extends React.Component {
@@ -31,6 +30,7 @@ class App extends React.Component {
     }
   }
 
+
   componentDidMount(){
     getData()
     .then(responseToken => {
@@ -40,12 +40,14 @@ class App extends React.Component {
       this.setState({ isLogin: true });
       this.props.addSession(responseProfile.user);
     })
+
     this.setState({ mounted: true });
   }
 
   render(){
     return (
       <PaperProvider>
+
         <NavigationContainer>
           <Stack.Navigator>
             {!this.state.mounted ?
@@ -118,6 +120,7 @@ class App extends React.Component {
             }
           </Stack.Navigator>
         </NavigationContainer>
+
       </PaperProvider>
     );
   }
@@ -133,7 +136,9 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
+
     addSession: (user) => dispatch(addSession(user)),
+
   };
 };
 
