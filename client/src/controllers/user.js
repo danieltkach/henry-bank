@@ -24,7 +24,7 @@ export const registerUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -46,7 +46,7 @@ export const loginUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -68,7 +68,7 @@ export const updateUserFetch = (dataId, dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE PUT < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -87,7 +87,7 @@ export const readUserByIdFetch = (dataId) => {
       method: 'GET',
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE GET < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -103,7 +103,7 @@ export const readUsersFetch = () => {
       method: 'GET',
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE GET < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -119,6 +119,7 @@ export const readAddressFetch = (queryData) => {
       method: 'GET',
     })
     .then(response => {
+      console.log('RESPONSE GET < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -129,7 +130,7 @@ export const readAddressFetch = (queryData) => {
 }
 
 export const verifyUserFetch = (dataForm) => {
-  console.log('GET', dataForm);
+  console.log('POST', dataForm);
   return new Promise((resolve) => {
     fetch(POST_CODE, {
       method: 'POST',
@@ -140,7 +141,7 @@ export const verifyUserFetch = (dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -156,7 +157,7 @@ export const profileAuthFetch = (token) => {
       method: 'GET',
     })
     .then(response => {
-      console.log('STATUS OK');
+      console.log('RESPONSE GET < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {

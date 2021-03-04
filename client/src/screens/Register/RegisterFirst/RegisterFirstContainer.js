@@ -2,18 +2,20 @@ import React from "react";
 import { View, SafeAreaView } from "react-native";
 import RegisterFirstView from './RegisterFirstView';
 import { Background } from '../../../components';
+import { registerUserFetch } from '../../../controllers/user';
 import styles from './../styles';
 import { registerUserFetch } from "../../../controllers/user";
 
 export default function RegisterFirstContainer({ navigation }) {
 
   const handleFinalSubmit = inputs => {
-    console.log('dataForm: ', inputs)
     registerUserFetch(inputs)
-    .then(r => {
-      console.log(r)
-      navigation.navigate('Register2');
+    .then(responseUser => {
+      navigation.navigate('Register2', {email: responseUser.user.email});
     })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   return (

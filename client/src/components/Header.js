@@ -5,16 +5,16 @@ import { BottomNavigation, IconButton, Surface } from 'react-native-paper';
 import { palette } from '../theme';
 import { Drawer, Text } from './index';
 
-
 const HomeRoute = () => <Text>Inicio</Text>;
 const ContactsRoute = () => <Text>Contactos</Text>;
 const AccountRoute = () => <Text>Cuenta</Text>;
 const ProfileRoute = () => <Text>You</Text>;
 
+
 export default function Header({ type = 'default', label, navigation, align }) {
 
   const Settings = () => (
-    <Drawer label={label} align={align}/>
+    <Drawer label={label} align={align} navigation={navigation}/>
   );
 
   const Default = () => (
@@ -25,21 +25,15 @@ export default function Header({ type = 'default', label, navigation, align }) {
         color={palette.accent.dark}
         onPress={() => navigation.goBack()}
       />
-      <View style={{margin: 'auto'}}>
-        <Text type='title' text={label} />
+      <View style={{ margin: 'auto' }}>
+        <Text type="title" text={label} />
       </View>
     </View>
   );
 
-  return(
+  return (
     <View style={styles.nav}>
-      {type !== 'default' ? (
-          <Settings/>
-        ):
-        (
-          <Default/>
-        )
-      }
+      {type !== 'default' ? <Settings /> : <Default />}
     </View>
   );
 }
@@ -55,4 +49,4 @@ const styles = StyleSheet.create({
     alignItems     : 'center',
     flexDirection  : 'row',
   }
-})
+});

@@ -2,14 +2,25 @@ import React from "react";
 import { View, SafeAreaView } from "react-native";
 import RegisterSecondView from './RegisterSecondView';
 import { Background } from '../../../components';
+import { verifyUserFetch } from '../../../controllers/user';
 import styles from './../styles';
 
-export default function RegisterSecondContainer({ navigation }) {
+export default function RegisterSecondContainer({ navigation, route }) {
+  console.log(route)
+  const { email } = route.params;
 
   const handleFinalSubmit = inputs => {
-    console.log('dataForm: ', inputs)
-    //fetch
-    navigation.navigate('Register3');
+    const data = {
+      codeSecurity: inputs,
+      email: email
+    }
+    verifyUserFetch(data)
+    .then(responseUser => {
+      navigation.navigate('Register3', {userId: responseUser.userId});
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   return (
