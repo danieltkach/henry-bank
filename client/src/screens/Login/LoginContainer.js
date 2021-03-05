@@ -22,10 +22,13 @@ export default function LoginContainer({ navigation, route }) {
       return profileAuthFetch(responseLogin.token);
     })
     .then(responseUser => {
-      storeData(token);
-      dispatch({type: "ADD_SESSION", payload: responseUser});
-      console.log(handleIsLogin)
-      handleIsLogin(true);
+      if(responseUser.user.role == "client"){
+        storeData(token);
+        dispatch({type: "ADD_SESSION", payload: responseUser});
+        console.log(handleIsLogin)
+        handleIsLogin(true);
+      }
+      
     })
     .catch(err => console.log(err));
   }
