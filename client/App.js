@@ -119,6 +119,11 @@ class App extends React.Component {
                       name="Deposit"
                       component={Deposit}
                     />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Contact"
+                      component={Contact}
+                    />
                   </>
                 )}
               </>
