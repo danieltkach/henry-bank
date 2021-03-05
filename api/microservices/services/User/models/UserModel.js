@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
+
 
 const validateEmail = function (email) {
   let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -91,13 +91,6 @@ const UserSchema = new Schema({
       ref: 'Account'
     }
   ]
-});
-
-UserSchema.pre('save', async function (next) {
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
-  this.codeSecurityExp = Date.now() + 600000;
-  next();
 });
 
 UserSchema.methods.isValidPassword = async function (password) {
