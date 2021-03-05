@@ -8,5 +8,7 @@ export { default as MyData } from './MyData/MyDataContainer';
 
 export { default as Home } from './Home/HomeContainer';
 export { default as Login } from './Login/LoginContainer';
+export { default as AccountScreen } from './AccountScreen';
+export {default as  Contact} from "./Contact/ContactContainer"
 export { default as Register } from './Register';
 export { default as Transfer } from './Transfer/TransferContainer';

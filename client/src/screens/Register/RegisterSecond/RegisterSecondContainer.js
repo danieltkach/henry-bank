@@ -5,16 +5,19 @@ import { Background } from '../../../components';
 import { verifyUserFetch } from '../../../controllers/user';
 import styles from './../styles';
 
-export default function RegisterSecondContainer({ navigation, email }) {
+export default function RegisterSecondContainer({ navigation, route }) {
+  console.log(route)
+  const { email } = route.params;
 
   const handleFinalSubmit = inputs => {
     const data = {
-      codeSecurity: inputs,
+      codeSecurity: inputs.code,
       email: email
     }
     verifyUserFetch(data)
     .then(responseUser => {
-      navigation.navigate('Register3', {userId: responseUser.userId});
+      if(responseUser.message == "Codigo verificado") {navigation.navigate('Register3', {userId: responseUser.userId})};
+      
     })
     .catch(err => {
       console.log(err);

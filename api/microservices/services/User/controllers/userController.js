@@ -23,6 +23,8 @@ const createUser = async (req, res, next) => {
 
   nodeMailer.sendEmail({ name, lastName, email, codeSecurity })
   .then((resp) => {
+    req.user.codeSecurityExp = Date.now() + 600000;
+    req.user.save();
     messages.message2 = 'Registro inicial completado';
     res.status(200).json({ ...messages, user: req.user });
   })
@@ -207,11 +209,6 @@ const modifyAlias = (req, res) => {
   const { contactEmail, contactAlias } = req.body;
   User.findOne({ _id: userId })
     .then((user) => {
-      // const contact = {
-      //   email: contactEmail,
-      //   alias: contactAlias
-      // };
-      // user.contactsAlias.push(contact);
       contact = user.contactsAlias.find((c) => c.email === contactEmail);
       contact.alias = contactAlias;
       user.save();

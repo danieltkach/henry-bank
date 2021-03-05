@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+
 
 passport.use('signup', new localStrategy({
     usernameField: 'email',
@@ -36,6 +38,8 @@ passport.use('login', new localStrategy({
             return done(null, false, { message: 'Wrong password' })
         }
 
+        user.password = bcrypt.hash(user.password, 10);
+        user.save();
         return done(null, user, { message: 'Login successfull' })
     } catch (e) {
         return done(e)
