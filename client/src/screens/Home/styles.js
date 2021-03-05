@@ -88,11 +88,10 @@ const styles = StyleSheet.create({
     inputs: {
         flex:1,
         justifyContent:'center',
-        },
-        foto: {
-        position: "absolute",
-        left: 140,
-        top: -20,
+    },
+    foto: {
+      width: '100%',
+      justifyContent: 'center'
     },
     button: {
         position: "absolute",

@@ -8,9 +8,7 @@ export default function RegisterThirdContainer({ navigation, route }) {
   const { userId } = route.params;
 
   const handleFinalSubmit = inputs => {
-    console.log('dataForm: ', inputs)
-    //fetch
-    navigation.navigate('Register4');
+    navigation.navigate('Register4', {inputsBefore: inputs, userId: userId});
   }
 
   return (

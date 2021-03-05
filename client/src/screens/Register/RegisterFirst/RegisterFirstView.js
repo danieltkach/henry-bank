@@ -75,16 +75,7 @@ export default function RegisterFirstView({ navigation, handleFinalSubmit, error
               {errors[e.name] ?
                 (<>
                   <View id='name' style={[styles.underlineBlur, styles.underlineError]}></View>
-                  <Text
-                    text={(e.name === 'password' || 'confirmPassword') ?
-                      (
-                        errorHandle === '' && errorHandle || errors?.[e.name]?.message
-                      ):
-                      (
-                        errors?.[e.name]?.message
-                      )
-                    }
-                    type='body3' style={styles.helperText}/>
+                  <Text text={errors?.[e.name]?.message} type='body3' style={styles.helperText}/>
                 </>
                 ):(
                   <View id='name' style={[styles.underlineBlur]}></View>

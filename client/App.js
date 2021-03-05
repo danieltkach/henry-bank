@@ -15,7 +15,8 @@ import {
   Boilerplate,
   Account,
   Deposit,
-  Transfer
+  Transfer,
+  Contact
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -102,11 +103,28 @@ class App extends React.Component {
                       options={{ headerShown: false }}
                       name="Home"
                       component={Home}
+                      initialParams={{
+                        handleIsLogin: (value) =>
+                          this.setState({ isLogin: value })
+                      }}
                     />
                     <Stack.Screen
                       options={{ headerShown: false }}
                       name="Account"
                       component={Account}
+                      initialParams={{
+                        handleIsLogin: (value) =>
+                          this.setState({ isLogin: value })
+                      }}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Contact"
+                      component={Contact}
+                      initialParams={{
+                        handleIsLogin: (value) =>
+                          this.setState({ isLogin: value })
+                      }}
                     />
                     <Stack.Screen
                       options={{ headerShown: false }}

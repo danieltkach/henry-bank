@@ -16,8 +16,10 @@ import {
 } from '../../../images/Logo.png';
 
 
-export default function HomeView() {
-
+export default function HomeView({ navigation, account, handleAccount, user }) {
+  // console.log(account)
+  // let setAccount = handleAccount(user.accounts[0]);
+  // console.log(setAccount)
   const ContentPrueba = () => {
     return (
       <>
@@ -39,9 +41,8 @@ export default function HomeView() {
         </View>
 
         <View style={styles.foto}>
-            <Image style={styles.logo} source={Logo}/>
+            <Image style={styles.logo} source={{uri: "https://res.cloudinary.com/dcen68vrk/image/upload/v1614840097/WalletLogo_-_Inro_logo_xxaihg.png"}}/>
         </View>
-            <Text style={styles.saludo}>Hola usuario</Text>
 
         <View>
             <Text style={styles.cantidadDinero}>5.911,34</Text>
@@ -91,6 +92,19 @@ export default function HomeView() {
 
   return (
     <View style={{flex: 1}}>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image style={styles.logo} source={{uri: "https://res.cloudinary.com/dcen68vrk/image/upload/v1614840097/WalletLogo_-_Inro_logo_xxaihg.png"}}/>
+      </View>
+
+      <View style={{width: '100%'}}>
+        <Text type='title' text={`0`} />
+        <Text type='subtitle1' label='Balance de mi cuenta' />
+      </View>
+
+      <View>
+        <Text type='title' text='Registro de cliente' style={styles.topText} />
+        <Text type='subtitle1' text='Datos personales' style={styles.topText} />
+      </View>
 
     </View>
   );

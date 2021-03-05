@@ -10,7 +10,7 @@ import { deleteData } from '../controllers/storage';
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label, align }) {
+export default function Drawer({ navigation, label, align, handleIsLogin }) {
   const dispatch = useDispatch();
   const [isSignOut, setIsSignOut] = useState(false);
   const dimensions = useWindowDimensions();
@@ -55,7 +55,7 @@ export default function Drawer({ navigation, label, align }) {
   const IconButtonText = ({ labelButton, icon, route }) => (
     <TouchableOpacity
       onPress={
-        route ? () => navigation.navigate(route) : () => setIsSignOut(true)
+        route ? () => navigation.navigate(route) : () => handleIsLogin(false)
       }
       style={styles.iconButtonText}
     >
