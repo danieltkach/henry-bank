@@ -15,6 +15,7 @@ const textInputs = [
 
   const ContactView = ({navigation,data,toggle,handleClick}) => {
     const { control, handleSubmit, errors } = useForm();
+    
     console.log(data,"data")
     return (
      <View style={{flex:1}}>

@@ -20,7 +20,6 @@ import { palette, rgba } from "../../theme";
   const fetch = () =>
   readUsersFetch()
   .then(r =>{
-    console.log(r,"esto es la respuesta")
     console.log(r[0].contactsAlias)
     Setusers(...users, r[0].contactsAlias)})
   
