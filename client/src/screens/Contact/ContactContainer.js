@@ -2,68 +2,75 @@ import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, StyleSheet, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Background, BottomNav, Button, Header } from '../../components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactView from './ContactView';
-import { addContactFetch, deleteContactFetch, readUsersFetch } from '../../controllers/user';
+import {
+  addContactFetch,
+  deleteContactFetch,
+  readUserByIdFetch,
+  readUsersFetch
+} from '../../controllers/user';
 import { palette, rgba } from '../../theme';
 
 const ContactContainer = ({ navigation }) => {
+  const userId = useSelector((state) => state.userReducer.user._id);
   const [users, Setusers] = useState([]);
   const [toggle, setToggle] = useState(false);
-  console.log(users,"a")
+  console.log(users, 'a');
   const handleClick = () => {
     setToggle(!toggle);
   };
-   
-  const addContact= (dataForm) =>{
-    console.log(dataForm,"addcontact")
+
+  const addContact = (dataForm) => {
+    console.log(dataForm, 'addcontact');
     addContactFetch(dataForm)
-    .then(r =>{
-      console.log(r)
-    })
-    .catch(err =>{
-      console.log(err)
-    })
-  }
+      .then((r) => {
+        console.log(r);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-
-  const deleteContact= (dataId,dataForm)=>{
-    console.log(dataForm,dataId,"Aaaaaaaaaaaaa")
-  deleteContactFetch(dataId,dataForm)
-  .then(response =>{
-    console.log(response,"response")
-  })
-  .catch(err =>{
-    console.log(err)
-  })
-  }
+  const deleteContact = (dataId, dataForm) => {
+    console.log(dataForm, dataId, 'Aaaaaaaaaaaaa');
+    deleteContactFetch(dataId, dataForm)
+      .then((response) => {
+        console.log(response, 'response');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fetch = () =>
-    readUsersFetch().then((r) => {
-      Setusers(...users, r[0].contactsAlias);
+    readUserByIdFetch(userId).then((r) => {
+      console.log(r);
+      Setusers(...users, r.contactsAlias);
     });
 
   useEffect(() => {
     fetch();
   }, []);
 
-  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
-      { users ? 
-
-        (
-          <ContactView toggle={toggle} handleClick={handleClick} data={users} deleteContact={deleteContact} addContact={addContact} />
-        ) 
-        :(
-          <>
+      {users ? (
+        <ContactView
+          toggle={toggle}
+          handleClick={handleClick}
+          data={users}
+          deleteContact={deleteContact}
+          addContact={addContact}
+          navigation={navigation}
+        />
+      ) : (
+        <>
           <Text>NO TENES CONTACTO</Text>
-          </>
-        )
+        </>
+      )}
 
-      }
-      
       <Button
         style={styles.icono}
         label="A"
