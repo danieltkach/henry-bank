@@ -11,7 +11,7 @@ export default function HomeContainer({ navigation }) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Background />
-      <Header type='settings' label={`Hola `} align='center'/>
+      <Header type='settings' label={`Hola`} align='center' navigation={navigation}/>
       <View style={styles.container}>
         <HomeView />
       </View>
