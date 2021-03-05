@@ -81,8 +81,9 @@ function calcularEdad(fecha) {
   return edad;
 }
 
-const modifyUser = async (req, res, next) => {
+const modifyUser = (req, res, next) => {
   const userId = req.params.id;
+
   const {
     idType,
     idNumber,
@@ -96,28 +97,29 @@ const modifyUser = async (req, res, next) => {
     zipCode,
     country
   } = req.body;
+  console.log('DEBUG')
+  User.findById({_id: userId}, (error, user) => {
+    console.log(user)
+    user.role = 'client',
+    user.idType = idType,
+    user.idNumber = idNumber,
+    user.name = name,
+    user.lastName = lastName,
+    user.birthdate = birthdate,
+    user.cellphone = cellphone,
+    user.streetName = streetName,
+    user.streetNumber = streetNumber,
+    user.city = city,
+    user.country = country,
+    user.zipCode = zipCode
 
-  User.findByIdAndUpdate(userId, {
-    role: 'client',
-    idType: idType,
-    idNumber: idNumber,
-    name: name,
-    lastName: lastName,
-    birthdate: birthdate,
-    cellphone: cellphone,
-    streetName: streetName,
-    streetNumber: streetNumber,
-    city: city,
-    country: country,
-    zipCode: zipCode
+
+    user.save();
+    res.status(200).json({ message: 'Usuario actualizado.', userId });
   })
-    .then((user) => {
-      user.save();
-      res.status(200).json({ message: 'Usuario actualizado.', userId });
-    })
-    .catch((error) =>
-      res.status(400).json({ message: 'Error al actualizar usuario.' })
-    );
+  .catch((error) =>
+    res.status(400).json({ message: 'Error al actualizar usuario.' })
+  );
 };
 
 const getUser = (req, res, next) => {
