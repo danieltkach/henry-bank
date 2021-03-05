@@ -210,9 +210,10 @@ const deleteContact = (req, res) => {
   const contactEmail = req.body.contactEmail;
 
   User.findOne({ _id: userId })
-    .populate('contacts')
+    .populate('contacts',"contactsAlias")
     .then((user) => {
-      user.contacts = user.contacts.filter((c) => c.email !== contactEmail);
+      user.contacts     = user.contacts.filter((c) => c.email == contactEmail);
+      user.contactsAlias = user.contactsAlias.filter((c) => c.email !== contactEmail);
       user.save();
       res.status(200).json(user);
     })

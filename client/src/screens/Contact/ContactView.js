@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View,TextInput } from "react-native";
 import { BottomNav, Header, Background,Button,Drawer,Avatar} from '../../components';
-import { readUsersFetch } from "../../controllers/user";
+import { addContactFetch, readUsersFetch } from "../../controllers/user";
 import { validations, REGEX } from '../../validations/index';
 import { palette, rgba,fontSystem } from "../../theme";
 import { useForm, Controller } from "react-hook-form"
@@ -13,8 +13,48 @@ const textInputs = [
   {name: 'email', placeholder: 'Correo electrónico', type: 'email', error: 'Correo electrónico invalido', pattern: REGEX.EMAIL, }
 ];
 
-  const ContactView = ({navigation,data,toggle,handleClick}) => {
+  const ContactView = ({navigation,data,toggle,handleClick,deleteContact,addContact}) => {
     const { control, handleSubmit, errors } = useForm();
+    
+    
+    const DELETECONTACT= (dataEmail)=>{
+      var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({"contactEmail":dataEmail});
+
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("localhost:4001/user/contacts/6041b71060964c81c9378b76", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    }
+
+    const onSumbit = data => {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      console.log(data,"input")
+      var raw = JSON.stringify({"contactEmail":data.email});
+      
+      var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      
+      fetch("http://localhost:4001/user/contact/6041b71060964c81c9378b76", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result), handleClick())
+        .catch(error => console.log('error', error));
+    }
+
     console.log(data,"data")
     return (
      <View style={{flex:1}}>
@@ -80,6 +120,7 @@ const textInputs = [
           </View>
             <Button 
               label="Agregar Contacto" 
+              onPress={handleSubmit(onSumbit)}
               style={{backgroundColor:secondaryColor}} 
               type="button"
             >
@@ -97,9 +138,9 @@ const textInputs = [
           </View> : <Header type='settings' label='Contactos' align='center'/>
 
 }
-       {data.map((d,key) => (
-         <View  key={key}>
-         <Avatar title={d.alias} subtitle={d.email} />
+       {data.length >0 && data.map((d,index) => (
+         <View  key={index}>
+         <Avatar  title={d.alias} subtitle={d.email} onPress={() => DELETECONTACT(d.email)}/>
          </View>
         ))}
           

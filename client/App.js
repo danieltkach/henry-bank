@@ -15,7 +15,8 @@ import {
   Boilerplate,
   Account,
   Deposit,
-  Transfer
+  Transfer,
+  Contact
 } from './src/screens';
 import { Preload } from './src/components';
 

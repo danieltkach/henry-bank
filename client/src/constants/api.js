@@ -17,6 +17,7 @@ export const GET_USERS = `${API_USER_HOST}/user`;
 export const ADD_CONTACT = `${API_USER_HOST}/user/contact`; //dataId
 export const POST_CODE = `${API_USER_HOST}/user/verify`; //:token
 export const GET_PROFILE_AUTH = `${API_USER_HOST}/profile`;
+export const DELETE_CONTACT =  `${API_USER_HOST}/user/contacts` //dataId;
 
 export const GET_ADDRESS = `${API_USER_HOST}/user/validate-address`; //?direccion=:queryData
 
