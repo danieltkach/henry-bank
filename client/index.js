@@ -3,7 +3,7 @@ import App from './App.js'
 import store from './src/stores'
 import { Provider } from 'react-redux'
 import { registerRootComponent } from 'expo';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 const NewRootComponent = () => {
   return (
     <Provider store={store}>
