@@ -11,12 +11,12 @@ const darkColor = palette.accent.dark;
 
 
 const textInputs = [
-  {name: 'phone', placeholder: 'Telefono', maxLength: 20, minLength: 8},
-  {name: 'street', placeholder: 'Domicilio calle', maxLength: 20, minLength: 8},
-  {name: 'streetNumber', placeholder: 'Número', maxLength: 20, minLength: 8},
-  {name: 'zipCode', placeholder: 'Codigo postal', maxLength: 20, minLength: 8},
-  {name: 'city', placeholder: 'Ciudad', maxLength: 20, minLength: 8},
-  {name: 'country', placeholder: 'País', maxLength: 20, minLength: 8},
+  {name: 'phone', placeholder: 'Telefono', maxLength: 20, minLength: 6},
+  {name: 'street', placeholder: 'Domicilio calle', maxLength: 20, minLength: 3},
+  {name: 'streetNumber', placeholder: 'Número', maxLength: 20, minLength: 3},
+  {name: 'zipCode', placeholder: 'Codigo postal', maxLength: 20, minLength: 4},
+  {name: 'city', placeholder: 'Ciudad', maxLength: 20, minLength: 3},
+  {name: 'country', placeholder: 'País', maxLength: 20, minLength: 3},
 ];
 
 export default function RegisterFourthView({ navigation, handleFinalSubmit }) {

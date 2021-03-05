@@ -23,7 +23,7 @@ export default function TransferContainer({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
-      <Header label="Transferir Dinero" />
+      <Header label="Transferir Dinero" navigation={navigation}/>
       <View style={styles.container}>
         <TransferView
           navigation={navigation}
