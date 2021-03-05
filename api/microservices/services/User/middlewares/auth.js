@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
+
 
 
 passport.use('signup', new localStrategy({
