@@ -13,16 +13,18 @@ const createUser = async (req, res, next) => {
     message2: ''
   };
 
-  // axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
-  // .then((resp) => {
-  //   messages.message1 = 'Registro inicial completado, cuenta asociada';
-  // })
-  // .catch((err) => {
-  //   messages.message1 = 'Error al comunicar api transaction';
-  // });
+  axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
+  .then((resp) => {
+    messages.message1 = 'Registro inicial completado, cuenta asociada';
+  })
+  .catch((err) => {
+    messages.message1 = 'Error al comunicar api transaction';
+  });
 
   nodeMailer.sendEmail({ name, lastName, email, codeSecurity })
   .then((resp) => {
+    req.user.codeSecurityExp = Date.now() + 600000;
+    req.user.save();
     messages.message2 = 'Registro inicial completado';
     res.status(200).json({ ...messages, user: req.user });
   })
