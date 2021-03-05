@@ -42,8 +42,11 @@ class App extends React.Component {
       return profileAuthFetch(responseToken);
     })
     .then(responseProfile => {
-      this.setState({ isLogin: true });
-      this.props.addSession(responseProfile.user);
+      if(responseProfile.user.role == "client"){
+        this.setState({ isLogin: true });
+        this.props.addSession(responseProfile.user);
+      }
+      
     })
     this.setState({ mounted: true });
   }

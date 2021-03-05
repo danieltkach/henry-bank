@@ -11,12 +11,13 @@ export default function RegisterSecondContainer({ navigation, route }) {
 
   const handleFinalSubmit = inputs => {
     const data = {
-      codeSecurity: inputs,
+      codeSecurity: inputs.code,
       email: email
     }
     verifyUserFetch(data)
     .then(responseUser => {
-      navigation.navigate('Register3', {userId: responseUser.userId});
+      if(responseUser.message == "Codigo verificado") {navigation.navigate('Register3', {userId: responseUser.userId})};
+      
     })
     .catch(err => {
       console.log(err);
