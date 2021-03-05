@@ -28,7 +28,7 @@ class App extends React.Component {
     this.state = {
       mounted: false,
       isLogin: false
-    }
+    };
   }
 
   handleIsLogin(value) {
@@ -36,97 +36,93 @@ class App extends React.Component {
     this.state.setState({ isLogin: value });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     getData()
-    .then(responseToken => {
-      // if(!responseToken) return new Error();
-      return profileAuthFetch(responseToken);
-    })
-    .then(responseProfile => {
-      if(responseProfile.user.role == "client"){
-        this.setState({ isLogin: true });
-        this.props.addSession(responseProfile.user);
-      }
-      
-    })
+      .then((responseToken) => {
+        // if(!responseToken) return new Error();
+        return profileAuthFetch(responseToken);
+      })
+      .then((responseProfile) => {
+        if (responseProfile.user.role) {
+          this.setState({ isLogin: true });
+          this.props.addSession(responseProfile.user);
+        }
+      });
     this.setState({ mounted: true });
   }
 
-  render(){
-    console.log(this.state.isLogin)
+  render() {
+    console.log(this.state.isLogin);
     return (
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {!this.state.mounted ?
-              (
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Preload"
-                  component={Preload}
-                />
-              )
-              :(
-                <>
-                  {!this.state.isLogin ?
-                    (
-                    <>
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Login"
-                        component={Contact}
-                        initialParams={{ handleIsLogin: (value) => this.setState({ isLogin: value }) }}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register1"
-                        component={Register.RegisterFirst}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register2"
-                        component={Register.RegisterSecond}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register3"
-                        component={Register.RegisterThird}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register4"
-                        component={Register.RegisterFourth}
-                      />
-                    </>
-                  )
-                  :(
-                    <>
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Home"
-                        component={Home}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Account"
-                        component={Account}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Transfer"
-                        component={Transfer}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Deposit"
-                        component={Deposit}
-                      />
-                    </>
-                  )
-                }
+            {!this.state.mounted ? (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Preload"
+                component={Preload}
+              />
+            ) : (
+              <>
+                {!this.state.isLogin ? (
+                  <>
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Login"
+                      component={Login}
+                      initialParams={{
+                        handleIsLogin: (value) =>
+                          this.setState({ isLogin: value })
+                      }}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Register1"
+                      component={Register.RegisterFirst}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Register2"
+                      component={Register.RegisterSecond}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Register3"
+                      component={Register.RegisterThird}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Register4"
+                      component={Register.RegisterFourth}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Home"
+                      component={Home}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Account"
+                      component={Account}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Transfer"
+                      component={Transfer}
+                    />
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Deposit"
+                      component={Deposit}
+                    />
+                  </>
+                )}
               </>
-              )
-            }
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
@@ -144,9 +140,7 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
-
-    addSession: (user) => dispatch(addSession(user)),
-
+    addSession: (user) => dispatch(addSession(user))
   };
 };
 

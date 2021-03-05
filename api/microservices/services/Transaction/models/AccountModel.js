@@ -8,7 +8,7 @@ const accountSchema = new Schema({
   },
   currency: {
     type: String,
-    default: ''
+    default: 'Pesos'
   },
   cvu: {
     type: Number,

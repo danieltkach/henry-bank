@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const passport = require('passport');
-// const setPassword = require('../middlewares/setPassword');
 
 
 router.post('/signup', passport.authenticate('signup', { session: false }), userController.createUser);
