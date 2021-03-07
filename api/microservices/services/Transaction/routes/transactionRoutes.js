@@ -15,4 +15,6 @@ server.put('/transfer/recharge', transactionController.rapiTransfer)
 
 server.put('/newTransfer/:idSender' , transactionController.newTransaction)
 
+server.get('/statistics/:id' , transactionController.getStatistics)
+
 module.exports = server
