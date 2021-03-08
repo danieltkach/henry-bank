@@ -223,6 +223,19 @@ const getStatistics = (req,res) =>{
 }
 
 
+const getAllTransfers = (req,res) => {
+    const user = req.params.idAccount
+    Transaction.find({ $or: [{idSenderAccount : user } , {idReceiverAccount: user} ] }, function(err,data){
+        if(err) res.status(400).send('Error al traer las transacciones')
+
+        let allTransfersUser = data.map(transfer => 
+            transfer.idReceiverAccount === user ? [...data , transfer.amount = '+ ' + transfer.amount] :
+            [...data , transfer.amount = '- ' + transfer.amount])
+
+        res.status(200).send(allTransfersUser)
+    } )
+}
+
 module.exports= {
     getTranfers,
     getIncomes,
@@ -230,5 +243,6 @@ module.exports= {
     getIncomesByDate,
     rapiTransfer,
     newTransaction,
-    getStatistics
+    getStatistics,
+    getAllTransfers
 }
