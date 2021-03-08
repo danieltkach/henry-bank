@@ -6,13 +6,13 @@ import { Text, Button } from '../../components';
 import styles from './styles';
 import { validations, REGEX } from '../../validations/index';
 import { palette, rgba, fontSystem } from '../../theme';
-import LogoSvg from '../../media/TransferSvg.js';
+// import LogoSvg from '../../media/LogoSvg.js';
 
 
 const darkColor = palette.accent.dark;
 
 const textInputs = [
-  {name: 'email', placeholder: 'Correo electrónico', type: 'email', error: 'Correo electrónico invalido', pattern: REGEX.EMAIL, },
+  {name: 'email', placeholder: 'Correo electrónico', type: 'email', error: 'Correo electrónico invalido', pattern: REGEX.EMAIL },
   {name: 'password', placeholder: 'Contraseña', type: 'password', error: 'Minimo 8 caracteres (al menos una letra y número).', pattern: REGEX.PASSWORD, maxLength: 20, minLength: 8}
 ];
 
@@ -74,10 +74,11 @@ export default function LoginView({ navigation, handleFinalSubmit }) {
                 )}
               />
               {errors[e.name] ?
-                (<>
-                  <View id='name' style={[styles.underlineBlur, styles.underlineError]}></View>
-                  <Text text={errors?.[e.name]?.message} type='body3' style={styles.helperText}/>
-                </>
+                (
+                  <>
+                    <View id='name' style={[styles.underlineBlur, styles.underlineError]}></View>
+                    <Text text={errors?.[e.name]?.message} type='body3' style={styles.helperText}/>
+                  </>
                 ):(
                   <View id='name' style={[styles.underlineBlur]}></View>
                 )

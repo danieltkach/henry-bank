@@ -41,7 +41,7 @@ export const readAccountsFetch = () => {
   })
 }
 
-export const readAccountsByIdFetch = (dataId) => {
+export const readAccountByIdFetch = (dataId) => {
   return new Promise((resolve, reject) => {
     fetch(`${GET_ACCOUNT_BY_ID}/${dataId}`, {
       method: 'GET'

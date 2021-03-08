@@ -85,8 +85,7 @@ export default function RegisterThirdView({ navigation, handleFinalSubmit }) {
         </View>
 
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Button onPress={() => navigation.goBack()} icon='arrow-left' type='icon' color='primary' style={styles.button}/>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <Button onPress={handleSubmit(onSubmit)} icon='arrow-right' type='icon' color='primary' style={styles.button} />
         </View>
 
