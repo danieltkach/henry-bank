@@ -17,6 +17,7 @@ import {
   Account,
   Deposit,
   Transfer,
+  MyData,
   Contact
 } from './src/screens';
 import { Preload } from './src/components';
@@ -143,6 +144,11 @@ class App extends React.Component {
                     options={{ headerShown: false }}
                     name="Deposit"
                     component={Deposit}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="MyData"
+                    component={MyData}
                   />
                 </>
               )

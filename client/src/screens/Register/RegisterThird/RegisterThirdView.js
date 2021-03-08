@@ -11,11 +11,11 @@ const darkColor = palette.accent.dark;
 
 
 const textInputs = [
-  {name: 'name', placeholder: 'Nombre', maxLength: 20, minLength: 3},
-  {name: 'lastName', placeholder: 'Apellido', maxLength: 20, minLength: 3},
-  {name: 'typeDocument', placeholder: 'Tipo de documento', maxLength: 20, minLength: 3},
-  {name: 'document', placeholder: 'Número de documento', maxLength: 20, minLength: 8},
-  {name: 'birthdate', placeholder: 'Fecha de nacimiento', maxLength: 8, minLength: 8}
+  {name: 'name', placeholder: 'Nombre', pattern: REGEX.NAME, maxLength: 20, minLength: 2},
+  {name: 'lastName', placeholder: 'Apellido', pattern: REGEX.LASTNAME,maxLength: 20, minLength: 2},
+  {name: 'typeDocument', placeholder: 'Tipo de documento', pattern: REGEX.TYPEDOCUMENT, maxLength: 20, minLength: 2},
+  {name: 'document', placeholder: 'Número de documento', pattern: REGEX.ZIPCODE, maxLength: 10, minLength: 6},
+  {name: 'birthdate', placeholder: 'Fecha de nacimiento', maxLength: 20, minLength: 8}
 ];
 
 export default function RegisterThirdView({ navigation, handleFinalSubmit }) {
