@@ -15,8 +15,8 @@ const textInputs = [
     name: 'cvu',
     placeholder: 'CVU',
     error: 'CVU invalido',
-    maxLength: 22,
-    minLength: 22,
+    maxLength: 10,
+    minLength: 10,
     required: true
   },
   {

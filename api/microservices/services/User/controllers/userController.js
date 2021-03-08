@@ -5,31 +5,46 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 
 const createUser = async (req, res, next) => {
-  const { name, email, lastName, codeSecurity } = req.user;
+  const { email, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
   const token = jwt.sign({ user: body }, 'top_secret');
   const messages = {
     message1: '',
     message2: ''
   };
+  let user;
 
-  axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
-  .then((resp) => {
-    messages.message1 = 'Registro inicial completado, cuenta asociada';
+  User.findOne({ email: email })
+  .then(userResponse => {
+    user = userResponse;
+
+    axios.post(`http://localhost:4002/transaction/account/init/${user._id}`)
+    .then((resp) => {
+      user.accounts.push(resp.data.account);
+      user.save();
+      messages.message1 = 'Registro inicial completado, cuenta asociada';
+    })
+    .catch((err) => {
+      messages.message1 = 'Error al comunicar api transaction';
+    });
+
+    nodeMailer.sendEmail({
+        name: user.name,
+        email: user.email,
+        codeSecurity })
+    .then((resp) => {
+      messages.message2 = 'Registro inicial completado';
+      res.status(200).json({ ...messages, user: user });
+    })
+    .catch((err) => {
+      messages.message2 = 'Ya existe una cuenta con este correo';
+      res.status(400).json({ ...messages })
+    });
   })
   .catch((err) => {
-    messages.message1 = 'Error al comunicar api transaction';
-  });
-
-  nodeMailer.sendEmail({ name, lastName, email, codeSecurity })
-  .then((resp) => {
-    messages.message2 = 'Registro inicial completado';
-    res.status(200).json({ ...messages, user: req.user });
+    res.status(400).json({ message: 'Usuario inexistente' });
   })
-  .catch((err) => {
-    messages.message2 = 'Ya existe una cuenta con este correo';
-    res.status(400).json({ ...messages })
-  });
+
 };
 
 const loginUser = async (req, res, next) => {
@@ -66,8 +81,9 @@ function calcularEdad(fecha) {
   return edad;
 }
 
-const modifyUser = async (req, res, next) => {
+const modifyUser = (req, res, next) => {
   const userId = req.params.id;
+
   const {
     idType,
     idNumber,
@@ -81,28 +97,29 @@ const modifyUser = async (req, res, next) => {
     zipCode,
     country
   } = req.body;
+  console.log('DEBUG')
+  User.findById({_id: userId}, (error, user) => {
+    console.log(user)
+    user.role = 'client',
+    user.idType = idType,
+    user.idNumber = idNumber,
+    user.name = name,
+    user.lastName = lastName,
+    user.birthdate = birthdate,
+    user.cellphone = cellphone,
+    user.streetName = streetName,
+    user.streetNumber = streetNumber,
+    user.city = city,
+    user.country = country,
+    user.zipCode = zipCode
 
-  User.findByIdAndUpdate(userId, {
-    role: 'client',
-    idType: idType,
-    idNumber: idNumber,
-    name: name,
-    lastName: lastName,
-    birthdate: birthdate,
-    cellphone: cellphone,
-    streetName: streetName,
-    streetNumber: streetNumber,
-    city: city,
-    country: country,
-    zipCode: zipCode
+
+    user.save();
+    res.status(200).json({ message: 'Usuario actualizado.', userId });
   })
-    .then((user) => {
-      user.save();
-      res.status(200).json({ message: 'Usuario actualizado.', userId });
-    })
-    .catch((error) =>
-      res.status(400).json({ message: 'Error al actualizar usuario.' })
-    );
+  .catch((error) =>
+    res.status(400).json({ message: 'Error al actualizar usuario.' })
+  );
 };
 
 const getUser = (req, res, next) => {
@@ -193,9 +210,10 @@ const deleteContact = (req, res) => {
   const contactEmail = req.body.contactEmail;
 
   User.findOne({ _id: userId })
-    .populate('contacts')
+    .populate('contacts',"contactsAlias")
     .then((user) => {
-      user.contacts = user.contacts.filter((c) => c.email !== contactEmail);
+      user.contacts     = user.contacts.filter((c) => c.email == contactEmail);
+      user.contactsAlias = user.contactsAlias.filter((c) => c.email !== contactEmail);
       user.save();
       res.status(200).json(user);
     })

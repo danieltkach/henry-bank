@@ -36,7 +36,7 @@ passport.use('login', new localStrategy({
         if (!validate) {
             return done(null, false, { message: 'Wrong password' })
         }
-
+        
         return done(null, user, { message: 'Login successfull' })
     } catch (e) {
         return done(e)

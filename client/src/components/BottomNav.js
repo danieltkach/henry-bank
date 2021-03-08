@@ -5,25 +5,29 @@ import { IconButton } from 'react-native-paper';
 import { Text } from './index';
 import { palette, rgba } from '../theme';
 
-
 const disableColor = palette.text.disabled;
 const activeColor = palette.primary.main;
 
 export default function BottomNav({ navigation, init }) {
-  const [indexClick, setIndexClick] = React.useState(init && init || 0);
+  const [indexClick, setIndexClick] = React.useState((init && init) || 0);
 
   const buttons = [
-    { index: 0, label: 'Inicio', icon: 'view-grid', route: 'Home'},
-    { index: 1, label: 'Contactos', icon: 'book-open-variant', route: 'Contacts'},
-    { index: 2, label: 'Cuenta', icon: 'bank', route: 'Account'},
-    { index: 3, label: 'Yo', icon: 'account', route: 'Profile'}
+    { index: 0, label: 'Inicio', icon: 'view-grid', route: 'Home' },
+    {
+      index: 1,
+      label: 'Contactos',
+      icon: 'book-open-variant',
+      route: 'Contact'
+    },
+    { index: 2, label: 'Cuenta', icon: 'bank', route: 'Account' },
+    { index: 3, label: 'Yo', icon: 'account', route: 'Profile' }
   ];
 
-  const handleClick = value => {
+  const handleClick = (value) => {
     console.log(value);
-  }
+  };
 
-  return(
+  return (
     <View style={styles.bottomNavigation}>
       <View style={styles.surface}>
         {buttons.map((bt, index) => (
@@ -35,17 +39,23 @@ export default function BottomNav({ navigation, init }) {
             <IconButton
               style={styles.iconButton}
               icon={bt.icon}
-              size={indexClick === index && 20 || 24}
-              color={indexClick === index && activeColor || disableColor}
+              size={(indexClick === index && 20) || 24}
+              color={(indexClick === index && activeColor) || disableColor}
             />
             <Text
               text={bt.label}
-              type='subtitle2'
-              style={[styles.text, {color: indexClick === index && `${activeColor}` || `${disableColor}`}]}
+              type="subtitle2"
+              style={[
+                styles.text,
+                {
+                  color:
+                    (indexClick === index && `${activeColor}`) ||
+                    `${disableColor}`
+                }
+              ]}
             />
           </TouchableOpacity>
-          ))
-        }
+        ))}
       </View>
     </View>
   );
@@ -58,39 +68,39 @@ const styles = StyleSheet.create({
     bottom: '0px',
     zIndex: 1
   },
-  button          : {
-    flexDirection : 'column',
-    alignItems    : 'center',
-    width         : 48,
-    height        : 48,
+  button: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 48,
+    height: 48
   },
-  iconButton : {
-    width    : 24,
-    height   : 24,
-    margin   : 0,
+  iconButton: {
+    width: 24,
+    height: 24,
+    margin: 0
   },
-  text            : {
+  text: {
     justifyContent: 'center',
-    alignItems    : 'center',
-    height        : 14,
+    alignItems: 'center',
+    height: 14
   },
-  surface          : {
+  surface: {
     backgroundColor: 'white',
-    flexDirection  : 'row',
-    justifyContent : 'space-around',
-    height         : '48px',
-    borderRadius   : 32,
-    margin         : '8px',
-    paddingTop     : '4px',
-    paddingBottom  : '4px',
-    borderRadius   : 32,
-    shadowColor    : "#000",
-    shadowOffset   : {
-      width        : 0,
-      height       : 4,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    height: '48px',
+    borderRadius: 32,
+    margin: '8px',
+    paddingTop: '4px',
+    paddingBottom: '4px',
+    borderRadius: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4
     },
-    shadowOpacity: 0.30,
-    shadowRadius : 4.65,
-    elevation    : 8,
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8
   }
-})
+});

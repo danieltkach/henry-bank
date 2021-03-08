@@ -8,7 +8,7 @@ import styles from './../styles';
 export default function RegisterFirstContainer({ navigation }) {
   const [errorHandle, setErrorHandle] = useState('');
 
-  const handleFinalSubmit = (e, inputs) => {
+  const handleFinalSubmit = (inputs) => {
     // e.preventDefault()
     console.log(inputs)
     setErrorHandle('');

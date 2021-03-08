@@ -8,7 +8,8 @@ import {
   GET_ADDRESS,
   POST_CODE,
   GET_PROFILE_AUTH,
-  ADD_CONTACT
+  ADD_CONTACT,
+  DELETE_CONTACT
 } from '../constants/api';
 
 
@@ -166,10 +167,10 @@ export const profileAuthFetch = (token) => {
   })
 }
 
-export const addContactFetch = (dataId,dataForm)=>{
-  console.log("PUT",dataId,dataForm);
+export const addContactFetch = (dataForm)=>{
+  console.log("PUT",dataForm);
   return new Promise((resolve,reject) =>{
-    fetch(`${ADD_CONTACT}/${dataId}`,{
+    fetch(`${ADD_CONTACT}/6041b71060964c81c9378b76`,{
       method: 'PUT',
       headers: {
         Accept: '*/*',
@@ -183,6 +184,27 @@ export const addContactFetch = (dataId,dataForm)=>{
     })
     .catch(err => {
        console.log(err.message)
+    });
+  })
+}
+
+export const deleteContactFetch = (dataId,dataForm)=>{
+  console.log("DELETE",dataId,dataForm);
+  return new Promise((resolve,reject) =>{
+    fetch(`${DELETE_CONTACT}/${dataId}`,{
+      method: 'DELETE',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
+    })
+    .then(response => {
+      console.log('STATUS OK');
+      resolve(response.json());
+    })
+    .catch(err => {
+       console.log(err.message,"ERORR")
     });
   })
 }
