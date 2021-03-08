@@ -9,7 +9,8 @@ import {
   POST_CODE,
   GET_PROFILE_AUTH,
   ADD_CONTACT,
-  DELETE_CONTACT
+  DELETE_CONTACT,
+  POST_EMAIL_VERIFY
 } from '../constants/api';
 
 
@@ -32,7 +33,6 @@ export const registerUserFetch = (dataForm) => {
       console.log(err.message)
     });
   })
-
 }
 
 export const loginUserFetch = (dataForm) => {
@@ -54,7 +54,6 @@ export const loginUserFetch = (dataForm) => {
       console.log(err.message)
     });
   })
-
 }
 
 export const updateUserFetch = (dataId, dataForm) => {
@@ -76,10 +75,27 @@ export const updateUserFetch = (dataId, dataForm) => {
        console.log(err.message)
     });
   })
-
 }
 
-// export const readAuthFetch = () => {}
+export const emailVerifyFetch = (dataForm) => {
+  console.log('POST', dataForm);
+
+  let headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  let body = JSON.stringify(dataForm);
+  let requestOptions = { method: 'POST', headers, body, redirect: 'follow' };
+
+  return new Promise((resolve, reject) => {
+    fetch(POST_EMAIL_VERIFY, requestOptions)
+    .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
+      resolve(response.json());
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
+  })
+}
 
 export const readUserByIdFetch = (dataId) => {
   console.log('GET', dataId);
@@ -127,7 +143,6 @@ export const readAddressFetch = (queryData) => {
       console.log(err.message)
     });
   })
-
 }
 
 export const verifyUserFetch = (dataForm) => {

@@ -27,15 +27,15 @@ passport.use('login', new localStrategy({
         console.log('User authenticated');
         const user = await User.findOne({ email })
         if (!user) {
-            return done(null, false, { message: 'User not found' })
+            return done(null, false, { message: 'Correo electrónico no encontrado' })
         }
 
         const validate = await user.isValidPassword(password)
 
         if (!validate) {
-            return done(null, false, { message: 'Wrong password' })
+            return done(null, false, { message: 'Contraseña incorrecta' })
         }
-        
+
         return done(null, user, { message: 'Login successfull' })
     } catch (e) {
         return done(e)

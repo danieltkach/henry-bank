@@ -3,48 +3,46 @@ const nodeMailer = require('../util/nodeMailer');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const crypto = require('crypto');
+
 
 const createUser = async (req, res, next) => {
   const { email, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
   const token = jwt.sign({ user: body }, 'top_secret');
-  const messages = {
-    message1: '',
-    message2: ''
-  };
-  let user;
 
   User.findOne({ email: email })
-  .then(userResponse => {
-    user = userResponse;
-
-    axios.post(`http://localhost:4002/transaction/account/init/${user._id}`)
-    .then((resp) => {
-      user.accounts.push(resp.data.account);
-      user.save();
-      messages.message1 = 'Registro inicial completado, cuenta asociada';
-    })
-    .catch((err) => {
-      messages.message1 = 'Error al comunicar api transaction';
-    });
-
-    nodeMailer.sendEmail({
-        name: user.name,
-        email: user.email,
-        codeSecurity })
-    .then((resp) => {
-      messages.message2 = 'Registro inicial completado';
-      res.status(200).json({ ...messages, user: user });
-    })
-    .catch((err) => {
-      messages.message2 = 'Ya existe una cuenta con este correo';
-      res.status(400).json({ ...messages })
-    });
+  // .then(userResponse => {
+  //   return axios.post(`http://localhost:4002/transaction/account/init/${userResponse._id}`)
+  // })
+  .then((resp) => {
+    // user.accounts.push(resp.data.account);
+    // user.save();
+    res.status(201).json({user: { email: resp.email, token}, message: 'Registro inicial completado, cuenta asociada' });
   })
   .catch((err) => {
     res.status(400).json({ message: 'Usuario inexistente' });
   })
+};
 
+const sendEmailVerify = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email: email })
+  .then(userResponse => {
+    userResponse.codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
+    userResponse.save();
+    return nodeMailer.sendEmail({
+      email: userResponse.email,
+      codeSecurity: userResponse.codeSecurity
+    })
+  })
+  .then(emailResponse => {
+    res.status(200).json({ message: 'Email enviado', info: emailResponse })
+  })
+  .catch(err => {
+    res.status(400).json({ message: 'Usuario inexistente' });
+  })
 };
 
 const loginUser = async (req, res, next) => {
@@ -58,12 +56,16 @@ const loginUser = async (req, res, next) => {
       req.login(user, { session: false }, async (err) => {
         if (err) return next(err);
         const body = { _id: user._id, email: user.email };
-
         const token = jwt.sign({ user: body }, 'top_secret');
-        return res.status(202).json({ user, token });
+        let filterUser =  { ...user._doc };
+        delete filterUser.password;
+        delete filterUser.codeSecurityExp;
+        delete filterUser.__v;
+        return res.status(202).json({ user: filterUser, token, message: info });
       });
+
     } catch (e) {
-      return next(e);
+      return res.status(202).json({ message: info });
     }
   })(req, res, next);
 };
@@ -159,8 +161,8 @@ const verifyCodeSecurity = (req, res) => {
     ){
       responseUser.codeSecurity = 'active';
       responseUser.save();
-      res.status(200).json({ message: 'Codigo verificado', userId: responseUser._id });
-    } else res.status(400).json({ message: 'Error de verificacion' });
+      res.status(200).json({ status: 200, message: 'Codigo verificado', userId: responseUser._id });
+    } else res.status(400).json({ status: 400, message: 'Codigo incorrecto' });
   })
   .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
 };
@@ -244,5 +246,6 @@ module.exports = {
   verifyCodeSecurity,
   addContact,
   deleteContact,
-  modifyAlias
+  modifyAlias,
+  sendEmailVerify
 };

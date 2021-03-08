@@ -100,5 +100,7 @@ export const setColor = {
   primary  : palette.primary.main,
   secondary: palette.secondary.main,
   accent   : palette.accent.dark,
-  disabled : palette.text.disabled
+  disabled : palette.text.disabled,
+  light    : palette.accent.light,
+  gray     : '#BDBDBD'
 }

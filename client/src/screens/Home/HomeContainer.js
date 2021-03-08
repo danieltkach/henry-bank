@@ -26,7 +26,7 @@ export default function HomeContainer({ navigation, route }) {
       <Background />
       <Header
         type="settings"
-        label={`Hola ${user.name}`}
+        label='Inicio'
         align="center"
         navigation={navigation}
         handleIsLogin={handleIsLogin}

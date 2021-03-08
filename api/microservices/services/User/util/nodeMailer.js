@@ -28,12 +28,12 @@ const transporter = nodemailer.createTransport({
 
 
 let sendEmail = props => {
-  const { name, email, codeSecurity} = props;
+  const { email, codeSecurity} = props;
   const data = {
     from: "Inro",
     to: `${email}`,
     subject: "Verificacion de email",
-    html: htmlTemplate(codeSecurity, name)
+    html: htmlTemplate(codeSecurity)
   };
 
   return new Promise((resolve, reject) => {

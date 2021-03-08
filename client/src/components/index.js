@@ -7,3 +7,4 @@ export { default as Button } from './ButtonCustom';
 export { default as TextInput } from './TextInputCustom';
 export { default as Text } from './TextCustom';
 export { default as Avatar } from './AvatarCustom';
+export { default as Alert } from './AlertCustom';
