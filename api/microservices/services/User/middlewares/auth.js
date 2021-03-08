@@ -6,6 +6,7 @@ const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 const crypto = require('crypto');
 
+
 passport.use('signup', new localStrategy({
     usernameField: 'email',
     passwordField: 'password'
