@@ -72,7 +72,7 @@ const  rapiTransfer =  (req,res ) => {
 
      AccountModel.findOne({cvu:cvu})
         .then((acc)=>{                 
-            acc.balance +=amount        
+            acc.balance += parseFloat(amount)      
             acc.save() 
             return acc
         }) 
