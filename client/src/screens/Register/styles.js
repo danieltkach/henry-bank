@@ -22,7 +22,10 @@ const styles = StyleSheet.create({
   },
   textInputs      : {
     marginVertical: '2px',
-    width         : '100%'
+    width         : '100%',
+    // flexDirection : 'row',
+    flexWrap      : 'wrap',
+    justifyContent: 'space-between'
   },
   topText          : {
     paddingVertical: '2px',
@@ -49,6 +52,10 @@ const styles = StyleSheet.create({
 
 
   //TEXT STYLES
+
+  inputTextHalf: {
+    width      : '50%'
+  },
   underlineBlur    : {
     position       : 'absolute',
     bottom         : '8px',

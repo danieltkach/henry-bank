@@ -3,8 +3,8 @@ import { View, SafeAreaView } from 'react-native';
 import HomeView from './HomeView';
 import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
+import { readAccountByIdFetch } from '../../controllers/account';
 import { useSelector } from 'react-redux';
-import { readAccountsByIdFetch } from '../../controllers/account';
 
 
 export default function HomeContainer({ navigation, route }) {
@@ -20,7 +20,6 @@ export default function HomeContainer({ navigation, route }) {
     })
   }
 
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
@@ -32,9 +31,9 @@ export default function HomeContainer({ navigation, route }) {
         handleIsLogin={handleIsLogin}
       />
       <View style={styles.container}>
-      {user ?
+      {user && account ?
         (
-          <HomeView user={user} handleAccount={handleAccount} account={account}/>
+          <HomeView user={user} account={account}/>
         )
         :(
           <></>

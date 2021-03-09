@@ -1,24 +1,38 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { TextInput, Button, useTheme} from "react-native-paper";
-import { color } from "react-native-reanimated";
-import { registerUserFetch } from './../controllers/user';
+import React, {useEffect, useState} from 'react';
+import { View, SafeAreaView } from 'react-native';
+import AccountView from './AccountView';
+import { BottomNav, Header, Background } from '../../components';
+import styles from './styles';
+import { useSelector } from 'react-redux';
 
-const AccountContainer = () => {
 
-  const handleFinalSubmit = (inputs) => {
-    registerUserFetch(inputs)
-    .then(registerResponse => {
-      console.log(registerResponse.message)
-    })
-    .catch(err => {
-      console.log(err.message);
-    })
-  }
+export default function AccountContainer({ navigation, route }) {
+  const { handleIsLogin } = route.params;
+  const account = useSelector((state) => state.accountReducer.account);
+  const user = useSelector((state) => state.userReducer.user);
+
 
   return (
-    <Account handleFinalSubmit={handleFinalSubmit}>
-  )
-
-
+    <SafeAreaView style={{ flex: 1 }}>
+      <Background />
+      <Header
+        type="settings"
+        label='Cuenta'
+        align="center"
+        navigation={navigation}
+        handleIsLogin={handleIsLogin}
+      />
+      <View style={styles.container}>
+      {account ?
+        (
+          <AccountView user={user} account={account}/>
+        )
+        :(
+          <></>
+        )
+      }
+      </View>
+      <BottomNav navigation={navigation} init={2} />
+    </SafeAreaView>
+  );
 }

@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   },
   idType: {
     type: String,
-    enum: ['DNI']
+    enum: ['DNI', 'PAS', 'LIC']
   },
   idNumber: {
     type: Number,
