@@ -46,60 +46,18 @@ const ContactView = ({
   addContact
 }) => {
   const userId = useSelector((state) => state.userReducer.user._id);
-  console.log(userId);
+  const contactAlias = useSelector((state) => state.userReducer.user.contactsAlias);
   const { control, handleSubmit, errors } = useForm();
-
-  const DELETECONTACT = (dataEmail) => {
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    var raw = JSON.stringify({ contactEmail: dataEmail });
-
-    var requestOptions = {
-      method: 'DELETE',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch(
-      `http://${HOST}:${PORT_API_USER}/user/contacts/${userId}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
-  };
+  
+  const DELETECONTACT = (userId,dataEmail) => {
+    var contactEmail = {contactEmail: dataEmail}
+    deleteContact(userId,contactEmail )
+   };
 
   const onSumbit = (data) => {
-    navigation.navigate('Contact');
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    console.log(data, 'input');
-    var raw = JSON.stringify({ contactEmail: data.email });
+     addContact(userId,data)
 
-    var requestOptions = {
-      method: 'PUT',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch(
-      `http://${HOST}:${PORT_API_USER}/user/contact/${userId}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-
-      .then(
-        (result) => console.log(result),
-        handleClick(),
-        navigation.navigate('Contact')
-      )
-      .catch((error) => console.log('error', error));
   };
-
-  console.log(data, 'data');
   return (
     <View style={{ flex: 1 }}>
       {toggle ? (
@@ -196,13 +154,13 @@ const ContactView = ({
       ) : (
         <Header type="settings" label="Contactos" align="center" />
       )}
-      {data.length > 0 &&
-        data.map((d, index) => (
+      {contactAlias.length > 0 &&
+        contactAlias.map((d, index) => (
           <View key={index}>
             <Avatar
-              title={d.alias}
+              title={d.alias || d.name}
               subtitle={d.email}
-              onPress={() => DELETECONTACT(d.email)}
+              onPress={() => DELETECONTACT(userId,d.email)}
             />
           </View>
         ))}

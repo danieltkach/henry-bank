@@ -12,31 +12,32 @@ import {
 } from '../../controllers/user';
 import { palette, rgba } from '../../theme';
 
+
 const ContactContainer = ({ navigation }) => {
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.userReducer.user._id);
+  const contacts = useSelector(state => state.userReducer.contacts)
+  
   const [users, Setusers] = useState([]);
   const [toggle, setToggle] = useState(false);
-  console.log(users, 'a');
   const handleClick = () => {
     setToggle(!toggle);
   };
 
-  const addContact = (dataForm) => {
-    console.log(dataForm, 'addcontact');
-    addContactFetch(dataForm)
+  const addContact = (userId,dataForm) => {
+    addContactFetch(userId,dataForm)
       .then((r) => {
-        console.log(r);
+      dispatch({type: "ADD_CONTACT", payload:r.contact})
+        handleClick()
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  const deleteContact = (dataId, dataForm) => {
-    console.log(dataForm, dataId, 'Aaaaaaaaaaaaa');
-    deleteContactFetch(dataId, dataForm)
+  const deleteContact = (userId, dataForm) => {
+    deleteContactFetch(userId, dataForm)
       .then((response) => {
-        console.log(response, 'response');
+        dispatch({type: "DELETE_CONTACT", payload:dataForm.contactEmail})
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +46,6 @@ const ContactContainer = ({ navigation }) => {
 
   const fetch = () =>
     readUserByIdFetch(userId).then((r) => {
-      console.log(r);
       Setusers(...users, r.contactsAlias);
     });
 

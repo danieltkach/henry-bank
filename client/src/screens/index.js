@@ -9,3 +9,4 @@ export { default as Login } from './Login/LoginContainer';
 export { default as  Contact} from "./Contact/ContactContainer"
 export { default as Register } from './Register';
 export { default as Transfer } from './Transfer/TransferContainer';
+export { default as Transaction } from './Transaction/TransactionContainer';

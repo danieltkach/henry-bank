@@ -19,7 +19,8 @@ import {
   Deposit,
   Transfer,
   MyData,
-  Contact
+  Contact,
+  Transaction
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -158,11 +159,89 @@ class App extends React.Component {
               (
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Preload"
-                  component={Preload}
+                  name="Login"
+                  component={Login}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
                 />
-              )
-            }
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register1"
+                  component={Register.RegisterFirst}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register2"
+                  component={Register.RegisterSecond}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register3"
+                  component={Register.RegisterThird}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register4"
+                  component={Register.RegisterFourth}
+                />
+              </>
+            )}
+            {this.state.isLogin === 'sessionOn' && (
+              <>
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Home"
+                  component={Home}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Account"
+                  component={Account}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Contact"
+                  component={Contact}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transfer"
+                  component={Transfer}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transaction"
+                  component={Transaction}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Deposit"
+                  component={Deposit}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="MyData"
+                  component={MyData}
+                />
+              </>
+            )}
+            {this.state.isLogin === 'sessionDefault' && (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Preload"
+                component={Preload}
+              />
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
