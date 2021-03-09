@@ -9,6 +9,7 @@ import { readAccountByIdFetch } from './src/controllers/account';
 import { getData } from './src/controllers/storage';
 import { connect } from 'react-redux';
 import {
+  Cards,
   Login,
   Register,
   Home,
@@ -73,6 +74,14 @@ class App extends React.Component {
           <Stack.Navigator>
             {this.state.isLogin === 'sessionOff' && (
               <>
+              <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Cards"
+                  component={Cards}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"
