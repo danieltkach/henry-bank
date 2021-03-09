@@ -1,6 +1,8 @@
 const Transaction = require('../models/TransactionModel')
 const AccountModel = require('../models/AccountModel')
+const UserModel = require('../../User/models/UserModel')
 const { response } = require('express')
+
 
 
 const getTranfers = (req,res) =>{
@@ -126,7 +128,7 @@ const newTransaction = (req,res) => {
             currency:"pesos",
             amount : cash,
             idSenderAccount: idSender,
-            idReceiverAccount: cvu || idReceiverAccount,
+            idReceiverAccount: idReceiver,
         }) 
         
         transaction.save()
@@ -234,8 +236,17 @@ const getAllTransfers = (req,res) => {
         
          let updateTransfers = allTransfersUser.map(transfer => 
             transfer[0].transactionType === 'recharge'? [transfer , transfer[0].idSenderAccount="RapiPago" ]:
-            [transfer , transfer[0].idSenderAccount = transfer[0].idSenderAccount])     
+            [transfer , transfer[0].idSenderAccount = transfer[0].idSenderAccount]) 
+        
+        let account= [];
+        updateTransfers.map(transfer => 
+            transfer[0][0].idSenderAccount === user ?
+            (AccountModel.findById(transfer[0][0].idReceiverAccount)
+                .then(response => { account.push([transfer[0][0], response.userId])
+                                    console.log(response.userId)}) )
             
+            : account.push([transfer[0][0]])
+         )
 
         res.status(200).send(updateTransfers)
     })
