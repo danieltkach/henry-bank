@@ -169,16 +169,16 @@ const verifyCodeSecurity = (req, res) => {
 
 const addContact = (req, res) => {
   const userId = req.params.id;
-  const contactEmail = req.body.contactEmail;
+  const contactEmail = req.body.email;
   let foundUser;
 
-  User.findOne({ _id: userId })
+  User.findById({ _id: userId })
     .then((user) => {
       foundUser = user;
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      // Validations
+     // Validations
       if (foundUser._id.toString() === contact._id.toString()) {
         return res
           .status(400)
@@ -191,6 +191,7 @@ const addContact = (req, res) => {
       }
 
       // Adding contact to user
+      
       foundUser.contacts.push(contact);
       foundUser.contactsAlias.push({
         email: contact.email,
@@ -199,7 +200,7 @@ const addContact = (req, res) => {
       foundUser.save();
       return res.status(201).json({
         message: 'Contacto agregado.',
-        contacts: foundUser.contacts
+        contact
       });
     })
     .catch((error) => {
@@ -210,7 +211,7 @@ const addContact = (req, res) => {
 const deleteContact = (req, res) => {
   const userId = req.params.id;
   const contactEmail = req.body.contactEmail;
-
+  
   User.findOne({ _id: userId })
     .populate('contacts',"contactsAlias")
     .then((user) => {
