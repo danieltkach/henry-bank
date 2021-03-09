@@ -126,7 +126,7 @@ const newTransaction = (req,res) => {
             currency:"pesos",
             amount : cash,
             idSenderAccount: idSender,
-            idReceiverAccount: idReceiver,
+            idReceiverAccount: cvu || idReceiverAccount,
         }) 
         
         transaction.save()
@@ -224,16 +224,21 @@ const getStatistics = (req,res) =>{
 
 
 const getAllTransfers = (req,res) => {
-    const user = req.params.idAccount
+    const user = req.params.id
     Transaction.find({ $or: [{idSenderAccount : user } , {idReceiverAccount: user} ] }, function(err,data){
         if(err) res.status(400).send('Error al traer las transacciones')
-
+        
         let allTransfersUser = data.map(transfer => 
-            transfer.idReceiverAccount === user ? [...data , transfer.amount = '+ ' + transfer.amount] :
-            [...data , transfer.amount = '- ' + transfer.amount])
+            transfer.idReceiverAccount === user ? [transfer , transfer.amount = '+ ' + transfer.amount] :
+            [transfer , transfer.amount = '- ' + transfer.amount])
+        
+         let updateTransfers = allTransfersUser.map(transfer => 
+            transfer[0].transactionType === 'recharge'? [transfer , transfer[0].idSenderAccount="RapiPago" ]:
+            [transfer , transfer[0].idSenderAccount = transfer[0].idSenderAccount])     
+            
 
-        res.status(200).send(allTransfersUser)
-    } )
+        res.status(200).send(updateTransfers)
+    })
 }
 
 module.exports= {
