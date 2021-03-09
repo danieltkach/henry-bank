@@ -10,11 +10,9 @@ const ContactsRoute = () => <Text>Contactos</Text>;
 const AccountRoute = () => <Text>Cuenta</Text>;
 const ProfileRoute = () => <Text>You</Text>;
 
-
-export default function Header({ type = 'default', label, navigation, align }) {
-
+export default function Header({ type = 'default', label, navigation, align, handleIsLogin }) {
   const Settings = () => (
-    <Drawer label={label} align={align} navigation={navigation}/>
+    <Drawer label={label} align={align} navigation={navigation} handleIsLogin={handleIsLogin}/>
   );
 
   const Default = () => (
@@ -23,7 +21,7 @@ export default function Header({ type = 'default', label, navigation, align }) {
         icon="arrow-left"
         size={24}
         color={palette.accent.dark}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate('Home')}
       />
       <View style={{ margin: 'auto' }}>
         <Text type="title" text={label} />
@@ -42,11 +40,11 @@ const styles = StyleSheet.create({
   nav: {
     zIndex: 9
   },
-  header           : {
-    position       : 'relative',
-    width          : '100%',
-    height         : '48px',
-    alignItems     : 'center',
-    flexDirection  : 'row',
+  header: {
+    position: 'relative',
+    width: '100%',
+    height: '48px',
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });

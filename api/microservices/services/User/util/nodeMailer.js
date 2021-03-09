@@ -28,8 +28,7 @@ const transporter = nodemailer.createTransport({
 
 
 let sendEmail = props => {
-  const { name, lastName, email, codeSecurity} = props;
-
+  const { email, codeSecurity} = props;
   const data = {
     from: "Inro",
     to: `${email}`,

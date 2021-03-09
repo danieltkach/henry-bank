@@ -12,7 +12,7 @@ const setWeight = {
 };
 
 export default function TextCustom({ type, color, style, weight, text}) {
-  const genColor = setColor[color] || setColor['accent'] ;
+  const genColor = color ? setColor[color] ? setColor[color] : color : setColor['accent'] ;
   const genWeight = setWeight[weight] || setWeight['regular'] ;
 
   return <Text style={[{

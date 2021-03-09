@@ -3,8 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { profileAuthFetch } from './src/controllers/user';
 import { addSession } from './src/stores/userStore/userActions';
+import { addAccount } from './src/stores/accountStore/accountActions';
+import { profileAuthFetch } from './src/controllers/user';
+import { readAccountByIdFetch } from './src/controllers/account';
 import { getData } from './src/controllers/storage';
 import { connect } from 'react-redux';
 import {
@@ -15,7 +17,10 @@ import {
   Boilerplate,
   Account,
   Deposit,
-  Transfer
+  Transfer,
+  MyData,
+  Contact,
+  Transaction
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -26,106 +31,217 @@ class App extends React.Component {
     super(props);
     this.state = {
       mounted: false,
-      isLogin: false
-    }
+      isLogin: 'sessionDefault'
+    };
   }
 
   handleIsLogin(value) {
-    console.log('handle', value);
-    this.state.setState({ isLogin: value });
+    this.setState({ isLogin: value });
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    this.setState({ isLogin: 'sessionDefault' });
+
     getData()
-    .then(responseToken => {
-      // if(!responseToken) return new Error();
-      return profileAuthFetch(responseToken);
+    .then((responseToken) => {
+      if(!responseToken) {
+        // this.setState({ isLogin: 'sessionOff' });
+      } else {
+        return profileAuthFetch(responseToken);
+      }
     })
     .then(responseProfile => {
-      if(responseProfile.user.role == "client"){
-        this.setState({ isLogin: true });
+      if (responseProfile.user.role) {
         this.props.addSession(responseProfile.user);
+        return readAccountByIdFetch(responseProfile.user.accounts[0]);
       }
-      
+    })
+    .then(responseAccount => {
+      this.props.addAccount(responseAccount.account);
+      this.setState({ isLogin: 'sessionOn' });
+    })
+    .catch(err => {
+      this.setState({ isLogin: 'sessionOff' });
     })
     this.setState({ mounted: true });
   }
 
-  render(){
-    console.log(this.state.isLogin)
+  render() {
+    console.log(this.props);
     return (
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {!this.state.mounted ?
+            {this.state.isLogin === 'sessionOff' &&
+              (
+                <>
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Login"
+                    component={Login}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register1"
+                    component={Register.RegisterFirst}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register2"
+                    component={Register.RegisterSecond}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register3"
+                    component={Register.RegisterThird}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register4"
+                    component={Register.RegisterFourth}
+                  />
+                </>
+              )
+            }
+            {this.state.isLogin === 'sessionOn' &&
+              (
+                <>
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Account"
+                    component={Account}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Home"
+                    component={Home}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Contact"
+                    component={Contact}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Transfer"
+                    component={Transfer}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Deposit"
+                    component={Deposit}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="MyData"
+                    component={MyData}
+                  />
+                </>
+              )
+            }
+            {this.state.isLogin === 'sessionDefault' &&
               (
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Preload"
-                  component={Preload}
+                  name="Login"
+                  component={Login}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
                 />
-              )
-              :(
-                <>
-                  {!this.state.isLogin ?
-                    (
-                    <>
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Login"
-                        component={Login}
-                        initialParams={{ handleIsLogin: (value) => this.setState({ isLogin: value }) }}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register1"
-                        component={Register.RegisterFirst}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register2"
-                        component={Register.RegisterSecond}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register3"
-                        component={Register.RegisterThird}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Register4"
-                        component={Register.RegisterFourth}
-                      />
-                    </>
-                  )
-                  :(
-                    <>
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Home"
-                        component={Home}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Account"
-                        component={Account}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Transfer"
-                        component={Transfer}
-                      />
-                      <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="Deposit"
-                        component={Deposit}
-                      />
-                    </>
-                  )
-                }
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register1"
+                  component={Register.RegisterFirst}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register2"
+                  component={Register.RegisterSecond}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register3"
+                  component={Register.RegisterThird}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Register4"
+                  component={Register.RegisterFourth}
+                />
               </>
-              )
-            }
+            )}
+            {this.state.isLogin === 'sessionOn' && (
+              <>
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Home"
+                  component={Home}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Account"
+                  component={Account}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Contact"
+                  component={Contact}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transfer"
+                  component={Transfer}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transaction"
+                  component={Transaction}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Deposit"
+                  component={Deposit}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="MyData"
+                  component={MyData}
+                />
+              </>
+            )}
+            {this.state.isLogin === 'sessionDefault' && (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Preload"
+                component={Preload}
+              />
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
@@ -143,15 +259,15 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
-
+    addAccount: (account) => dispatch(addAccount(account)),
     addSession: (user) => dispatch(addSession(user)),
-
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userStore
+    user: state.userStore,
+    account: state.accountStore
   };
 };
 

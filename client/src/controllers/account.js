@@ -7,17 +7,18 @@ import {
 } from '../constants/api';
 
 
-export const createAccountFetch = (dataId) => {
+export const createAccountFetch = (userId) => {
+  console.log('POST', userId);
   return new Promise((resolve, reject) => {
-    fetch(`${POST_ACCOUNT}/${dataId}`, {
+    fetch(`${POST_ACCOUNT}/${userId}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataForm)
+      }
     })
     .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -28,11 +29,13 @@ export const createAccountFetch = (dataId) => {
 }
 
 export const readAccountsFetch = () => {
+  console.log('GET');
   return new Promise((resolve, reject) => {
     fetch(GET_ACCOUNTS, {
       method: 'GET'
     })
     .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -41,12 +44,14 @@ export const readAccountsFetch = () => {
   })
 }
 
-export const readAccountsByIdFetch = (dataId) => {
+export const readAccountByIdFetch = (dataId) => {
+  console.log('GET');
   return new Promise((resolve, reject) => {
     fetch(`${GET_ACCOUNT_BY_ID}/${dataId}`, {
       method: 'GET'
     })
     .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -56,6 +61,7 @@ export const readAccountsByIdFetch = (dataId) => {
 }
 
 export const updateAccountFetch = (dataId, dataForm) => {
+  console.log('PUT', dataId, dataForm);
   return new Promise((resolve, reject) => {
     fetch(`${PUT_USER}/${dataId}`, {
       method: 'PUT',
@@ -66,6 +72,7 @@ export const updateAccountFetch = (dataId, dataForm) => {
       body: JSON.stringify(dataForm)
     })
     .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {
@@ -75,11 +82,13 @@ export const updateAccountFetch = (dataId, dataForm) => {
 }
 
 export const readBalanceByIdFetch = (dataId) => {
+  console.log('GET', dataId);
   return new Promise((resolve, reject) => {
     fetch(`${GET_BALANCE_BY_ID}/${dataId}`, {
       method: 'GET'
     })
     .then(response => {
+      console.log('RESPONSE POST < STATUS OK');
       resolve(response.json());
     })
     .catch(err => {

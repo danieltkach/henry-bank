@@ -28,8 +28,9 @@ function htmlTemplate(codeSecurity) {
         background-color: white;
         padding: 50px;"
       >
+        <h4 style="color:#1B263D;">Bienvenido a Inro!<h6>
         <p style="color:#1B263D;">Utiliza este codigo para activar tu cuenta de usuario en <b>Inro</b> y continuar con tu registro.</p>
-        <h1 style="color:#1B263;D">${codeSecurity}</h1>
+        <h1 style="color:#1B263;">${codeSecurity}</h1>
         <p style="color:#1B263D;">Este codigo expira en 10 minutos !.</p>
       </div>
     </div>

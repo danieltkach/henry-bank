@@ -3,33 +3,41 @@ const nodeMailer = require('../util/nodeMailer');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const crypto = require('crypto');
+
 
 const createUser = async (req, res, next) => {
-  const { name, email, lastName, codeSecurity } = req.user;
+  const { email, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
   const token = jwt.sign({ user: body }, 'top_secret');
-  const messages = {
-    message1: '',
-    message2: ''
-  };
 
-  axios.post(`http://localhost:4002/transaction/account/${req.user._id}`)
+  User.findOne({ email: email })
   .then((resp) => {
-    messages.message1 = 'Registro inicial completado, cuenta asociada';
+    res.status(201).json({user: { email: resp.email, token}, message: 'Registro inicial completado, cuenta asociada' });
   })
   .catch((err) => {
-    messages.message1 = 'Error al comunicar api transaction';
-  });
-
-  nodeMailer.sendEmail({ name, lastName, email, codeSecurity })
-  .then((resp) => {
-    messages.message2 = 'Registro inicial completado';
-    res.status(200).json({ ...messages, user: req.user });
+    res.status(400).json({ message: 'Usuario inexistente' });
   })
-  .catch((err) => {
-    messages.message2 = 'Ya existe una cuenta con este correo';
-    res.status(400).json({ ...messages })
-  });
+};
+
+const sendEmailVerify = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email: email })
+  .then(userResponse => {
+    userResponse.codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
+    userResponse.save();
+    return nodeMailer.sendEmail({
+      email: userResponse.email,
+      codeSecurity: userResponse.codeSecurity
+    })
+  })
+  .then(emailResponse => {
+    res.status(200).json({ message: 'Email enviado', info: emailResponse })
+  })
+  .catch(err => {
+    res.status(400).json({ message: 'Usuario inexistente' });
+  })
 };
 
 const loginUser = async (req, res, next) => {
@@ -43,31 +51,39 @@ const loginUser = async (req, res, next) => {
       req.login(user, { session: false }, async (err) => {
         if (err) return next(err);
         const body = { _id: user._id, email: user.email };
-
         const token = jwt.sign({ user: body }, 'top_secret');
-        return res.status(202).json({ user, token });
+        let filterUser =  { ...user._doc };
+        delete filterUser.password;
+        delete filterUser.codeSecurityExp;
+        delete filterUser.__v;
+        return res.status(202).json({ user: filterUser, token, message: info });
       });
+
     } catch (e) {
-      return next(e);
+      return res.status(202).json({ message: info });
     }
   })(req, res, next);
 };
 
-function calcularEdad(fecha) {
-  var hoy = new Date();
-  var cumpleanos = new Date(fecha);
-  var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-  var m = hoy.getMonth() - cumpleanos.getMonth();
+const validateAge = (date) => {
+  let birthdate = new Date(date.split('/')[2], date.split('/')[1], date.split('/')[0]);
+  let today = new Date();
+  let before = new Date().setFullYear(today.getFullYear() - 122);
+  let limit = new Date().setFullYear(today.getFullYear() - 18);
 
-  if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-    edad--;
+  if(birthdate > today) return new Error({ message: 'Edad invalida' });
+  if(birthdate < before) return new Error({ message: 'Edad invalida' })
+
+  if(birthdate < limit) {
+    return true;
+  } else {
+    return new Error({ message: 'Menor de 18 años' })
   }
-
-  return edad;
 }
 
-const modifyUser = async (req, res, next) => {
+const modifyUser = (req, res, next) => {
   const userId = req.params.id;
+
   const {
     idType,
     idNumber,
@@ -82,27 +98,34 @@ const modifyUser = async (req, res, next) => {
     country
   } = req.body;
 
-  User.findByIdAndUpdate(userId, {
-    role: 'client',
-    idType: idType,
-    idNumber: idNumber,
-    name: name,
-    lastName: lastName,
-    birthdate: birthdate,
-    cellphone: cellphone,
-    streetName: streetName,
-    streetNumber: streetNumber,
-    city: city,
-    country: country,
-    zipCode: zipCode
+  let dateBirthdate = new Date(birthdate);
+  let account;
+
+  axios.post(`http://localhost:4002/transaction/account/init/${userId}`)
+  .then((responseAccount) => {
+    account = responseAccount.data.account;
+    return User.findById({_id: userId})
   })
-    .then((user) => {
-      user.save();
-      res.status(200).json({ message: 'Usuario actualizado.', userId });
-    })
-    .catch((error) =>
-      res.status(400).json({ message: 'Error al actualizar usuario.' })
-    );
+  .then(user => {
+    user.role = 'client',
+    user.idType = idType,
+    user.idNumber = idNumber,
+    user.name = name,
+    user.lastName = lastName,
+    user.birthdate = birthdate,
+    user.cellphone = cellphone,
+    user.streetName = streetName,
+    user.streetNumber = streetNumber,
+    user.city = city,
+    user.country = country,
+    user.zipCode = zipCode
+    user.accounts.push(account);
+    user.save();
+    res.status(200).json({ message: 'Usuario actualizado.', userId });
+  })
+  .catch((error) =>
+    res.status(400).json({ message: 'Error al actualizar usuario.' })
+  );
 };
 
 const getUser = (req, res, next) => {
@@ -142,24 +165,24 @@ const verifyCodeSecurity = (req, res) => {
     ){
       responseUser.codeSecurity = 'active';
       responseUser.save();
-      res.status(200).json({ message: 'Codigo verificado', userId: responseUser._id });
-    } else res.status(400).json({ message: 'Error de verificacion' });
+      res.status(200).json({ status: 200, message: 'Codigo verificado', userId: responseUser._id });
+    } else res.status(400).json({ status: 400, message: 'Codigo incorrecto' });
   })
   .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
 };
 
 const addContact = (req, res) => {
   const userId = req.params.id;
-  const contactEmail = req.body.contactEmail;
+  const contactEmail = req.body.email;
   let foundUser;
 
-  User.findOne({ _id: userId })
+  User.findById({ _id: userId })
     .then((user) => {
       foundUser = user;
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      // Validations
+     // Validations
       if (foundUser._id.toString() === contact._id.toString()) {
         return res
           .status(400)
@@ -172,6 +195,7 @@ const addContact = (req, res) => {
       }
 
       // Adding contact to user
+      
       foundUser.contacts.push(contact);
       foundUser.contactsAlias.push({
         email: contact.email,
@@ -180,7 +204,7 @@ const addContact = (req, res) => {
       foundUser.save();
       return res.status(201).json({
         message: 'Contacto agregado.',
-        contacts: foundUser.contacts
+        contact
       });
     })
     .catch((error) => {
@@ -191,11 +215,12 @@ const addContact = (req, res) => {
 const deleteContact = (req, res) => {
   const userId = req.params.id;
   const contactEmail = req.body.contactEmail;
-
+  
   User.findOne({ _id: userId })
-    .populate('contacts')
+    .populate('contacts',"contactsAlias")
     .then((user) => {
-      user.contacts = user.contacts.filter((c) => c.email !== contactEmail);
+      user.contacts     = user.contacts.filter((c) => c.email == contactEmail);
+      user.contactsAlias = user.contactsAlias.filter((c) => c.email !== contactEmail);
       user.save();
       res.status(200).json(user);
     })
@@ -226,5 +251,6 @@ module.exports = {
   verifyCodeSecurity,
   addContact,
   deleteContact,
-  modifyAlias
+  modifyAlias,
+  sendEmailVerify
 };

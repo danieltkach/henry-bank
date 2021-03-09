@@ -16,10 +16,18 @@ const textInputs = [
   {name: 'confirmPassword', placeholder: 'Confirmar contraseña', type: 'password', error: 'Minimo 8 caracteres (al menos una letra y número).', pattern: REGEX.PASSWORD, maxLength: 20, minLength: 8}
 ];
 
-export default function RegisterFirstView({ navigation, handleFinalSubmit, errorHandle }) {
-  const { control, handleSubmit, errors } = useForm();
+export default function RegisterFirstView({ navigation, handleFinalSubmit }) {
+  const { control, handleSubmit, setError, errors } = useForm();
 
-  const onSubmit = (data, e) => handleFinalSubmit(data, e);
+  const onSubmit = (data) => {
+    handleFinalSubmit(data)
+    .then(result => {
+      if (result) {
+        setError('email', {type: 'required', message: result.email });
+      }
+    })
+    .catch(err => console.log(err));
+  }
 
   return (
     <View style={styles.body}>
@@ -41,6 +49,7 @@ export default function RegisterFirstView({ navigation, handleFinalSubmit, error
                 defaultValue=""
                 control={control}
                 rules={{
+                  [e['confirmPassword'] ? 'validate' : ''] : value => value === control.getValues()['password'] || "No coincide la contraseña",
                   required: {
                     value: true,
                     message: 'Campo requerido'
@@ -75,16 +84,7 @@ export default function RegisterFirstView({ navigation, handleFinalSubmit, error
               {errors[e.name] ?
                 (<>
                   <View id='name' style={[styles.underlineBlur, styles.underlineError]}></View>
-                  <Text
-                    text={(e.name === 'password' || 'confirmPassword') ?
-                      (
-                        errorHandle === '' && errorHandle || errors?.[e.name]?.message
-                      ):
-                      (
-                        errors?.[e.name]?.message
-                      )
-                    }
-                    type='body3' style={styles.helperText}/>
+                  <Text text={errors?.[e.name]?.message} type='body3' style={styles.helperText}/>
                 </>
                 ):(
                   <View id='name' style={[styles.underlineBlur]}></View>

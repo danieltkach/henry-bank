@@ -6,31 +6,26 @@ import { registerUserFetch } from '../../../controllers/user';
 import styles from './../styles';
 
 export default function RegisterFirstContainer({ navigation }) {
-  const [errorHandle, setErrorHandle] = useState('');
 
-  const handleFinalSubmit = (e, inputs) => {
-    // e.preventDefault()
-    console.log(inputs)
-    setErrorHandle('');
+  const handleFinalSubmit = async inputs => {
+    let error = undefined;
+    await registerUserFetch(inputs)
+    .then(responseUser => {
+      navigation.navigate('Register2', {email: responseUser.user.email});
+    })
+    .catch(err => {
+      error = { email: 'Correo electrónico no disponible' };
+      console.log(err);
+    });
 
-    if (inputs.password !== inputs.confirmPassword) {
-      setErrorHandle('Contraseñas diferentes');
-    }else {
-      registerUserFetch(inputs)
-      .then(responseUser => {
-        navigation.navigate('Register2', {email: responseUser.user.email});
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
+    return error;
   }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Background />
       <View style={styles.container}>
-        <RegisterFirstView handleFinalSubmit={handleFinalSubmit} navigation={navigation} errorHandle={errorHandle}/>
+        <RegisterFirstView handleFinalSubmit={handleFinalSubmit} navigation={navigation} />
       </View>
     </SafeAreaView>
   );

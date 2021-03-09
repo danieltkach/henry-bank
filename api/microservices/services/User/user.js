@@ -33,9 +33,13 @@ app.use('/user', routes);
 
 
 app.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  let filterUser =  { ...req.user._doc };
+  delete filterUser.password;
+  delete filterUser.codeSecurityExp;
+  delete filterUser.__v;
   res.status(200).json({
     message: 'Informacion del perfil',
-    user: req.user,
+    user: filterUser,
   });
 });
 
