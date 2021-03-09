@@ -14,7 +14,7 @@ const textInputs = [
   {name: 'phone', placeholder: 'Telefono', pattern: REGEX.PHONE, maxLength: 15, minLength: 8},
   {name: 'street', placeholder: 'Domicilio calle', maxLength: 20, minLength: 3},
   {name: 'streetNumber', placeholder: 'Número', maxLength: 5, minLength: 1},
-  {name: 'zipCode', placeholder: 'Codigo postal',pattern: REGEX.ZIPCODE, maxLength: 4, minLength: 4},
+  {name: 'zipCode', placeholder: 'Codigo postal', pattern: REGEX.ZIPCODE, maxLength: 4, minLength: 4},
   {name: 'city', placeholder: 'Ciudad', maxLength: 20, minLength: 3},
   {name: 'country', placeholder: 'País', maxLength: 20, minLength: 3},
 ];
@@ -90,8 +90,6 @@ export default function RegisterFourthView({ navigation, handleFinalSubmit }) {
           <Button onPress={handleSubmit(onSubmit)} label='registrarme' color='primary' style={styles.button} />
         </View>
 
-        <View style={styles.midText}><Text type='subtitle2' text='O Registrate con' /></View>
-        <View style={{alignItems: 'center'}}><Surface style={styles.googleButton}><IconButton icon='google' color='black' size={24}/></Surface></View>
         <Button onPress={() => navigation.navigate('Login')} label='¿Ya tienes una cuenta? Inicia Sesión' type='text' style={styles.midText}/>
       </View>
     </View>

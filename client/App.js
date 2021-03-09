@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { addSession } from './src/stores/userStore/userActions';
+import { addAccount } from './src/stores/accountStore/accountActions';
 import { profileAuthFetch } from './src/controllers/user';
 import { readAccountByIdFetch } from './src/controllers/account';
 import { getData } from './src/controllers/storage';
@@ -42,37 +43,120 @@ class App extends React.Component {
     this.setState({ isLogin: 'sessionDefault' });
 
     getData()
-      .then((responseToken) => {
-        if (!responseToken) {
-          // this.setState({ isLogin: 'sessionOff' });
-        } else {
-          return profileAuthFetch(responseToken);
-        }
-      })
-      .then((responseProfile) => {
-        if (responseProfile.user.role) {
-          this.setState({ isLogin: 'sessionOn' });
-          this.props.addSession(responseProfile.user);
-          return readAccountByIdFetch(responseProfile.user.accounts[0]);
-        }
-      })
-      .then((responseAccount) => {
-        this.props.addAccount(responseAccount);
-      })
-      .catch((err) => {
-        this.setState({ isLogin: 'sessionOff' });
-      });
+    .then((responseToken) => {
+      if(!responseToken) {
+        // this.setState({ isLogin: 'sessionOff' });
+      } else {
+        return profileAuthFetch(responseToken);
+      }
+    })
+    .then(responseProfile => {
+      if (responseProfile.user.role) {
+        this.props.addSession(responseProfile.user);
+        return readAccountByIdFetch(responseProfile.user.accounts[0]);
+      }
+    })
+    .then(responseAccount => {
+      this.props.addAccount(responseAccount.account);
+      this.setState({ isLogin: 'sessionOn' });
+    })
+    .catch(err => {
+      this.setState({ isLogin: 'sessionOff' });
+    })
     this.setState({ mounted: true });
   }
 
   render() {
-    console.log(this.state.isLogin);
+    console.log(this.props);
     return (
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {this.state.isLogin === 'sessionOff' && (
-              <>
+            {this.state.isLogin === 'sessionOff' &&
+              (
+                <>
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Login"
+                    component={Login}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register1"
+                    component={Register.RegisterFirst}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register2"
+                    component={Register.RegisterSecond}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register3"
+                    component={Register.RegisterThird}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Register4"
+                    component={Register.RegisterFourth}
+                  />
+                </>
+              )
+            }
+            {this.state.isLogin === 'sessionOn' &&
+              (
+                <>
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Account"
+                    component={Account}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Home"
+                    component={Home}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Contact"
+                    component={Contact}
+                    initialParams={{
+                      handleIsLogin: (value) =>
+                        this.setState({ isLogin: value })
+                    }}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Transfer"
+                    component={Transfer}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Deposit"
+                    component={Deposit}
+                  />
+                  <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="MyData"
+                    component={MyData}
+                  />
+                </>
+              )
+            }
+            {this.state.isLogin === 'sessionDefault' &&
+              (
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Login"
@@ -175,8 +259,8 @@ const styles = StyleSheet.create({
 
 const mapActionsToProps = (dispatch) => {
   return {
+    addAccount: (account) => dispatch(addAccount(account)),
     addSession: (user) => dispatch(addSession(user)),
-    addAccount: (account) => dispatch(addAccount(account))
   };
 };
 

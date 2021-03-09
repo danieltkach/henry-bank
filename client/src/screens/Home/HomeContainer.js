@@ -20,7 +20,6 @@ import {
 } from "react-native-chart-kit";
 
 
-
 export default function HomeContainer({ navigation, route }) {
   const { handleIsLogin } = route.params;
   const [account, setAccount] = useState();
@@ -34,7 +33,6 @@ export default function HomeContainer({ navigation, route }) {
     })
   }
 
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
@@ -46,9 +44,9 @@ export default function HomeContainer({ navigation, route }) {
         handleIsLogin={handleIsLogin}
       />
       <View style={styles.container}>
-      {user ?
+      {user && account ?
         (
-          <HomeView user={user} handleAccount={handleAccount} account={account}/>
+          <HomeView user={user} account={account}/>
         )
         :(
           <></>
