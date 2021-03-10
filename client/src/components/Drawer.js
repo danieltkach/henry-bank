@@ -39,7 +39,7 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
       type: 'button',
       label: 'Recargar dinero',
       icon: 'arrow-collapse-up',
-      route: 'Recharge'
+      route: 'Deposit'
     },
     {
       index: 1,

@@ -19,7 +19,6 @@ export const removeSession = () => {
 
 
 export const addContact= user =>{
-  console.log(user,"useeeeeeeeeer")
   return{
     type:ADD_CONTACT,
     payload:user
