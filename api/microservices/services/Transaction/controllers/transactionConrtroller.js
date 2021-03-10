@@ -2,6 +2,7 @@ const Transaction = require('../models/TransactionModel')
 const AccountModel = require('../models/AccountModel')
 const UserModel = require('../../User/models/UserModel')
 const { response } = require('express')
+const { update } = require('../models/TransactionModel')
 
 
 
@@ -128,7 +129,7 @@ const newTransaction = (req,res) => {
             currency:"pesos",
             amount : cash,
             idSenderAccount: idSender,
-            idReceiverAccount: idReceiver,
+            idReceiverAccount: cvu || idReceiver,
         }) 
         
         transaction.save()
@@ -224,6 +225,12 @@ const getStatistics = (req,res) =>{
     })
 }
 
+const getUser = async (user) =>{
+    let us = await AccountModel.findOne({cvu : user})
+            .then(response => {return response})
+    
+}
+
 
 const getAllTransfers = (req,res) => {
     const user = req.params.id
@@ -235,20 +242,13 @@ const getAllTransfers = (req,res) => {
             [transfer , transfer.amount = '- ' + transfer.amount])
         
          let updateTransfers = allTransfersUser.map(transfer => 
-            transfer[0].transactionType === 'recharge'? [transfer , transfer[0].idSenderAccount="RapiPago" ]:
-            [transfer , transfer[0].idSenderAccount = transfer[0].idSenderAccount]) 
+            transfer[0].transactionType === 'recharge'? [transfer[0] , transfer[0].idSenderAccount="RapiPago" ]:
+            [transfer[0] , transfer[0].idSenderAccount = transfer[0].idSenderAccount])
         
-        let account= [];
-        updateTransfers.map(transfer => 
-            transfer[0][0].idSenderAccount === user ?
-            (AccountModel.findById(transfer[0][0].idReceiverAccount)
-                .then(response => { account.push([transfer[0][0], response.userId])
-                                    console.log(response.userId)}) )
-            
-            : account.push([transfer[0][0]])
-         )
+        let allTransfers = updateTransfers.map(transfer => transfer.shift())
+        
 
-        res.status(200).send(updateTransfers)
+        res.status(200).send(allTransfers)
     })
 }
 
