@@ -4,12 +4,12 @@ import { IconButton } from 'react-native-paper';
 import styles from './styles';
 import data from './data';
 
-export default function TrasactionView() {
-  console.log('====================================');
-  console.log(data);
-  console.log('====================================');
-
-  const [transaction, setTransaction] = useState(data.transactionHistory);
+export default function TrasactionView({ transactions }) {
+  // console.log('====================================');
+  // console.log(transactions);
+  // console.log(transactions[0]);
+  // console.log(transactions[0][0][0]);
+  // console.log('====================================');
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -21,7 +21,7 @@ export default function TrasactionView() {
     >
       <IconButton icon="bank-transfer" color="black" size={40} />
       <View style={{ flex: 1, marginLeft: 10 }}>
-        <Text>{item.description}</Text>
+        <Text>{item.transactionType}</Text>
         <Text>{item.date}</Text>
       </View>
       <View
@@ -43,8 +43,8 @@ export default function TrasactionView() {
       <FlatList
         contentContainerStyle={{ marginTop: 10 }}
         // scrollEnabled={false}
-        data={data.transactionHistory}
-        keyExtractor={(item) => `${item.id}`}
+        data={transactions}
+        keyExtractor={(item) => `${item._id}`}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => {
