@@ -58,7 +58,7 @@ class App extends React.Component {
         }
       })
       .then((responseAccount) => {
-        // this.props.addAccount(responseAccount.account);
+        this.props.addAccount(responseAccount.account);
         this.setState({ isLogin: 'sessionOn' });
       })
       .catch((err) => {

@@ -1,5 +1,5 @@
-export const ADD_ACCOUNT = "ADD_SESSION";
-export const REMOVE_ACCOUNT = "REMOVE_SESSION";
+export const ADD_ACCOUNT = "ADD_ACCOUNT";
+export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
 
 
 export const addAccount = (account) => {
