@@ -1,6 +1,8 @@
 const Transaction = require('../models/TransactionModel')
 const AccountModel = require('../models/AccountModel')
+const UserModel = require('../../User/models/UserModel')
 const { response } = require('express')
+
 
 
 const getTranfers = (req,res) =>{
@@ -72,7 +74,7 @@ const  rapiTransfer =  (req,res ) => {
 
      AccountModel.findOne({cvu:cvu})
         .then((acc)=>{                 
-            acc.balance +=amount        
+            acc.balance += parseFloat(amount)      
             acc.save() 
             return acc
         }) 
@@ -223,6 +225,33 @@ const getStatistics = (req,res) =>{
 }
 
 
+const getAllTransfers = (req,res) => {
+    const user = req.params.id
+    Transaction.find({ $or: [{idSenderAccount : user } , {idReceiverAccount: user} ] }, function(err,data){
+        if(err) res.status(400).send('Error al traer las transacciones')
+        
+        let allTransfersUser = data.map(transfer => 
+            transfer.idReceiverAccount === user ? [transfer , transfer.amount = '+ ' + transfer.amount] :
+            [transfer , transfer.amount = '- ' + transfer.amount])
+        
+         let updateTransfers = allTransfersUser.map(transfer => 
+            transfer[0].transactionType === 'recharge'? [transfer , transfer[0].idSenderAccount="RapiPago" ]:
+            [transfer , transfer[0].idSenderAccount = transfer[0].idSenderAccount]) 
+        
+        let account= [];
+        updateTransfers.map(transfer => 
+            transfer[0][0].idSenderAccount === user ?
+            (AccountModel.findById(transfer[0][0].idReceiverAccount)
+                .then(response => { account.push([transfer[0][0], response.userId])
+                                    console.log(response.userId)}) )
+            
+            : account.push([transfer[0][0]])
+         )
+
+        res.status(200).send(updateTransfers)
+    })
+}
+
 module.exports= {
     getTranfers,
     getIncomes,
@@ -230,5 +259,6 @@ module.exports= {
     getIncomesByDate,
     rapiTransfer,
     newTransaction,
-    getStatistics
+    getStatistics,
+    getAllTransfers
 }
