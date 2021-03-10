@@ -6,7 +6,7 @@ const initialState = {
   account: {}
 };
 
-const userReducer = (state = initialState, action) => {
+const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ACCOUNT:
       return {...state, account: action.payload && action.payload || {}};
@@ -21,4 +21,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default userReducer;
+export default accountReducer;

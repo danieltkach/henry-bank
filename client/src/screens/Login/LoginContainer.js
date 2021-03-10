@@ -39,7 +39,7 @@ export default function LoginContainer({ navigation, route }) {
     .then(responseUser => {
       if (responseUser.user.role === 'guest') {
         if (responseUser.user.codeSecurity === 'active') {
-          navigation.navigate('Register3', { userId: responseUser._id });
+          navigation.navigate('Register3', { userId: responseUser.user._id });
         } else {
           navigation.navigate('Register2', {email: responseUser.user.email});
         }
