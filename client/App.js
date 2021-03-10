@@ -151,6 +151,11 @@ class App extends React.Component {
                   name="Cards"
                   component={Cards}
                 />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transaction"
+                  component={Transaction}
+                />
               </>
             )}
             {this.state.isLogin === 'sessionDefault' && (

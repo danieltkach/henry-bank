@@ -17,4 +17,6 @@ server.put('/newTransfer/:idSender' , transactionController.newTransaction)
 
 server.get('/statistics/:id' , transactionController.getStatistics)
 
+server.get('/all/:id', transactionController.getAllTransfers)
+
 module.exports = server
