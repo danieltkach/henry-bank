@@ -10,7 +10,7 @@ import {
 // const PORT_API_TRANSACTION = '4002';
 // const PORT_API_GATEWAY = '8080';
 
-export const API_USER_HOST = `http://${HOST}:${PORT_API_USER}`;
+export const API_USER_HOST = `http://192.168.3.160:${PORT_API_USER}`;
 export const API_TRANSACTION_HOST = `http://${HOST}:${PORT_API_TRANSACTION}`;
 
 //Fetchs asociadas a User
