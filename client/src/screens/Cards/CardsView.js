@@ -112,7 +112,7 @@ function initialValues() {
 function validationSchema() {
   return {
     number: Yup.string().min(16).max(16).required(true),
-    exp_month: Yup.string().min(2).max(2).required(true),
+    exp_month: Yup.string().min(1).max(2).required(true),
     exp_year: Yup.string().min(4).max(4).required(true),
     cvc: Yup.string().min(3).max(3).required(true),
     name: Yup.string().min(6).required(true)
