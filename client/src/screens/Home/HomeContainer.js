@@ -45,9 +45,9 @@ export default function HomeContainer({ navigation, route }) {
   console.log(user);
   console.log(cuenta);
 
-  const mensualLabel2 = [ '1', '2','3', '4', '5','6', '7', '8','9', '10']
+  
   const trimestralLabel = ['12', '11','10', '9', '8','7', '6', '5','4', '3', '2', '1']
-  const semestreLabel = ['Octubre','Noviembre','Diciembre','Enero','Febrero','Marzo']
+  
 
   
   const [tablas ,setTablas] = useState([' ']);
@@ -58,7 +58,7 @@ export default function HomeContainer({ navigation, route }) {
       <Background />
       <Header
         type="settings"
-        label='Inicio'
+        label='Bienvenido'
         align="center"
         navigation={navigation}
         handleIsLogin={handleIsLogin}
@@ -73,8 +73,14 @@ export default function HomeContainer({ navigation, route }) {
         )
       }
       </View>
+      <View style={estilos.balanceTotal3}>
+        <Text style={estilos.letraBalance}>{ `Balance total \n $${cuenta && cuenta.balance}` }</Text>
+      </View>
+      <View style={estilos.balanceTotal2}>
+        <Text> </Text>
+      </View>
       <View style={estilos.balanceTotal}>
-        <Text style={estilos.letraBalance}>{ `Balance: ${cuenta && cuenta.balance}` }</Text>
+        <Text> </Text>
       </View>
       <View style={estilos.titulo}>
         <Text style={estilos.negrita}>
@@ -84,7 +90,7 @@ export default function HomeContainer({ navigation, route }) {
           <View style={estilos.semMesSem}>
             <Button
               color="accent"
-              label="Mensual"
+              label="Quincena"
               type='text'
               onPress={() => (console.log('mensual'), setTablas(statistics.day.dayArr), setDatas(statistics.day.spentDay))}
             />
@@ -145,7 +151,7 @@ export default function HomeContainer({ navigation, route }) {
     }}
   />
 </View>
-      <View style={estilos.surface4}>
+      {/* <View style={estilos.surface4}>
         <Text style={estilos.negrita}> General </Text>
         <View style={estilos.linea}/>
         <View style={estilos.general}>
@@ -160,24 +166,24 @@ export default function HomeContainer({ navigation, route }) {
         
 
         
-      </View>
+      </View> */}
       <View style={estilos.contenedorBotones}>
       <View style={estilos.surface}>
-        <TouchableOpacity style={estilos.button}>
+        <TouchableOpacity style={estilos.button}  >
           <IconButton style={estilos.IconButton} icon={EnviarDinero}/>
-          <Text style={estilos.text}> Enviar</Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Transfer')}> Enviar</Text>
         </TouchableOpacity>
       </View>
       <View style={estilos.surface2}>
-        <TouchableOpacity style={estilos.button}>          
+        <TouchableOpacity style={estilos.button} >          
           <IconButton style={estilos.IconButton} icon={Cargar}/>
-          <Text style={estilos.text}> Cargar</Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Deposit')}> Cargar</Text>
         </TouchableOpacity>
       </View>
       <View style={estilos.surface3}>
-        <TouchableOpacity style={estilos.button}>
+        <TouchableOpacity style={estilos.button} >
           <IconButton style={estilos.IconButton} icon={Transacciones}/>
-          <Text style={estilos.text}> Transacciones </Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Transaction')}> Transacciones </Text>
         </TouchableOpacity>
         
       </View>
@@ -200,16 +206,32 @@ const chartConfig = {
 
 
 const estilos = StyleSheet.create({
-  
-  balanceTotal:{
+  balanceTotal3:{
     flex: 0.2,
-    margin: 10,
+    padding: 10,
     alignItems:'center',
     textAlign: 'center',
+    borderRadius: 32,
+    borderColor: 'black'
+  },
+  balanceTotal2:{
+    flex: 0.2,
+    padding: 10,
+    alignItems:'center',
+    textAlign: 'center',
+    borderRadius: 32,
+    
+  },
+  balanceTotal:{
+    flex: 0.2,
+    padding: 10,
+    alignItems:'center',
+    textAlign: 'center',
+    borderRadius: 32,
+    
   },
   letraBalance:{
     fontSize: 25,
-    
   },
   semanaMesSem:{
     alignItems: 'flex-start',
@@ -221,7 +243,7 @@ const estilos = StyleSheet.create({
   semMesSem:{
     flex: 0.5,
     flexDirection: 'row',
-    
+    justifyContent: 'space-around'
   },
   titulo: {
     flex: 0.3,
@@ -261,7 +283,8 @@ const estilos = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     width: 48,
-    height: 48
+    height: 48,
+    
   },
   iconButton: {
     width: 24,
