@@ -5,7 +5,7 @@
 //   PORT_API_GATEWAY
 // } from '@env';
 
-const HOST = '192.168.0.10';
+const HOST = '192.168.0.107';
 const PORT_API_USER = '4001';
 const PORT_API_TRANSACTION = '4002';
 const PORT_API_GATEWAY = '8080';

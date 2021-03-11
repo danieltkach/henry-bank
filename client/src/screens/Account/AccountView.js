@@ -8,6 +8,7 @@ import { Text, Button } from '../../components';
 import MasterCard from './img/masterCard.png';
 import Visa from './img/visa.png';
 import { useSelector } from 'react-redux';
+import axios from "axios";
 
 
 const array = [
@@ -48,8 +49,8 @@ export default function AccountView({ navigation, account, user, deleteCard }) {
   const userId = useSelector((state) => state.userReducer.user._id);
   console.log(userId,"holaaaaaaaa")
 
-  const handleDelete = (userId) => {
-    deleteCard(userId )
+  const handleDelete = (cardId) => {
+    axios.delete(`http:/localhost:4001/user/credit-card/${userId}`, {cardId})
    };
 
   return (
