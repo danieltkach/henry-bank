@@ -1,31 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  FlatList,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   TextInput
 } from 'react-native';
 import {
-  BottomNav,
   Header,
-  Background,
   Button,
-  Drawer,
   Avatar
 } from '../../components';
-import { addContactFetch, readUsersFetch } from '../../controllers/user';
-import { validations, REGEX } from '../../validations/index';
+import {REGEX } from '../../validations/index';
 import { palette, rgba, fontSystem } from '../../theme';
 import { useForm, Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { HOST, PORT_API_USER } from '@env';
-
+import styles from './styles';
 const darkColor = palette.accent.dark;
-const primaryColor = palette.primary.main;
 const secondaryColor = palette.secondary.light;
 const textInputs = [
   {
@@ -38,12 +27,11 @@ const textInputs = [
 ];
 
 const ContactView = ({
-  navigation,
-  data,
   toggle,
   handleClick,
   deleteContact,
-  addContact
+  addContact,
+  navigation
 }) => {
   const userId = useSelector((state) => state.userReducer.user._id);
   const contactAlias = useSelector((state) => state.userReducer.user.contactsAlias);
@@ -56,7 +44,6 @@ const ContactView = ({
 
   const onSumbit = (data) => {
      addContact(userId,data)
-
   };
   return (
     <View style={{ flex: 1 }}>
@@ -152,7 +139,7 @@ const ContactView = ({
           </View>
         </View>
       ) : (
-        <Header type="settings" label="Contactos" align="center" />
+        <Header type="settings" label="Contactos" align="center" navigation={navigation}/>
       )}
       {contactAlias.length > 0 &&
         contactAlias.map((d, index) => (
@@ -167,74 +154,5 @@ const ContactView = ({
     </View>
   );
 };
-const styles = StyleSheet.create({
-  index: {
-    paddingHorizontal: 13,
-    position: 'absolute',
-    zIndex: 1,
-    top: 0,
-    width: '100%',
-    backgroundColor: primaryColor,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30
-  },
-  texts: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
 
-  text1: {
-    color: 'white',
-    padding: 30,
-    fontSize: 24
-  },
-  text2: {
-    paddingHorizontal: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'white',
-    fontSize: 16
-  },
-
-  textInputs: {
-    marginVertical: '2px',
-    width: '100%'
-  },
-  underlineBlur: {
-    position: 'absolute',
-    bottom: '8px',
-    width: '100%',
-    height: '1px',
-    backgroundColor: palette.text.disabled,
-    opacity: 0.8
-    // transition     : '.4s',
-  },
-  underlineFocus: {
-    height: '2px',
-    opacity: 1,
-    backgroundColor: palette.primary.main
-    // transition     : '.4s',
-  },
-  underlineError: {
-    height: '2px',
-    opacity: 1,
-    backgroundColor: 'red'
-    // transition     : '.4s',
-  },
-  text: {
-    height: 48,
-    backgroundColor: 'transparent',
-    marginTop: '12px',
-    color: 'white'
-  },
-  helperText: {
-    position: 'absolute',
-    right: '0px',
-    bottom: '-8px',
-    color: 'red'
-    // transition: '.3s'
-  }
-});
 export default ContactView;
