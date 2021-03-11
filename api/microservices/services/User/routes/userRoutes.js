@@ -3,7 +3,14 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const passport = require('passport');
 
-router.post('/signup', passport.authenticate('signup', { session: false }), userController.createUser);
+router.post('/credit-card/:id', userController.addCreditCard);
+router.get('/credit-card/:id', userController.getCreditCardsList);
+
+router.post(
+  '/signup',
+  passport.authenticate('signup', { session: false }),
+  userController.createUser
+);
 router.put('/alias/:id', userController.modifyAlias);
 router.post('/login', userController.loginUser);
 router.post('/send/email', userController.sendEmailVerify);
