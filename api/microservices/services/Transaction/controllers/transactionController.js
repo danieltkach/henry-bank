@@ -83,53 +83,53 @@ const getIncomesByDate = (req, res) => {
   );
 };
 
-const  rapiTransfer =  (req,res ) => {
-    const { amount, cvu} = req.body
+const rapiTransfer = (req, res) => {
+  const { amount, cvu } = req.body;
 
-     AccountModel.findOne({cvu:cvu})
-        .then((acc)=>{
-            acc.balance += amount
-            acc.save()
-            return acc
-        })
-        .then(trans => {
-            console.log(trans)
+  AccountModel.findOne({ cvu: cvu })
+    .then((acc) => {
+      acc.balance += amount;
+      acc.save();
+      return acc;
+    })
+    .then((trans) => {
+      console.log(trans);
 
-        const transaction = new Transaction({
-            transactionType:"recharge",
-            currency:"pesos",
-            amount,
-            idSenderAccount:-1,
-            idReceiverAccount:trans._id
-        })
-        transaction.save()
-        return transaction
-        })
-        .then(trans => {
-            res.status(200).json({
-                message: 'Transfer complete',
-                trans
-            })
-        })
-        .catch(err => {
-            res.status(400).json({
-                message: err.message || 'Error in transfer'
-            })
-        })
-}
+      const transaction = new Transaction({
+        transactionType: 'recharge',
+        currency: 'ARS',
+        amount,
+        idSenderAccount: -1,
+        idReceiverAccount: trans._id
+      });
+      transaction.save();
+      return transaction;
+    })
+    .then((trans) => {
+      res.status(200).json({
+        message: 'Transfer complete',
+        trans
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: err.message || 'Error in transfer'
+      });
+    });
+};
 
-const newTransaction = (req,res) => {
-    const idSender = req.params.idSender
-    const {cash , cvu , idReceiver} = req.body
+const newTransaction = (req, res) => {
+  const idSender = req.params.idSender;
+  const { cash, cvu, idReceiver } = req.body;
 
-    let accountLocal ;
+  let accountLocal;
 
-    AccountModel.findById(idSender)
-    .then( send => {
-        if(send.balance < cash) return new Error('Saldo insuficiente')
-        accountLocal = send
-        if(!cvu) return AccountModel.findById(idReceiver)
-        else return AccountModel.findOne({cvu : cvu})
+  AccountModel.findById(idSender)
+    .then((send) => {
+      if (send.balance < cash) return new Error('Saldo insuficiente');
+      accountLocal = send;
+      if (!cvu) return AccountModel.findById(idReceiver);
+      else return AccountModel.findOne({ cvu: cvu });
     })
     .then((receive) => {
       receive.balance += parseFloat(cash);
@@ -139,7 +139,7 @@ const newTransaction = (req,res) => {
 
       const transaction = new Transaction({
         transactionType: 'transfer',
-        currency: 'pesos',
+        currency: 'ARS',
         amount: cash,
         idSenderAccount: idSender,
         idReceiverAccount: idReceiver || cvu
@@ -265,24 +265,16 @@ const getAllTransfers = (req, res) => {
 
       let updateTransfers = allTransfersUser.map((transfer) =>
         transfer[0].transactionType === 'recharge'
-          ? [transfer, (transfer[0].idSenderAccount = 'RapiPago')]
+          ? [transfer[0], (transfer[0].idSenderAccount = 'RapiPago')]
           : [
-              transfer,
+              transfer[0],
               (transfer[0].idSenderAccount = transfer[0].idSenderAccount)
             ]
       );
 
-      // let account= [];
-      // updateTransfers.map(transfer =>
-      //     transfer[0][0].idSenderAccount === user ?
-      //     (AccountModel.findById(transfer[0][0].idReceiverAccount)
-      //         .then(response => { account.push([transfer[0][0], response.userId])
-      //                             console.log(response.userId)}) )
+      let allTransfers = updateTransfers.map((transfer) => transfer.shift());
 
-      //     : account.push([transfer[0][0]])
-      //  )
-
-      res.status(200).send(updateTransfers);
+      res.status(200).send(allTransfers);
     }
   );
 };

@@ -16,9 +16,9 @@ export default function TransactionContainer({ navigation }) {
     const allTransactions = async () => {
       const { data } = await axios.get(`${GET_TRANSACTIONS}/${accountId[0]}`);
       console.log(data);
-      if (data[0]) {
+      if (data) {
         data.map((array) => {
-          transactions.push(array[0][0]);
+          transactions.push(array);
           transactions.reverse();
           // setTransactions(transactions, array[0][0]);
         });
