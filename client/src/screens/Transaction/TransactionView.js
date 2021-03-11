@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Animated } from 'react-native';
+import { View, FlatList, TouchableOpacity, Animated } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import styles from './styles';
 import { StatusBar } from 'expo-status-bar';
+import { Text } from '../../components/';
 
 export default function TrasactionView({ transactions }) {
   const scrollY = React.useRef(new Animated.Value(0)).current;
@@ -10,13 +11,13 @@ export default function TrasactionView({ transactions }) {
   return (
     <Animated.View style={{ flex: 1 }}>
       <Animated.FlatList
+        style={{ height: 100, paddingBottom: 64 }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: true }
         )}
         contentContainerStyle={{
-          marginTop: 10,
-          paddingTop: StatusBar.currentHeight || 42
+          marginTop: 10
         }}
         // scrollEnabled={false}
         data={transactions}
@@ -32,26 +33,55 @@ export default function TrasactionView({ transactions }) {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingVertical: 10,
-                padding: 20,
-                marginBottom: 20,
+                marginVertical: 8,
+                padding: 16,
+
                 backgroundColor: 'rgba(255,255,255,0.9)',
                 borderRadius: 12,
                 shadowColor: '#000',
                 shadowOffset: {
                   width: 0,
-                  height: 10
+                  height: 4
                 },
-                shadowOpacity: 1,
-                shadowRadius: 20,
+                shadowOpacity: 0.3,
+                //shadowRadius: 4.65,
+                elevation: 4,
                 transform: [{ scale }]
               }}
             >
-              <IconButton icon="bank-transfer" color="black" size={40} />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text>{item.idSenderAccount}</Text>
-                <Text>{item.transactionType}</Text>
-                <Text>{item.date}</Text>
+              <IconButton
+                icon={
+                  item.transactionType === 'transfer'
+                    ? 'subdirectory-arrow-right'
+                    : 'arrow-collapse-up'
+                }
+                color="black"
+                size={24}
+              />
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  alignItems: 'space-around',
+                  justifyContent: 'space-around',
+                  height: '100%'
+                }}
+              >
+                {item.idSenderAccount === 'RapiPago' ? (
+                  <Text text={item.idSenderAccount} type="subtitle2" />
+                ) : (
+                  <Text
+                    text={`CVU ${item.idReceiverAccount}`}
+                    type="subtitle2"
+                  />
+                )}
+
+                <Text
+                  text={item.date.substr(0, 10)}
+                  type="body3"
+                  color="disabled"
+                />
               </View>
               <View
                 style={{
@@ -64,9 +94,16 @@ export default function TrasactionView({ transactions }) {
                   style={{
                     color: item.transactionType == 'recharge' ? 'green' : 'red'
                   }}
-                >
-                  {item.amount} {item.currency}
-                </Text>
+                  text={item.amount}
+                  type="subtitle1"
+                />
+                <Text
+                  style={{
+                    color: item.transactionType == 'recharge' ? 'green' : 'red'
+                  }}
+                  text={item.currency}
+                  type="subtitle2"
+                />
               </View>
             </Animated.View>
           );

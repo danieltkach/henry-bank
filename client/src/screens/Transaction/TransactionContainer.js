@@ -19,13 +19,13 @@ export default function TransactionContainer({ navigation }) {
       if (data[0]) {
         data.map((array) => {
           transactions.push(array[0][0]);
+          transactions.reverse();
           // setTransactions(transactions, array[0][0]);
         });
       }
     };
     allTransactions();
   }, []);
-  console.log(transactions);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
