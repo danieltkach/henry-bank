@@ -3,19 +3,27 @@ import { View, SafeAreaView } from 'react-native';
 import TransactionView from './TransactionView';
 import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
-import { useSelector } from 'react-redux';
-import { listTransactions } from '../../controllers/transaction';
+import { useDispatch, useSelector } from 'react-redux';
+import { listAllTransactions } from '../../stores/accountStore/accountActions';
 
 export default function TransactionContainer({ navigation }) {
-  const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState([]);
   const accountId = useSelector((state) => state.userReducer.user.accounts);
+  const transactions = useSelector(
+    (state) => state.accountReducer.account.transactions
+  );
+  console.log(transactions);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const transactionsFetch = async () => {
+  //     const data = await listTransactions(accountId);
+  //     setTransactions(data);
+  //   };
+  //   transactionsFetch();
+  // }, []);
 
   useEffect(() => {
-    const transactionsFetch = async () => {
-      const data = await listTransactions(accountId);
-      setTransactions(data);
-    };
-    transactionsFetch();
+    dispatch(listAllTransactions(accountId));
   }, []);
 
   return (
@@ -25,7 +33,7 @@ export default function TransactionContainer({ navigation }) {
       <View style={styles.container}>
         <TransactionView transactions={transactions} />
       </View>
-      <BottomNav navigation={navigation} init={1} />
+      <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
 }

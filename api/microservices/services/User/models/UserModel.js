@@ -90,6 +90,12 @@ const UserSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Account'
     }
+  ],
+  cards: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Card'
+    }
   ]
 });
 

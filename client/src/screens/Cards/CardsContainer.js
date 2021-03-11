@@ -8,7 +8,7 @@ export default function CardsContainer({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
-      <Header type="settings" label="Contactos" align="center" />
+      <Header type="settings" label="Cargar tarjeta" align="center" />
       <View style={styles.container}>
         <CardsView />
       </View>
