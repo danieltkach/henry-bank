@@ -1,6 +1,9 @@
-export const ADD_ACCOUNT = "ADD_ACCOUNT";
-export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
-export const UPDATE_BALANCE = "UPDATE_BALANCE";
+import { listTransactions } from '../../controllers/transaction';
+
+export const ADD_ACCOUNT = 'ADD_ACCOUNT';
+export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
+export const UPDATE_BALANCE = 'UPDATE_BALANCE';
+export const TRANSACTION_LIST = 'TRANSACTION_LIST';
 
 export const addAccount = (account) => {
   return {
@@ -21,4 +24,16 @@ export const updateBalance = (balance) => {
     type: UPDATE_BALANCE,
     payload: balance
   };
+};
+
+export const listAllTransactions = (accountId) => async (dispatch) => {
+  try {
+    const data = await listTransactions(accountId);
+    dispatch({
+      type: TRANSACTION_LIST,
+      payload: data
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
