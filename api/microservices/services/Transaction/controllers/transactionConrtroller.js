@@ -1,10 +1,8 @@
-
-const Transaction = require('../models/TransactionModel')
-const AccountModel = require('../models/AccountModel')
-const UserModel = require('../../User/models/UserModel')
-const { response } = require('express')
-const { update } = require('../models/TransactionModel')
-
+const Transaction = require('../models/TransactionModel');
+const AccountModel = require('../models/AccountModel');
+const UserModel = require('../../User/models/UserModel');
+const { response } = require('express');
+const { update } = require('../models/TransactionModel');
 
 const getTranfers = (req, res) => {
   Transaction.find(
@@ -156,31 +154,31 @@ const newTransaction = (req, res) => {
       });
     })
 
-    .then(receive => {
-        receive.balance += parseFloat(cash)
-        receive.save()
-        accountLocal.balance -= parseFloat(cash)
-        accountLocal.save() 
+    .then((receive) => {
+      receive.balance += parseFloat(cash);
+      receive.save();
+      accountLocal.balance -= parseFloat(cash);
+      accountLocal.save();
 
-        const transaction = new Transaction({
-            transactionType:"transfer",
-            currency:"pesos",
-            amount : cash,
-            idSenderAccount: idSender,
-            idReceiverAccount: cvu || idReceiver,
-        }) 
-        
-        transaction.save()
+      const transaction = new Transaction({
+        transactionType: 'transfer',
+        currency: 'pesos',
+        amount: cash,
+        idSenderAccount: idSender,
+        idReceiverAccount: cvu || idReceiver
+      });
 
+      transaction
+        .save()
 
-    .catch((err) =>
-      res.status(400).json({
-        message: 'Transferencia incompleta',
-        error: err
-      })
-    );
+        .catch((err) =>
+          res.status(400).json({
+            message: 'Transferencia incompleta',
+            error: err
+          })
+        );
+    });
 };
-
 const getStatistics = (req, res) => {
   let start = new Date(new Date() - 1000 * 60 * 60 * 24 * 30 * 7);
 
@@ -277,27 +275,27 @@ const getAllTransfers = (req, res) => {
     function (err, data) {
       if (err) res.status(400).send('Error al traer las transacciones');
 
+      let allTransfersUser = data.map((transfer) =>
+        transfer.idReceiverAccount === user
+          ? [transfer, (transfer.amount = '+ ' + transfer.amount)]
+          : [transfer, (transfer.amount = '- ' + transfer.amount)]
+      );
 
-const getAllTransfers = (req,res) => {
-    const user = req.params.id
-    Transaction.find({ $or: [{idSenderAccount : user } , {idReceiverAccount: user} ] }, function(err,data){
-        if(err) res.status(400).send('Error al traer las transacciones')
-        
-        let allTransfersUser = data.map(transfer => 
-            transfer.idReceiverAccount === user ? [transfer , transfer.amount = '+ ' + transfer.amount] :
-            [transfer , transfer.amount = '- ' + transfer.amount])
-        
-         let updateTransfers = allTransfersUser.map(transfer => 
-            transfer[0].transactionType === 'recharge'? [transfer[0] , transfer[0].idSenderAccount="RapiPago" ]:
-            [transfer[0] , transfer[0].idSenderAccount = transfer[0].idSenderAccount])
-        
-        let allTransfers = updateTransfers.map(transfer => transfer.shift())
-        
+      let updateTransfers = allTransfersUser.map((transfer) =>
+        transfer[0].transactionType === 'recharge'
+          ? [transfer[0], (transfer[0].idSenderAccount = 'RapiPago')]
+          : [
+              transfer[0],
+              (transfer[0].idSenderAccount = transfer[0].idSenderAccount)
+            ]
+      );
 
-        res.status(200).send(allTransfers)
-    })
-}
+      let allTransfers = updateTransfers.map((transfer) => transfer.shift());
 
+      res.status(200).send(allTransfers);
+    }
+  );
+};
 
 module.exports = {
   getTranfers,
