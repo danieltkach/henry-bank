@@ -58,7 +58,7 @@ class App extends React.Component {
         }
       })
       .then((responseAccount) => {
-        // this.props.addAccount(responseAccount.account);
+        this.props.addAccount(responseAccount.account);
         this.setState({ isLogin: 'sessionOn' });
       })
       .catch((err) => {
@@ -150,6 +150,11 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Cards"
                   component={Cards}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Transaction"
+                  component={Transaction}
                 />
               </>
             )}

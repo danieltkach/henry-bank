@@ -1,7 +1,7 @@
 const express = require('express')
 const server = express.Router()
 
-const transactionController = require('../controllers/transactionConrtroller')
+const transactionController = require('../controllers/transactionController')
 
 server.get('/transfers/:id', transactionController.getTranfers)
 

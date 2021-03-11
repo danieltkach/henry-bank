@@ -10,7 +10,8 @@ export const REGEX = {
   PHONE: /^([0-9])*$/,
   DNI: /^(\d{2}\d{3}\d{3})|(\d{2}\s{1}\d{3}\s\d{3})$/,
   PAS: /^[A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2}$/,
-  DATE: /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/
+  DATE: /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/,
+  AMOUNT: /^(\d+(?:[\.\,]\d{2})?)$/
 }
 
 export const validations = {
@@ -90,6 +91,15 @@ export const validations = {
     if (!dataForm.trim()) {
       return `${label} requerido.`
     } else if (REGEX.PHONE.test(dataForm.trim())) {
+      return `${label} invalido.`
+    } else {
+      return '';
+    }
+  },
+  amount: (dataForm, label) => {
+    if (!dataForm.trim()) {
+      return `${label} requerido.`
+    } else if (REGEX.AMOUNT.test(dataForm.trim())) {
       return `${label} invalido.`
     } else {
       return '';

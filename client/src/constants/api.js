@@ -1,14 +1,16 @@
-// import {
-//   HOST,
-//   PORT_API_USER,
-//   PORT_API_TRANSACTION,
-//   PORT_API_GATEWAY
-// } from '@env';
+import {
+  HOST,
+  PORT_API_USER,
+  PORT_API_TRANSACTION,
+  PORT_API_GATEWAY
+} from '@env';
+
 
 const HOST = '192.168.0.107';
 const PORT_API_USER = '4001';
 const PORT_API_TRANSACTION = '4002';
 const PORT_API_GATEWAY = '8080';
+
 
 export const API_USER_HOST = `http://${HOST}:${PORT_API_USER}`;
 export const API_TRANSACTION_HOST = `http://${HOST}:${PORT_API_TRANSACTION}`;
@@ -31,6 +33,8 @@ export const GET_TRANSFER_SENDED = `${API_TRANSACTION_HOST}/transaction/transfer
 export const GET_TRANSFER_INCOME = `${API_TRANSACTION_HOST}/transaction/incomes`; //:dataId
 export const POST_TRANSFER = `${API_TRANSACTION_HOST}/transaction/transfer`; //#dataForm
 export const PUT_TRANSFER = `${API_TRANSACTION_HOST}/transaction/newTransfer`;
+export const PUT_RECHARGE = `${API_TRANSACTION_HOST}/transaction/transfer/recharge`; //#cvu
+export const GET_TRANSACTIONS = `${API_TRANSACTION_HOST}/transaction/all`; //:dataId
 
 //Fetchs asociadas a User
 export const POST_ACCOUNT = `${API_TRANSACTION_HOST}/transaction/account`; //:dataId
