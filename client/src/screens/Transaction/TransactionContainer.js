@@ -4,27 +4,18 @@ import TransactionView from './TransactionView';
 import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
 import { useSelector } from 'react-redux';
-import { allTransactionFetch } from '../../controllers/transaction';
-import { GET_TRANSACTIONS } from '../../constants/api';
-import axios from 'axios';
+import { listTransactions } from '../../controllers/transaction';
 
 export default function TransactionContainer({ navigation }) {
-  // const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const accountId = useSelector((state) => state.userReducer.user.accounts);
-  const transactions = [];
+
   useEffect(() => {
-    const allTransactions = async () => {
-      const { data } = await axios.get(`${GET_TRANSACTIONS}/${accountId[0]}`);
-      console.log(data);
-      if (data) {
-        data.map((array) => {
-          transactions.push(array);
-          transactions.reverse();
-          // setTransactions(transactions, array[0][0]);
-        });
-      }
+    const transactionsFetch = async () => {
+      const data = await listTransactions(accountId);
+      setTransactions(data);
     };
-    allTransactions();
+    transactionsFetch();
   }, []);
 
   return (
