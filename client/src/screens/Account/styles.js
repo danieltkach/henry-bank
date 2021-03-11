@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     surface: {
       marginVertical: 8,
       width: '100%',
-      height: 210,
+      height: '30%',
       flexDirection: 'row',
       justifyContent: 'space-around',
       borderRadius: 12,
@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
       flex: 1,
       padding: 16,
       alignItems: 'space-between',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     circle: {
       position: 'relative',
       width: 50,
       height: 50,
       borderRadius: '100px',
-      backgroundColor: rgba(palette.accent.light, 0.2)
+      backgroundColor: 'rgba(palette.accent.light, 0.2)'
     },
     symbol: {
       flexDirection: 'row',
     }
+    
 });
 
 export default styles;

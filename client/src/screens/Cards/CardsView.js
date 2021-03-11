@@ -5,8 +5,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { palette, rgba, fontSystem } from '../../theme';
+import styles from './styles';
 
-const axios = require('axios');
+const darkColor = palette.accent.dark;
+
+import axios from 'axios';
 
 // Deberíamos usar solo la PK y no la SK acá en el front
 // pero por ahora dejo las dos para testear, por las dudas
@@ -60,13 +64,16 @@ export default function CardView(props) {
   });
 
   return (
-    <View>
-      <Text>Forma de pago</Text>
+    <View style={styles.textInputs}>
+      <Text>Completá con tus datos</Text>
       <TextInput
         label="Nombre de la tarjeta"
         onChangeText={(text) => formik.setFieldValue('name', text)}
         value={formik.values.name}
         error={formik.errors.name}
+        style={[fontSystem.body1, styles.text]}
+        placeholderTextColor={rgba(darkColor, 0.5)}
+        underlineColorAndroid='transparent'
       />
       <TextInput
         maxLength="16"
@@ -74,6 +81,9 @@ export default function CardView(props) {
         onChangeText={(text) => formik.setFieldValue('number', text)}
         value={formik.values.number}
         error={formik.errors.number}
+        style={[fontSystem.body1, styles.text]}
+        placeholderTextColor={rgba(darkColor, 0.5)}
+        underlineColorAndroid='transparent'
       />
       <View>
         <View>
@@ -83,6 +93,9 @@ export default function CardView(props) {
             onChangeText={(text) => formik.setFieldValue('exp_month', text)}
             value={formik.values.exp_month}
             error={formik.errors.exp_month}
+            style={[fontSystem.body1, styles.text]}
+            placeholderTextColor={rgba(darkColor, 0.5)}
+            underlineColorAndroid='transparent'
           />
           <TextInput
             maxLength="4"
@@ -90,6 +103,9 @@ export default function CardView(props) {
             onChangeText={(text) => formik.setFieldValue('exp_year', text)}
             value={formik.values.exp_year}
             error={formik.errors.exp_year}
+            style={[fontSystem.body1, styles.text]}
+            placeholderTextColor={rgba(darkColor, 0.5)}
+            underlineColorAndroid='transparent'
           />
         </View>
         <TextInput
@@ -98,9 +114,12 @@ export default function CardView(props) {
           onChangeText={(text) => formik.setFieldValue('cvc', text)}
           value={formik.values.cvc}
           error={formik.errors.cvc}
+          style={[fontSystem.body1, styles.text]}
+          placeholderTextColor={rgba(darkColor, 0.5)}
+          underlineColorAndroid='transparent'
         />
       </View>
-      <Button mode="contained" onPress={formik.handleSubmit} loading={loading}>
+      <Button mode="contained" onPress={formik.handleSubmit} loading={loading} style = {styles.button}>
         Agregar tarjeta
       </Button>
     </View>
