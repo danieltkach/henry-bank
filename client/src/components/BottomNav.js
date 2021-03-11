@@ -20,7 +20,7 @@ export default function BottomNav({ navigation, init }) {
       route: 'Contact'
     },
     { index: 2, label: 'Cuenta', icon: 'bank', route: 'Account' },
-    { index: 3, label: 'Yo', icon: 'account', route: 'Profile' }
+    { index: 3, label: 'Yo', icon: 'account', route: 'MyData' }
   ];
 
   const handleClick = (value) => {

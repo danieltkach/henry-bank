@@ -148,6 +148,9 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="MyData"
                   component={MyData}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
                 />
               </>
             )}
