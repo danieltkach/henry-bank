@@ -161,94 +161,84 @@ const newTransaction = (req, res) => {
     );
 };
 
-const getStatistics = (req, res) => {
-  let start = new Date(new Date() - 1000 * 60 * 60 * 24 * 30 * 7);
+const getStatistics = (req,res) =>{
+    
+  let start =new Date( (new Date)-(1000*60*60*24*30*7))
+  
+  let end = new Date 
+  const {id} = req.params    
 
-  let end = new Date();
-  const { id } = req.params;
+  Transaction.find( {idSenderAccount:id  , $and : [{date : {$gte : start}}, { date : {$lte : end}}]} , function(err,data){
+      if(err) res.status(400).json({message:'Sin transferencias'})
+      let spent=[]
+      let total = 0
+      let month= end.getMonth()
+      let monthArr=[]
 
-  Transaction.find(
-    {
-      idSenderAccount: id,
-      $and: [{ date: { $gte: start } }, { date: { $lte: end } }]
-    },
-    function (err, data) {
-      if (err) res.status(400).json({ message: 'Sin transferencias' });
-      let spent = [];
-      let total = 0;
-      let month = end.getMonth();
-      let monthArr = [];
+      for(let i=0; i<6 ;i++){
 
-      for (let i = 0; i < 6; i++) {
-        data.forEach((transfer) => {
-          if (transfer.date.getMonth() === month) {
-            total += parseFloat(transfer.amount);
-          }
-        });
-        spent.unshift(total);
-        monthArr.unshift(month + 1);
-        total = 0;
-        if (month === 0) month = 12;
-        month--;
-      }
-      month = end.getMonth();
-      let weekArr = Array(16).fill(0);
-      let weekNumber = [];
-      for (let i = 3; i >= 0; i--) {
-        data.forEach((transfer) => {
-          if (transfer.date.getMonth() === month) {
-            if (transfer.date.getDate() >= 1 && transfer.date.getDate() <= 7) {
-              weekArr[i * 4 + 0] += parseFloat(transfer.amount);
-            }
-            if (transfer.date.getDate() >= 8 && transfer.date.getDate() <= 14) {
-              weekArr[i * 4 + 1] += parseFloat(transfer.amount);
-            }
-            if (
-              transfer.date.getDate() >= 15 &&
-              transfer.date.getDate() <= 21
-            ) {
-              weekArr[i * 4 + 2] += parseFloat(transfer.amount);
-            }
-            if (transfer.date.getDate() >= 22) {
-              weekArr[i * 4 + 3] += parseFloat(transfer.amount);
-            }
-          }
-        });
-        for (let j = 0; j < 4; j++) {
-          weekNumber[i * 4 + j] = `week:${j + 1}, month:${month + 1}`;
-        }
-        if (month === 0) month = 12;
-        month--;
+          data.forEach(transfer => {            
+              if (transfer.date.getMonth()===month) {
+                  total += parseFloat(transfer.amount)
+              }            
+          })
+          spent.unshift(total)
+          monthArr.unshift(month+1)
+          total=0
+          if(month===0) month=12
+          month--
+      }         
+       month= end.getMonth()
+      let weekArr=Array(12).fill(0)
+      let weekNumber=[]
+      for(let i=2; i>=0 ;i--){
+
+          data.forEach(transfer => {            
+              if (transfer.date.getMonth()===month) {
+                  if (transfer.date.getDate()>=1 &&transfer.date.getDate()<=7){
+                      weekArr[i*4+0]+=parseFloat(transfer.amount)
+                  }
+                  if (transfer.date.getDate()>=8 &&transfer.date.getDate()<=14){
+                      weekArr[i*4+1]+=parseFloat(transfer.amount)
+                  }
+                  if (transfer.date.getDate()>=15 &&transfer.date.getDate()<=21){
+                      weekArr[i*4+2]+=parseFloat(transfer.amount)
+                  }
+                  if (transfer.date.getDate()>=22){
+                      weekArr[i*4+3]+=parseFloat(transfer.amount)                        
+                  }                    
+              }                          
+          }) 
+          for (let j=0;j<4;j++){
+              weekNumber[i*4+j]=`week:${j+1}, month:${month+1}`
+          }        
+          if(month===0) month=12
+          month--
       }
 
-      let day = end;
-      total = 0;
-      let spentDay = [];
-      let dayArr = [];
-      month = end.getMonth();
+      let day=end
+      total=0
+      let spentDay=[]
+      let dayArr =[]
+      month= end.getMonth()
 
-      for (let i = 0; i < 30; i++) {
-        data.forEach((transfer) => {
-          if (transfer.date.getMonth() === month)
-            if (transfer.date.getDate() === day.getDate()) {
-              total += parseFloat(transfer.amount);
-            }
-        });
-        spentDay.unshift(total);
-        dayArr.unshift(day);
-        total = 0;
-        day = new Date(end - 1000 * 60 * 60 * 24 * (i + 1));
-        month = day.getMonth();
+      for(let i=0; i<15 ;i++){
+
+          data.forEach(transfer => { 
+              if(transfer.date.getMonth()===month)            
+                  if (transfer.date.getDate()===day.getDate()) {
+                      total += parseFloat(transfer.amount)
+                  }            
+          })
+          spentDay.unshift(total)
+          dayArr.unshift(day.getDate())
+          total=0
+          day=new Date( (end)-(1000*60*60*24*(i+1)))
+          month=day.getMonth()
       }
-      res.status(200).json({
-        message: `statistics`,
-        month: { spent, monthArr },
-        week: { spent: weekArr, weekNumber },
-        day: { spentDay, dayArr }
-      });
-    }
-  );
-};
+      res.status(200).json({message:`statistics`, month:{spent,monthArr} , week:{spent:weekArr,weekNumber} , day:{spentDay,dayArr}})
+  })
+}
 
 const getAllTransfers = (req, res) => {
   const user = req.params.id;
