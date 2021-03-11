@@ -11,6 +11,7 @@ import {
   readUsersFetch
 } from '../../controllers/user';
 import { palette, rgba } from '../../theme';
+import { addContactAction } from '../../stores/userStore/userActions';
 
 
 const ContactContainer = ({ navigation }) => {
@@ -25,14 +26,9 @@ const ContactContainer = ({ navigation }) => {
   };
 
   const addContact = (userId,dataForm) => {
-    addContactFetch(userId,dataForm)
-      .then((r) => {
-      dispatch({type: "ADD_CONTACT", payload:r.contact})
-        handleClick()
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(userId,dataForm,"front")
+    dispatch(addContactAction(userId,dataForm))
+    handleClick()
   };
   const deleteContact = (userId, dataForm) => {
     deleteContactFetch(userId, dataForm)
