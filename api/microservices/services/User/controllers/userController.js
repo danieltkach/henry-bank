@@ -5,39 +5,44 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const crypto = require('crypto');
 
-
 const createUser = async (req, res, next) => {
   const { email, codeSecurity } = req.user;
   const body = { _id: req.user._id, email: req.user.email };
   const token = jwt.sign({ user: body }, 'top_secret');
 
   User.findOne({ email: email })
-  .then((resp) => {
-    res.status(201).json({user: { email: resp.email, token}, message: 'Registro inicial completado, cuenta asociada' });
-  })
-  .catch((err) => {
-    res.status(400).json({ message: 'Usuario inexistente' });
-  })
+    .then((resp) => {
+      res.status(201).json({
+        user: { email: resp.email, token },
+        message: 'Registro inicial completado, cuenta asociada'
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({ message: 'Usuario inexistente' });
+    });
 };
 
 const sendEmailVerify = (req, res) => {
   const { email } = req.body;
 
   User.findOne({ email: email })
-  .then(userResponse => {
-    userResponse.codeSecurity = crypto.randomBytes(3).toString('hex').toUpperCase();
-    userResponse.save();
-    return nodeMailer.sendEmail({
-      email: userResponse.email,
-      codeSecurity: userResponse.codeSecurity
+    .then((userResponse) => {
+      userResponse.codeSecurity = crypto
+        .randomBytes(3)
+        .toString('hex')
+        .toUpperCase();
+      userResponse.save();
+      return nodeMailer.sendEmail({
+        email: userResponse.email,
+        codeSecurity: userResponse.codeSecurity
+      });
     })
-  })
-  .then(emailResponse => {
-    res.status(200).json({ message: 'Email enviado', info: emailResponse })
-  })
-  .catch(err => {
-    res.status(400).json({ message: 'Usuario inexistente' });
-  })
+    .then((emailResponse) => {
+      res.status(200).json({ message: 'Email enviado', info: emailResponse });
+    })
+    .catch((err) => {
+      res.status(400).json({ message: 'Usuario inexistente' });
+    });
 };
 
 const loginUser = async (req, res, next) => {
@@ -52,13 +57,12 @@ const loginUser = async (req, res, next) => {
         if (err) return next(err);
         const body = { _id: user._id, email: user.email };
         const token = jwt.sign({ user: body }, 'top_secret');
-        let filterUser =  { ...user._doc };
+        let filterUser = { ...user._doc };
         delete filterUser.password;
         delete filterUser.codeSecurityExp;
         delete filterUser.__v;
         return res.status(202).json({ user: filterUser, token, message: info });
       });
-
     } catch (e) {
       return res.status(202).json({ message: info });
     }
@@ -66,20 +70,24 @@ const loginUser = async (req, res, next) => {
 };
 
 const validateAge = (date) => {
-  let birthdate = new Date(date.split('/')[2], date.split('/')[1], date.split('/')[0]);
+  let birthdate = new Date(
+    date.split('/')[2],
+    date.split('/')[1],
+    date.split('/')[0]
+  );
   let today = new Date();
   let before = new Date().setFullYear(today.getFullYear() - 122);
   let limit = new Date().setFullYear(today.getFullYear() - 18);
 
-  if(birthdate > today) return new Error({ message: 'Edad invalida' });
-  if(birthdate < before) return new Error({ message: 'Edad invalida' })
+  if (birthdate > today) return new Error({ message: 'Edad invalida' });
+  if (birthdate < before) return new Error({ message: 'Edad invalida' });
 
-  if(birthdate < limit) {
+  if (birthdate < limit) {
     return true;
   } else {
-    return new Error({ message: 'Menor de 18 años' })
+    return new Error({ message: 'Menor de 18 años' });
   }
-}
+};
 
 const modifyUser = (req, res, next) => {
   const userId = req.params.id;
@@ -101,31 +109,32 @@ const modifyUser = (req, res, next) => {
   let dateBirthdate = new Date(birthdate);
   let account;
 
-  axios.post(`http://localhost:4002/transaction/account/init/${userId}`)
-  .then((responseAccount) => {
-    account = responseAccount.data.account;
-    return User.findById({_id: userId})
-  })
-  .then(user => {
-    user.role = 'client',
-    user.idType = idType,
-    user.idNumber = idNumber,
-    user.name = name,
-    user.lastName = lastName,
-    user.birthdate = birthdate,
-    user.cellphone = cellphone,
-    user.streetName = streetName,
-    user.streetNumber = streetNumber,
-    user.city = city,
-    user.country = country,
-    user.zipCode = zipCode
-    user.accounts.push(account);
-    user.save();
-    res.status(200).json({ message: 'Usuario actualizado.', userId });
-  })
-  .catch((error) =>
-    res.status(400).json({ message: 'Error al actualizar usuario.' })
-  );
+  axios
+    .post(`http://localhost:4002/transaction/account/init/${userId}`)
+    .then((responseAccount) => {
+      account = responseAccount.data.account;
+      return User.findById({ _id: userId });
+    })
+    .then((user) => {
+      (user.role = 'client'),
+        (user.idType = idType),
+        (user.idNumber = idNumber),
+        (user.name = name),
+        (user.lastName = lastName),
+        (user.birthdate = birthdate),
+        (user.cellphone = cellphone),
+        (user.streetName = streetName),
+        (user.streetNumber = streetNumber),
+        (user.city = city),
+        (user.country = country),
+        (user.zipCode = zipCode);
+      user.accounts.push(account);
+      user.save();
+      res.status(200).json({ message: 'Usuario actualizado.', userId });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'Error al actualizar usuario.' })
+    );
 };
 
 const getUser = (req, res, next) => {
@@ -158,17 +167,22 @@ const verifyCodeSecurity = (req, res) => {
   const { email, codeSecurity } = req.body;
 
   User.findOne({ email })
-  .then((responseUser) => {
-    if (
-      responseUser.codeSecurity === codeSecurity &&
-      responseUser.codeSecurityExp > Date.now()
-    ){
-      responseUser.codeSecurity = 'active';
-      responseUser.save();
-      res.status(200).json({ status: 200, message: 'Codigo verificado', userId: responseUser._id });
-    } else res.status(400).json({ status: 400, message: 'Codigo incorrecto' });
-  })
-  .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
+    .then((responseUser) => {
+      if (
+        responseUser.codeSecurity === codeSecurity &&
+        responseUser.codeSecurityExp > Date.now()
+      ) {
+        responseUser.codeSecurity = 'active';
+        responseUser.save();
+        res.status(200).json({
+          status: 200,
+          message: 'Codigo verificado',
+          userId: responseUser._id
+        });
+      } else
+        res.status(400).json({ status: 400, message: 'Codigo incorrecto' });
+    })
+    .catch((err) => res.status(400).json({ message: 'Email inexistente' }));
 };
 
 const addContact = (req, res) => {
@@ -182,7 +196,7 @@ const addContact = (req, res) => {
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-     // Validations
+      // Validations
       if (foundUser._id.toString() === contact._id.toString()) {
         return res
           .status(400)
@@ -195,7 +209,7 @@ const addContact = (req, res) => {
       }
 
       // Adding contact to user
-      
+
       foundUser.contacts.push(contact);
       foundUser.contactsAlias.push({
         email: contact.email,
@@ -212,15 +226,58 @@ const addContact = (req, res) => {
     });
 };
 
+const addCreditCard = (req, res) => {
+  const userId = req.params.id;
+  const { newCardId, number, name, month, year, cvc } = req.params.body;
+
+  User.findById({ _id: userId })
+    .then((user) => {
+      const newCreditCard = {
+        newCardId,
+        number,
+        name,
+        month,
+        year,
+        cvc
+      };
+      user.cards.push(newCreditCard);
+    })
+    .catch((error) => {
+      res.status(400).json({ message: 'Error.', error });
+    });
+};
+
+const getCreditCardsList = (req, res) => {
+  const userId = req.params.id;
+  User.findById(userId)
+    .then((user) => {
+      return res.status(200).json(user.cards);
+    })
+    .catch((err) => err.message);
+};
+
+const deleteCreditCard = (req, res) => {
+  const userId = req.params.id;
+  const creditCardId = req.body.creditCardId;
+  User.findById(userId)
+    .then((user) => {
+      user.cards = user.cards.filter((c) => c.newCardId !== creditCardId);
+      return res.status(200).json(user.cards);
+    })
+    .catch((err) => err.message);
+};
+
 const deleteContact = (req, res) => {
   const userId = req.params.id;
   const contactEmail = req.body.contactEmail;
-  
+
   User.findOne({ _id: userId })
-    .populate('contacts',"contactsAlias")
+    .populate('contacts', 'contactsAlias')
     .then((user) => {
-      user.contacts     = user.contacts.filter((c) => c.email == contactEmail);
-      user.contactsAlias = user.contactsAlias.filter((c) => c.email !== contactEmail);
+      user.contacts = user.contacts.filter((c) => c.email == contactEmail);
+      user.contactsAlias = user.contactsAlias.filter(
+        (c) => c.email !== contactEmail
+      );
       user.save();
       res.status(200).json(user);
     })
@@ -252,5 +309,8 @@ module.exports = {
   addContact,
   deleteContact,
   modifyAlias,
-  sendEmailVerify
+  sendEmailVerify,
+  addCreditCard,
+  getCreditCardsList,
+  deleteCreditCard
 };

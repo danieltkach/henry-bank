@@ -4,6 +4,7 @@ import { TextInput, Button } from 'react-native-paper';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import { palette, rgba, fontSystem } from '../../theme';
 import styles from './styles';
 
@@ -23,6 +24,7 @@ const STRIPE_SK =
 export default function CardView(props) {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const userId = useSelector((state) => state.userReducer.user._id);
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -42,6 +44,7 @@ export default function CardView(props) {
       // Esta es la manera más rudimentaria de hacerlo
       // sin librerías ni módulos adicionales.
       // Luego deberíamos actualizar esto a Stripe.js para mobile.
+      // Implementar redux...
       axios
         .post('https://api.stripe.com/v1/tokens', params, {
           headers: {
@@ -49,9 +52,12 @@ export default function CardView(props) {
           }
         })
         .then((response) => {
-          console.log(response);
           // Acá va la llamada al backend para que se agregue la tarjeta
-          /// a la base de datos y se asocie con el usuario.
+          // a la base de datos y se asocie con el usuario.
+          // Implementar redux...
+          axios.post(`https://localhost:4001/user/credit-card/${userId}`, {
+            newCardId: response.card.id
+          });
         })
         .catch((error) => console.log(error.message));
     }
@@ -131,7 +137,7 @@ function initialValues() {
 function validationSchema() {
   return {
     number: Yup.string().min(16).max(16).required(true),
-    exp_month: Yup.string().min(2).max(2).required(true),
+    exp_month: Yup.string().min(1).max(2).required(true),
     exp_year: Yup.string().min(4).max(4).required(true),
     cvc: Yup.string().min(3).max(3).required(true),
     name: Yup.string().min(6).required(true)
