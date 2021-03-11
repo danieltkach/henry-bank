@@ -12,12 +12,7 @@ const createUser = async (req, res, next) => {
   const token = jwt.sign({ user: body }, 'top_secret');
 
   User.findOne({ email: email })
-  // .then(userResponse => {
-  //   return axios.post(`http://localhost:4002/transaction/account/init/${userResponse._id}`)
-  // })
   .then((resp) => {
-    // user.accounts.push(resp.data.account);
-    // user.save();
     res.status(201).json({user: { email: resp.email, token}, message: 'Registro inicial completado, cuenta asociada' });
   })
   .catch((err) => {
@@ -70,17 +65,20 @@ const loginUser = async (req, res, next) => {
   })(req, res, next);
 };
 
-function calcularEdad(fecha) {
-  var hoy = new Date();
-  var cumpleanos = new Date(fecha);
-  var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-  var m = hoy.getMonth() - cumpleanos.getMonth();
+const validateAge = (date) => {
+  let birthdate = new Date(date.split('/')[2], date.split('/')[1], date.split('/')[0]);
+  let today = new Date();
+  let before = new Date().setFullYear(today.getFullYear() - 122);
+  let limit = new Date().setFullYear(today.getFullYear() - 18);
 
-  if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-    edad--;
+  if(birthdate > today) return new Error({ message: 'Edad invalida' });
+  if(birthdate < before) return new Error({ message: 'Edad invalida' })
+
+  if(birthdate < limit) {
+    return true;
+  } else {
+    return new Error({ message: 'Menor de 18 años' })
   }
-
-  return edad;
 }
 
 const modifyUser = (req, res, next) => {
@@ -99,9 +97,16 @@ const modifyUser = (req, res, next) => {
     zipCode,
     country
   } = req.body;
-  console.log('DEBUG')
-  User.findById({_id: userId}, (error, user) => {
-    console.log(user)
+
+  let dateBirthdate = new Date(birthdate);
+  let account;
+
+  axios.post(`http://localhost:4002/transaction/account/init/${userId}`)
+  .then((responseAccount) => {
+    account = responseAccount.data.account;
+    return User.findById({_id: userId})
+  })
+  .then(user => {
     user.role = 'client',
     user.idType = idType,
     user.idNumber = idNumber,
@@ -114,8 +119,7 @@ const modifyUser = (req, res, next) => {
     user.city = city,
     user.country = country,
     user.zipCode = zipCode
-
-
+    user.accounts.push(account);
     user.save();
     res.status(200).json({ message: 'Usuario actualizado.', userId });
   })
@@ -169,16 +173,16 @@ const verifyCodeSecurity = (req, res) => {
 
 const addContact = (req, res) => {
   const userId = req.params.id;
-  const contactEmail = req.body.contactEmail;
+  const contactEmail = req.body.email;
   let foundUser;
 
-  User.findOne({ _id: userId })
+  User.findById({ _id: userId })
     .then((user) => {
       foundUser = user;
       return User.findOne({ email: contactEmail });
     })
     .then((contact) => {
-      // Validations
+     // Validations
       if (foundUser._id.toString() === contact._id.toString()) {
         return res
           .status(400)
@@ -191,6 +195,7 @@ const addContact = (req, res) => {
       }
 
       // Adding contact to user
+      
       foundUser.contacts.push(contact);
       foundUser.contactsAlias.push({
         email: contact.email,
@@ -199,7 +204,7 @@ const addContact = (req, res) => {
       foundUser.save();
       return res.status(201).json({
         message: 'Contacto agregado.',
-        contacts: foundUser.contacts
+        contact
       });
     })
     .catch((error) => {
@@ -210,7 +215,7 @@ const addContact = (req, res) => {
 const deleteContact = (req, res) => {
   const userId = req.params.id;
   const contactEmail = req.body.contactEmail;
-
+  
   User.findOne({ _id: userId })
     .populate('contacts',"contactsAlias")
     .then((user) => {

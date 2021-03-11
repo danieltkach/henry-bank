@@ -1,14 +1,17 @@
 
 export const REGEX = {
-  USERNAME: !/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/g,
+  USERNAME: /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
   EMAIL: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-  PASSWORD: !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g,
+  PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
   ZIPCODE: /^([0-9]{4})/,
   DOCUMENT: /^([0-9])*$/,
   NAME: /^([A-Za-z])*$/,
   LASTNAME: /^([A-Za-z])*$/,
-  TYPEDOCUMENT: /^([A-Za-z])*$/,
-  PHONE: /^([0-9])*$/
+  PHONE: /^([0-9])*$/,
+  DNI: /^(\d{2}\d{3}\d{3})|(\d{2}\s{1}\d{3}\s\d{3})$/,
+  PAS: /^[A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2}$/,
+  DATE: /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/,
+  AMOUNT: /^(\d+(?:[\.\,]\d{2})?)$/
 }
 
 export const validations = {
@@ -88,6 +91,15 @@ export const validations = {
     if (!dataForm.trim()) {
       return `${label} requerido.`
     } else if (REGEX.PHONE.test(dataForm.trim())) {
+      return `${label} invalido.`
+    } else {
+      return '';
+    }
+  },
+  amount: (dataForm, label) => {
+    if (!dataForm.trim()) {
+      return `${label} requerido.`
+    } else if (REGEX.AMOUNT.test(dataForm.trim())) {
       return `${label} invalido.`
     } else {
       return '';

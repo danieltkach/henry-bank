@@ -2,7 +2,8 @@ import {
   GET_TRANSFER_SENDED,
   GET_TRANSFER_INCOME,
   POST_TRANSFER,
-  PUT_TRANSFER
+  PUT_TRANSFER,
+  PUT_RECHARGE
 } from '../constants/api';
 
 export const createTransactionFetch = (dataId, dataForm) => {
@@ -52,11 +53,10 @@ export const readIncomeFetch = (dataId) => {
   });
 };
 
-export const newTransferFetch = (dataId, dataForm) => {
-  console.log('PUT TRANSFER', dataId, dataForm);
-  console.log(PUT_TRANSFER);
+export const rechargeFetch = (dataForm) => {
+  console.log('PUT TRANSFER', dataForm);
   return new Promise((resolve, reject) => {
-    fetch(`${PUT_TRANSFER}/${dataId}`, {
+    fetch(`${PUT_RECHARGE}/`, {
       method: 'PUT',
       headers: {
         Accept: '*/*',
@@ -73,3 +73,4 @@ export const newTransferFetch = (dataId, dataForm) => {
       });
   });
 };
+

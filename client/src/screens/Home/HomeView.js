@@ -44,14 +44,6 @@ export default function HomeView({ navigation, account, handleAccount, user }) {
             <Image style={styles.logo} source={{uri: "https://res.cloudinary.com/dcen68vrk/image/upload/v1614840097/WalletLogo_-_Inro_logo_xxaihg.png"}}/>
         </View>
 
-        <View>
-            <Text style={styles.cantidadDinero}>5.911,34</Text>
-            <Text style={styles.dineroDisponible}>
-                Dinero disponible</Text>
-            <Image style={styles.pesos} source={Vector}/>
-        </View>
-
-
         <View style={styles.operaciones}>
             <TouchableOpacity style={{ height: 40, width: "23%", justifyContent: "center", alignItems:"center", borderRadius:40, marginTop: 35, marginLeft: -2}}>
                 <Image source={Recargar}/>

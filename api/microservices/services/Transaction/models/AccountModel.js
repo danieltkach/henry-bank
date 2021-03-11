@@ -8,11 +8,16 @@ const accountSchema = new Schema({
   },
   currency: {
     type: String,
-    default: 'Pesos'
+    enum: ['ARS', 'USD'],
+    default: 'ARS'
   },
   cvu: {
     type: Number,
     unique: true
+  },
+  cvuExternal: {
+    type: String,
+    unique: true,    
   },
   balance: {
     type: Number,
@@ -23,9 +28,7 @@ const accountSchema = new Schema({
 //hook
 accountSchema.pre('save', async function (next) {
   if(!this.cvu){
-  let max = 9999999999
-  let min = 1000000000
-  let aux = Math.floor((Math.random() * (max - min + 1)) + min);
+  let aux = Math.floor((Math.random() * (9999999999 - 1000000000 + 1)) + 1000000000);
     this.cvu = aux
   }
   next();

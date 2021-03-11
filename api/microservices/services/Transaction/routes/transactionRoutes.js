@@ -1,7 +1,7 @@
 const express = require('express')
 const server = express.Router()
 
-const transactionController = require('../controllers/transactionConrtroller')
+const transactionController = require('../controllers/transactionController')
 
 server.get('/transfers/:id', transactionController.getTranfers)
 
@@ -16,5 +16,7 @@ server.put('/transfer/recharge', transactionController.rapiTransfer)
 server.put('/newTransfer/:idSender' , transactionController.newTransaction)
 
 server.get('/statistics/:id' , transactionController.getStatistics)
+
+server.get('/all/:id', transactionController.getAllTransfers)
 
 module.exports = server
