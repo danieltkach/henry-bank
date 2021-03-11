@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 
-const axios = require('axios');
+import axios from 'axios';
 
 // Deberíamos usar solo la PK y no la SK acá en el front
 // pero por ahora dejo las dos para testear, por las dudas
