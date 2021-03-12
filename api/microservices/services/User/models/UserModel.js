@@ -92,10 +92,21 @@ const UserSchema = new Schema({
   ],
   cards: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Card'
+      _id: { type: String, required: true },
+      newCardId: String,
+      number: String,
+      name: String,
+      month: String,
+      year: String,
+      cvc: String
     }
   ]
+  // cards: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Card'
+  //   }
+  // ]
 });
 
 UserSchema.pre('save', async function (next) {
