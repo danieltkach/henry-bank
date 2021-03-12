@@ -4,6 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const crypto = require('crypto');
+// import { ObjectID } from 'bson';
+const BSON = require('bson');
 
 const createUser = async (req, res, next) => {
   const { email, codeSecurity } = req.user;
@@ -135,7 +137,12 @@ const modifyUser = (req, res, next) => {
     })
     .catch((error) => {
       console.log(error),
-        res.status(400).json({ message: 'Error al actualizar usuario.' });
+        res
+          .status(400)
+          .json({
+            message: 'Error al actualizar usuario.',
+            error: error.message
+          });
       return;
     });
 };
@@ -230,16 +237,17 @@ const addContact = (req, res) => {
 };
 
 const addCreditCard = (req, res) => {
-  console.log('-----------', req.body);
   const userId = req.params.id;
   const { newCardId, number, name, month, year, cvc } = req.body;
-  console.log(userId);
+
+  const mongo_id = new BSON.ObjectID().toHexString();
 
   User.findById(userId)
     .then((user) => {
       console.log('user >>>', user);
 
       let newCreditCard = {
+        _id: mongo_id,
         newCardId: newCardId,
         number: number,
         name: name,
@@ -248,14 +256,15 @@ const addCreditCard = (req, res) => {
         cvc: cvc
       };
 
-      // user.cards.push(newCreditCard);
+      user.cards.push(newCreditCard);
+
       user.save();
       return res
         .status(200)
         .json({ message: 'Tarjeta agregada.', cards: user.cards });
     })
     .catch((error) => {
-      res.status(400).json({ message: 'Error.', error });
+      res.status(400).json({ message: 'Error.', error: error.message });
     });
 };
 

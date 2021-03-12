@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "babel-node": "^0.0.1-security",
+    "bson": "^4.2.3",
     "express": "^4.17.1",
     "express-gateway": "^1.16.10"
   },
