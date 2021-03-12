@@ -87,12 +87,12 @@ export default function CardView({ navigation, account, user, deleteCard }) {
                   <img src={getLogo(card.brand)} style={{ maxWidth: 60 }} />
                 </View>
               </View>
+              <Button
+                color="secondary"
+                label=" Eliminar "
+                onPress={() => handleDelete(card._id)}
+              />
             </View>
-            <Button
-              color="secondary"
-              label="eliminar tarjeta"
-              onPress={() => handleDelete(card._id)}
-            />
           </View>
         </LinearGradient>
       ))}

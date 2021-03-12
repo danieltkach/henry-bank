@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   text: {
     height: 48,
-    backgroundColor: 'black',
+    backgroundColor: 'transparent',
     marginTop: '12px',
     color: palette.accent.dark
   },
