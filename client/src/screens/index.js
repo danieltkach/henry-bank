@@ -9,3 +9,4 @@ export { default as Register } from './Register';
 export { default as Transfer } from './Transfer/TransferContainer';
 export { default as Transaction } from './Transaction/TransactionContainer';
 export { default as Cards } from './Cards/CardsContainer';
+export { default as CardsForm } from './Cards/CardsForms';
