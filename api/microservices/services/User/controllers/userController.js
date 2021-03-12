@@ -116,7 +116,7 @@ const modifyUser = (req, res, next) => {
       return User.findById({ _id: userId });
     })
     .then((user) => {
-      (user.role = 'client'),
+        (user.role = 'client'),
         (user.idType = idType),
         (user.idNumber = idNumber),
         (user.name = name),
@@ -130,10 +130,15 @@ const modifyUser = (req, res, next) => {
         (user.zipCode = zipCode);
       user.accounts.push(account);
       user.save();
-      res.status(200).json({ message: 'Usuario actualizado.', userId });
+       res.status(200).json({ message: 'Usuario actualizado.', userId });
+       return
     })
-    .catch((error) =>
+    .catch((error) =>{
+      console.log(error),
       res.status(400).json({ message: 'Error al actualizar usuario.' })
+      return 
+    }
+   
     );
 };
 
