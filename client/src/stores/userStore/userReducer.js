@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { ADD_SESSION, REMOVE_SESSION, ADD_CONTACT,DELETE_CONTACT} from "./userActions";
+import { ADD_SESSION, REMOVE_SESSION, ADD_CONTACT,DELETE_CONTACT, PUT_PROFILE} from "./userActions";
 
 
 const initialState = {
@@ -16,6 +16,20 @@ const userReducer = (state = initialState, action) => {
       return {};
       break;
 
+    case PUT_PROFILE:
+      return {
+        user: {
+          ...state.user,
+          cellphone: action.payload.cellphone,
+          streetName: action.payload.streetName,
+          streetNumber: action.payload.streetNumber,
+          city: action.payload.city,
+          country: action.payload.country,
+          zipCode: action.payload.zipCode
+        }
+      }
+    break;
+
     case ADD_CONTACT :{
       return{ 
         user:{
@@ -26,7 +40,7 @@ const userReducer = (state = initialState, action) => {
       }
 
     case DELETE_CONTACT :{
-      return{ 
+      return{
         user:{
             ...state.user, contactsAlias: state.user.contactsAlias.filter(item => item.email !== action.payload)
           }

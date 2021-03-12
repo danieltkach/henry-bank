@@ -10,7 +10,8 @@ import {
   GET_PROFILE_AUTH,
   ADD_CONTACT,
   DELETE_CONTACT,
-  POST_EMAIL_VERIFY
+  POST_EMAIL_VERIFY,
+  PUT_PROFILE
 } from '../constants/api';
 
 
@@ -60,6 +61,27 @@ export const updateUserFetch = (dataId, dataForm) => {
   console.log('PUT', dataId, dataForm);
   return new Promise((resolve, reject) => {
     fetch(`${PUT_USER}/${dataId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
+    })
+    .then(response => {
+      console.log('RESPONSE PUT < STATUS OK');
+      resolve(response.json());
+    })
+    .catch(err => {
+       console.log(err.message)
+    });
+  })
+}
+
+export const updateProfileFetch = (dataId, dataForm) => {
+  console.log('PUT', dataId, dataForm);
+  return new Promise((resolve, reject) => {
+    fetch(`${PUT_PROFILE}/${dataId}`, {
       method: 'PUT',
       headers: {
         Accept: '*/*',
