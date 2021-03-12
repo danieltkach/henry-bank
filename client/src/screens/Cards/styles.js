@@ -1,96 +1,94 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import { palette } from '../../theme';
 
 const styles = StyleSheet.create({
-  body            : {
-    flex          : 1,
+  body: {
+    flex: 1,
     justifyContent: 'space-around'
   },
-  container        : {
-    flex           : 1,
-    padding        : '16px',
-    flexDirection  : 'row',
-    flexWrap       : 'wrap',
+  container: {
+    flex: 1,
+    padding: '16px',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
-  content         : {
-    flex          : 1,
-    width         : '100%',
+  content: {
+    flex: 1,
+    width: '100%',
     justifyContent: 'space-around'
   },
-  button          : {
+  button: {
     marginVertical: '6px'
   },
-  textInputs      : {
+  textInputs: {
     marginVertical: '2px',
-    width         : '100%',
+    width: '100%',
     // flexDirection : 'row',
-    flexWrap      : 'wrap',
+    flexWrap: 'wrap'
     // justifyContent: 'space-between',
-    
   },
-  topText          : {
-    paddingVertical: '2px',
+  topText: {
+    paddingVertical: '2px'
   },
-  midText         : {
-    alignItems    : 'center'
+  midText: {
+    alignItems: 'center'
   },
-  botText          : {
+  botText: {
     padding: '4px'
   },
-  googleButton     : {
-    padding        : '4px',
-    width          : 40,
-    height         : 40,
-    borderRadius   : 1000,
+  googleButton: {
+    padding: '4px',
+    width: 40,
+    height: 40,
+    borderRadius: 1000,
     backgroundColor: 'white',
-    justifyContent : 'center',
-    alignItems     : 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo: {
-    resizeMode : 'contain',
-    height: 64,
+    resizeMode: 'contain',
+    height: 64
   },
-
 
   //TEXT STYLES
 
   inputTextHalf: {
-    width      : '50%'
+    width: '50%'
   },
-  underlineBlur    : {
-    position       : 'absolute',
-    bottom         : '8px',
-    width          : '100%',
-    height         : '1px',
+  underlineBlur: {
+    position: 'absolute',
+    bottom: '8px',
+    width: '100%',
+    height: '1px',
     backgroundColor: palette.accent.dark,
-    opacity        : 0.8,
+    opacity: 0.8
     // transition     : '.4s',
   },
-  underlineFocus   : {
-    height         : '2px',
-    opacity        : 1,
-    backgroundColor: palette.primary.main,
+  underlineFocus: {
+    height: '2px',
+    opacity: 1,
+    backgroundColor: palette.primary.main
     // transition     : '.4s',
   },
-  underlineError   : {
-    height         : '2px',
-    opacity        : 1,
-    backgroundColor: 'red',
+  underlineError: {
+    height: '2px',
+    opacity: 1,
+    backgroundColor: 'red'
     // transition     : '.4s',
   },
-  text             : {
-    height         : 48,
-    backgroundColor: 'transparent',
-    marginTop      : '12px',
-    color          : palette.accent.dark,
+  text: {
+    height: 48,
+    backgroundColor: 'black',
+    marginTop: '12px',
+    color: palette.accent.dark
   },
-  helperText  :{
-    position  : 'absolute',
-    right     : '0px',
-    bottom    : '-8px',
-    color     : 'red',
+  helperText: {
+    position: 'absolute',
+    right: '0px',
+    bottom: '-8px',
+    color: 'red'
     // transition: '.3s'
-  },
+  }
 });
 
 export default styles;

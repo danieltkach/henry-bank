@@ -1,21 +1,35 @@
-import React from 'react';
-import { View, SafeAreaView, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
 import TransferView from './TransferView';
-import { Header, Background } from '../../components';
+import { Header, Background, Alert } from '../../components';
 import styles from './styles';
 import { useSelector } from 'react-redux';
 import { newTransferFetch } from '../../controllers/transaction';
 
 export default function TransferContainer({ navigation }) {
   const accountId = useSelector((state) => state.userReducer.user.accounts);
-  console.log(accountId[0]);
+  const [alert, setAlert] = useState({
+    message: '',
+    state: false,
+    type: ''
+  });
+
+  const handleAlert = (message, type) => {
+    let timer;
+    if (alert.state === false) {
+      setAlert({ message, state: true, type });
+      timer = setTimeout(() => {
+        setAlert({ message, state: false, type });
+      }, 3000);
+    }
+  };
+
   const handleFinalSubmit = (inputs) => {
     console.log('dataForm: ', inputs);
     newTransferFetch(accountId[0], inputs)
       .then((responseTransfer) => {
         console.log('login: ', responseTransfer);
-
-        navigation.navigate('Home');
+        handleAlert('Transferencia Realizado');
       })
       .catch((err) => console.log(err));
   };
@@ -23,7 +37,13 @@ export default function TransferContainer({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
-      <Header label="Transferir Dinero" navigation={navigation}/>
+      <Alert
+        label={alert.message}
+        state={alert.state}
+        type={alert.type}
+        handleAlert={handleAlert}
+      />
+      <Header label="Transferir Dinero" navigation={navigation} />
       <View style={styles.container}>
         <TransferView
           navigation={navigation}

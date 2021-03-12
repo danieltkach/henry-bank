@@ -31,7 +31,7 @@ export const listAllTransactions = (accountId) => async (dispatch) => {
     const data = await listTransactions(accountId);
     dispatch({
       type: TRANSACTION_LIST,
-      payload: data
+      payload: data.reverse()
     });
   } catch (error) {
     console.log(error);

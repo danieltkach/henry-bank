@@ -21,7 +21,8 @@ import {
   MyData,
   Contact,
   Transaction,
-  Cards
+  Cards,
+  CardsForm
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -150,6 +151,11 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Cards"
                   component={Cards}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="CardsForm"
+                  component={CardsForm}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
