@@ -23,6 +23,7 @@ import {
   Transaction,
   Cards,
   Profile
+  CardsForm
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -110,6 +111,14 @@ class App extends React.Component {
               <>
                 <Stack.Screen
                   options={{ headerShown: false }}
+                  name="Home"
+                  component={Home}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
                   name="Profile"
                   component={Profile}
                   initialParams={{
@@ -120,14 +129,6 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Account"
                   component={Account}
-                  initialParams={{
-                    handleIsLogin: (value) => this.setState({ isLogin: value })
-                  }}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Home"
-                  component={Home}
                   initialParams={{
                     handleIsLogin: (value) => this.setState({ isLogin: value })
                   }}
@@ -159,6 +160,11 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Cards"
                   component={Cards}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="CardsForm"
+                  component={CardsForm}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}

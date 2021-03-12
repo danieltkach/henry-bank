@@ -98,11 +98,35 @@ const getBalance = (req,res) => {
     })
 }
 
+const cvuExternal = (req, res) => {
+    AccountModel.findById(req.params.id)
+        .then(account=>{
+            if (!account.cvuExternal){
+            account.cvuExternal=""+Math.floor(Math.random()*Math.pow(10,11))+Math.floor(Math.random()*Math.pow(10,11))
+            account.save()
+            }
+            return account
+        })
+        .then(account => {
+            
+            res.status(200).json({
+                message: 'CVU Externa asociada',
+                account
+            })
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message || "Some error occurred while updating the Account."
+            })
+        })
+}
+
 module.exports = {
     createAccount,
     findAccount,
     updateAccount,
     getAllAccounts,
     getBalance,
-    initCreateAccount
+    initCreateAccount,
+    cvuExternal
 }

@@ -31,12 +31,7 @@ const userReducer = (state = initialState, action) => {
     break;
 
     case ADD_CONTACT :{
-      // if(state.user.contactsAlias.find(item => item.email === action.payload.email)){
-      //   return {
-      //     ...state.user
-      //   }
-      // }
-      return{
+      return{ 
         user:{
             ...state.user, contactsAlias: state.user.contactsAlias.concat(action.payload)
           }

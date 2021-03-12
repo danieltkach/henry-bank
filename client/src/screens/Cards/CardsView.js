@@ -1,120 +1,113 @@
-// import React, { useState } from 'react';
-// import { StyleSheet, View, Text } from 'react-native';
-// import { TextInput, Button } from 'react-native-paper';
-// import { useFormik } from 'formik';
-// import * as Yup from 'yup';
-// import { useNavigation } from '@react-navigation/native';
-//
-// import axios from 'axios';
-//
-// // Deberíamos usar solo la PK y no la SK acá en el front
-// // pero por ahora dejo las dos para testear, por las dudas
-// // que algo no funcione con la otra.
-// // Estas deberías estar en el .env de todas maneras.
-// const STRIPE_PK =
-//   'pk_test_51IStZuG29JPNNfcZuTdmTQnbCrtaUf6Ykeexd2cEC3SLKFxSFi6HEXY1WkV34Ex9PPNsjjcnfjiN3QDVyocbeajW00AJugpZ8H';
-// const STRIPE_SK =
-//   'sk_test_51IStZuG29JPNNfcZNrKb0AXFkIregVqFGR6z2nEndVMoQWNGc4GKQviSX7PYyQyoXRsncHQdmT3xeTOj2gHktaLK00V7Q5wAnD';
-//
-// export default function CardView(props) {
-//   const [loading, setLoading] = useState(false);
-//   const navigation = useNavigation();
-//
-//   const formik = useFormik({
-//     initialValues: initialValues(),
-//     validationSchema: Yup.object(validationSchema()),
-//     onSubmit: (formData) => {
-//       const { name, number, exp_month, exp_year, cvc } = formData;
-//
-//       // Carga los datos del formulario en la variable params para
-//       // luego poder pasársela a axios.
-//       var params = new URLSearchParams();
-//       params.append('card[name]', name);
-//       params.append('card[number]', number);
-//       params.append('card[exp_month]', exp_month);
-//       params.append('card[exp_year]', exp_year);
-//       params.append('card[cvc]', cvc);
-//
-//       // Esta es la manera más rudimentaria de hacerlo
-//       // sin librerías ni módulos adicionales.
-//       // Luego deberíamos actualizar esto a Stripe.js para mobile.
-//       axios
-//         .post('https://api.stripe.com/v1/tokens', params, {
-//           headers: {
-//             Authorization: `Bearer ${STRIPE_PK}`
-//           }
-//         })
-//         .then((response) => {
-//           console.log(response);
-//           // Acá va la llamada al backend para que se agregue la tarjeta
-//           /// a la base de datos y se asocie con el usuario.
-//         })
-//         .catch((error) => console.log(error.message));
-//     }
-//   });
-//
-//   return (
-//     <View>
-//       <Text>Forma de pago</Text>
-//       <TextInput
-//         label="Nombre de la tarjeta"
-//         onChangeText={(text) => formik.setFieldValue('name', text)}
-//         value={formik.values.name}
-//         error={formik.errors.name}
-//       />
-//       <TextInput
-//         maxLength="16"
-//         label="Numero de tarjeta"
-//         onChangeText={(text) => formik.setFieldValue('number', text)}
-//         value={formik.values.number}
-//         error={formik.errors.number}
-//       />
-//       <View>
-//         <View>
-//           <TextInput
-//             maxLength="2"
-//             label="Mes"
-//             onChangeText={(text) => formik.setFieldValue('exp_month', text)}
-//             value={formik.values.exp_month}
-//             error={formik.errors.exp_month}
-//           />
-//           <TextInput
-//             maxLength="4"
-//             label="year"
-//             onChangeText={(text) => formik.setFieldValue('exp_year', text)}
-//             value={formik.values.exp_year}
-//             error={formik.errors.exp_year}
-//           />
-//         </View>
-//         <TextInput
-//           maxLength="3"
-//           label="CVV/CVC"
-//           onChangeText={(text) => formik.setFieldValue('cvc', text)}
-//           value={formik.values.cvc}
-//           error={formik.errors.cvc}
-//         />
-//       </View>
-//       <Button mode="contained" onPress={formik.handleSubmit} loading={loading}>
-//         Agregar tarjeta
-//       </Button>
-//     </View>
-//   );
-// }
-// function initialValues() {
-//   return {
-//     number: '4242424242424242',
-//     exp_month: '12',
-//     exp_year: '2025',
-//     cvc: '123',
-//     name: 'Test Name'
-//   };
-// }
-// function validationSchema() {
-//   return {
-//     number: Yup.string().min(16).max(16).required(true),
-//     exp_month: Yup.string().min(2).max(2).required(true),
-//     exp_year: Yup.string().min(4).max(4).required(true),
-//     cvc: Yup.string().min(3).max(3).required(true),
-//     name: Yup.string().min(6).required(true)
-//   };
-// }
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import styles from '../Account/styles';
+import { useForm } from 'react-hook-form';
+import { palette } from '../../theme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Text, Button } from '../../components';
+import MasterCard from './img/masterCard.png';
+import Visa from './img/visa.png';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+const array = [
+  {
+    brand: 'Visa',
+    exp_month: 11,
+    exp_year: 2026,
+    last4: 5000,
+    name: 'CASCO LUCAS GABRIEL'
+  },
+  {
+    brand: 'MasterCard',
+    exp_month: 1,
+    exp_year: 2026,
+    last4: 2923,
+    name: 'CASQUITO LUQUITAS'
+  },
+  {
+    brand: 'MasterCard',
+    exp_month: 10,
+    exp_year: 2026,
+    last4: 2021,
+    name: 'DANIEL CON MUCHA GUITA'
+  }
+];
+
+function getLogo(brand) {
+  if (brand === 'MasterCard') {
+    return MasterCard;
+  }
+  if (brand === 'Visa') {
+    return Visa;
+  }
+}
+
+export default function CardView({ navigation, account, user, deleteCard }) {
+  const userId = useSelector((state) => state.userReducer.user._id);
+  console.log(userId, 'holaaaaaaaa');
+
+  const handleDelete = (cardId) => {
+    axios.delete(`http:/localhost:4001/user/credit-card/${userId}`, { cardId });
+  };
+
+  return (
+    <View style={{ flex: 1, paddingVertical: 8, marginBottom: 60 }}>
+      {array.map((e, index) => (
+        <LinearGradient
+          colors={['darkgrey', 'lightgrey']}
+          style={styles.surface}
+        >
+          <View style={styles.card}>
+            <View
+              style={{
+                flexDirection: 'row',
+                display: 'tableCell',
+                verticalAlign: 'middle',
+                marginTop: 15,
+                marginBottom: 5
+              }}
+            >
+              <Text type="title" text={'XXXX XXXX XXXX ' + e.last4} />
+            </View>
+
+            <Text
+              type="subtitle2"
+              text={e.exp_month + '/' + e.exp_year}
+              style={{ marginBottom: 15 }}
+            />
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end'
+              }}
+            >
+              <Text
+                type="subtitle2"
+                text={e.name}
+                style={{ marginBottom: 15 }}
+              />
+              <View>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <img src={getLogo(e.brand)} style={{ maxWidth: 60 }} />
+                </View>
+              </View>
+            </View>
+            <Button
+              color="secondary"
+              label="eliminar tarjeta"
+              onPress={() => handleDelete(userId)}
+            />
+          </View>
+        </LinearGradient>
+      ))}
+      <Button
+        color="primary"
+        label="agregar nueva tarjeta"
+        onPress={() => navigation.navigate('CardsForm')}
+      />
+    </View>
+  );
+}

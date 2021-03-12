@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { View, SafeAreaView, StyleSheet, Image, Text, Dimensions } from 'react-native';
-import { BottomNav, Header, Background } from '../../components';
+import { BottomNav, Header, Background, Button } from '../../components';
 import { IconButton } from 'react-native-paper';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { readAccountsByIdFetch } from '../../controllers/account';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -20,11 +21,13 @@ import {
 } from "react-native-chart-kit";
 
 
+
 export default function HomeContainer({ navigation, route }) {
   const { handleIsLogin } = route.params;
-  const [account, setAccount] = useState();
+  const [statistics, setStatistics] = useState({month:{spent:[]}});
+  const [account ,setAccount] = useState();
   const user = useSelector((state) => state.userReducer.user);
-
+  const cuenta = useSelector((state) => state.accountReducer.account);
   const handleAccount = (idAccount) => {
     readAccountsByIdFetch(idAccount)
     .then(responseAccount => {
@@ -32,6 +35,23 @@ export default function HomeContainer({ navigation, route }) {
       setAccount(responseAccount);
     })
   }
+  //{month:{spent:[900, 200, 500, 2100, 2800, 1200]}, week:{spent:[100, 1000, 2000]}, day:{spent:[1500, 500, 2000, 200]}}
+  useState(() => {
+    axios.get(`http://localhost:4002/transaction/statistics/${cuenta._id}`)
+    .then((statistics) => {console.log(statistics.data),setStatistics(statistics.data), setTablas(statistics.data.month.monthArr), setDatas(statistics.data.month.spent)})
+  }, []);
+  //, {week:{spent:[1200, 100, 800]}}, {day:{spent:[500, 2100, 2800, 1200]}}
+  console.log("estadisticas aca",statistics);
+  console.log(user);
+  console.log(cuenta);
+
+  
+  const trimestralLabel = ['12', '11','10', '9', '8','7', '6', '5','4', '3', '2', '1']
+  
+
+  
+  const [tablas ,setTablas] = useState([' ']);
+  const [datas ,setDatas] = useState([0]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -43,48 +63,60 @@ export default function HomeContainer({ navigation, route }) {
         navigation={navigation}
         handleIsLogin={handleIsLogin}
       />
-      <View style={styles.container}>
-      {user && account ?
+      {/* <View style={styles.container}>
+      {user ?
         (
-          <HomeView user={user} account={account}/>
+          <HomeView user={user} handleAccount={handleAccount} account={account}/> 
         )
         :(
           <></>
         )
       }
+      </View> */}
+      
+
+      <View style={estilos.saludo}>
+        <Text style={{fontSize:40}}>{ `Hola ${user && user.name}!` }</Text>
       </View>
+      <View style={estilos.balanceTotal3}>
+        <Text style={estilos.letraBalance}>{ `Balance total \n $${cuenta && cuenta.balance}` }</Text>
+      </View>
+      
       <View style={estilos.titulo}>
         <Text style={estilos.negrita}>
           Estadisticas de gastos
         </Text>
         <View style={estilos.linea}/>
           <View style={estilos.semMesSem}>
-            <TouchableOpacity style={estilos.semanaMesSem}>
-              Semanal
-            </TouchableOpacity>
-            <TouchableOpacity style={estilos.semanaMesSem}>
-              Mensual
-            </TouchableOpacity>
-            <TouchableOpacity style={estilos.semanaMesSem}>
-              Semestral
-            </TouchableOpacity>
+            <Button
+              color="accent"
+              label="Quincena"
+              type='text'
+              onPress={() => (console.log('mensual'), setTablas(statistics.day.dayArr), setDatas(statistics.day.spentDay))}
+            />
+            <Button
+              color="accent"
+              label="Trimestral"
+              type='text'
+              onPress={() => (console.log('trimestral'), setTablas(trimestralLabel), setDatas(statistics.week.spent))}
+            />
+            <Button
+              color="accent"
+              label="Semestral"
+              type='text'
+              onPress={() => (console.log('semestral'), setTablas(statistics.month.monthArr), setDatas(statistics.month.spent))}
+            />
           </View>
       </View>
   <View style={estilos.estadisticas}>
   
   <LineChart
     data={{
-      labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+      labels: tablas,
       datasets: [
         {
-          data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
-          ]
+          data: datas  , 
+          
         }
       ]
     }}
@@ -92,7 +124,7 @@ export default function HomeContainer({ navigation, route }) {
     height={220}
     
     yAxisLabel="$"
-    yAxisSuffix="k"
+    yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
     chartConfig={{
       backgroundColor:'red',
@@ -119,7 +151,7 @@ export default function HomeContainer({ navigation, route }) {
     }}
   />
 </View>
-      <View style={estilos.surface4}>
+      {/* <View style={estilos.surface4}>
         <Text style={estilos.negrita}> General </Text>
         <View style={estilos.linea}/>
         <View style={estilos.general}>
@@ -134,24 +166,24 @@ export default function HomeContainer({ navigation, route }) {
         
 
         
-      </View>
+      </View> */}
       <View style={estilos.contenedorBotones}>
       <View style={estilos.surface}>
-        <TouchableOpacity style={estilos.button}>
+        <TouchableOpacity style={estilos.button}  >
           <IconButton style={estilos.IconButton} icon={EnviarDinero}/>
-          <Text style={estilos.text}> Enviar</Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Transfer')}> Enviar</Text>
         </TouchableOpacity>
       </View>
       <View style={estilos.surface2}>
-        <TouchableOpacity style={estilos.button}>          
+        <TouchableOpacity style={estilos.button} >          
           <IconButton style={estilos.IconButton} icon={Cargar}/>
-          <Text style={estilos.text}> Cargar</Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Deposit')}> Cargar</Text>
         </TouchableOpacity>
       </View>
       <View style={estilos.surface3}>
-        <TouchableOpacity style={estilos.button}>
+        <TouchableOpacity style={estilos.button} >
           <IconButton style={estilos.IconButton} icon={Transacciones}/>
-          <Text style={estilos.text}> Transacciones </Text>
+          <Text style={estilos.text} onPress={()=> navigation.navigate('Transaction')}> Transacciones </Text>
         </TouchableOpacity>
         
       </View>
@@ -174,7 +206,52 @@ const chartConfig = {
 
 
 const estilos = StyleSheet.create({
-  
+  nube2:{
+
+  },
+  saludo:{
+    flex: 0.12,
+    alignItems:'center',
+    
+  },
+  balanceTotal3:{
+    flex: 0.11,
+    alignItems:'center',
+    textAlign: 'center',
+    borderRadius: 32,
+    borderColor: 'black',
+    margin: 10,
+    padding: 0,
+    borderRadius: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8
+  },
+  balanceTotal2:{
+    flex: 0.2,
+    padding: 10,
+    alignItems:'center',
+    textAlign: 'center',
+    borderRadius: 32,
+    
+    
+  },
+  balanceTotal:{
+    flex: 0.2,
+    padding: 10,
+    alignItems:'center',
+    textAlign: 'center',
+    borderRadius: 32,
+    
+  },
+  letraBalance:{
+    fontSize: 25,
+  },
   semanaMesSem:{
     alignItems: 'flex-start',
     textAlign: 'left',
@@ -183,23 +260,22 @@ const estilos = StyleSheet.create({
     
   },
   semMesSem:{
-    flex: 0.5,
+    flex: 0.8,
     flexDirection: 'row',
-    
+    justifyContent: 'space-around',
   },
   titulo: {
-    flex: 0.3,
-    margin: 10,
+    flex: 0.11,    
   },
   estadisticas: {
-    flex: 1.5,
-    margin: 10,
+    flex: 0.42,
+    
   },
   surface4: {
     flex: 1,
-    backgroundColor: 'white',
+    
     borderRadius: 32, 
-    margin: 10,
+    padding: 10,
     borderRadius: 32,
     shadowColor: '#000',
     shadowOffset: {
@@ -211,11 +287,11 @@ const estilos = StyleSheet.create({
     elevation: 8
   },
   contenedorBotones: {
-    flex: 1,
-    margin: 10,
+    flex: 0.25,
+    padding: 0,
+    
     justifyContent: 'space-around',
     flexDirection: 'row',
-    
   },
   negrita: {
     fontWeight: 'bold',
@@ -225,7 +301,8 @@ const estilos = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     width: 48,
-    height: 48
+    height: 48,
+    
   },
   iconButton: {
     width: 24,
@@ -242,6 +319,7 @@ const estilos = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     height: '75px',
+    
     width: '120px',
     borderRadius: 32,
 
@@ -263,7 +341,9 @@ const estilos = StyleSheet.create({
     width: '120px',
     borderRadius: 32,
     borderRadius: 32,
+    
     shadowColor: '#000',
+    
     shadowOffset: {
       width: 0,
       height: 4
@@ -279,6 +359,7 @@ const estilos = StyleSheet.create({
     width: '120px',
     borderRadius: 32,
     borderRadius: 32,
+    
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -291,14 +372,14 @@ const estilos = StyleSheet.create({
   linea:{
     flex: 0.01,
     backgroundColor: '#bdbdbd',
-    margin: 10,
+    margin: 1,
   },
   general: {
     flex: 1,
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 10,
+    padding: 10,
     
     
   },

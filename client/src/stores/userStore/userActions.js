@@ -1,3 +1,5 @@
+import { addContactFetch } from "../../controllers/user";
+
 export const ADD_SESSION = "ADD_SESSION";
 export const REMOVE_SESSION = "REMOVE_SESSION";
 export const ADD_CONTACT = "ADD_CONTACT";
@@ -19,12 +21,24 @@ export const removeSession = () => {
 }
 
 
-export const addContact= user =>{
-  return{
-    type:ADD_CONTACT,
-    payload:user
-  }
+export const addContactAction= (userId,dataForm) => (dispatch) =>{
+  console.log(userId,dataForm,"action")
+  addContactFetch(userId,dataForm)
+  .then(response =>{
+    console.log(response)
+    if(response.message === "Contacto ya existe.") {return alert("Este contacto ya existe")}
+    dispatch({
+      type:ADD_CONTACT,
+      payload:response.contact
+    })
+  })
+  .catch(err =>{
+    console.log(err)
+  })
 }
+  
+
+
 
 export const putProfile= user =>{
   return{

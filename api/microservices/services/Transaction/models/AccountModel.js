@@ -15,6 +15,10 @@ const accountSchema = new Schema({
     type: Number,
     unique: true
   },
+  // cvuExternal: {
+  //   type: String,
+  //   unique: true,    
+  // },
   balance: {
     type: Number,
     default: 0

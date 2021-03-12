@@ -3,7 +3,8 @@ import {
   GET_TRANSFER_INCOME,
   POST_TRANSFER,
   PUT_TRANSFER,
-  PUT_RECHARGE
+  PUT_RECHARGE,
+  GET_TRANSACTIONS
 } from '../constants/api';
 
 export const createTransactionFetch = (dataId, dataForm) => {
@@ -74,3 +75,38 @@ export const rechargeFetch = (dataForm) => {
   });
 };
 
+export const listTransactions = (dataId) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${GET_TRANSACTIONS}/${dataId}`, {
+      method: 'GET'
+    })
+      .then((response) => {
+        resolve(response.json());
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
+};
+
+export const newTransferFetch = (dataId, dataForm) => {
+  console.log('PUT TRANSFER', dataId, dataForm);
+  console.log(PUT_TRANSFER);
+  return new Promise((resolve, reject) => {
+    fetch(`${PUT_TRANSFER}/${dataId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
+    })
+      .then((response) => {
+        console.log('RESPONSE PUT TRANSFER < STATUS OK');
+        resolve(response.json());
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
+};
