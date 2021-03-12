@@ -17,6 +17,7 @@ export default function CardsContainer({ navigation }) {
       <View style={styles.container}>
         <CardsView navigation={navigation} />
       </View>
+
       <BottomNav navigation={navigation} init={1} />
     </SafeAreaView>
   );

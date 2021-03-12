@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { palette, rgba, fontSystem } from '../../theme';
 import styles from './styles';
+import { BottomNav, Header, Background } from '../../components';
 
 const darkColor = palette.accent.dark;
 
@@ -66,76 +67,95 @@ export default function CardForms(props) {
             brand: response.data.card.brand,
             last4: response.data.card.last4
           });
+          navigation.navigate('Home');
         })
         .catch((error) => console.log(error.message));
     }
   });
 
   return (
-    <View style={styles.textInputs}>
-      <Text>Completá con tus datos</Text>
-      <TextInput
-        label="Nombre de la tarjeta"
-        onChangeText={(text) => formik.setFieldValue('name', text)}
-        value={formik.values.name}
-        error={formik.errors.name}
-        style={[fontSystem.body1, styles.text]}
-        placeholderTextColor={rgba(darkColor, 0.5)}
-        underlineColorAndroid="transparent"
+    <SafeAreaView style={{ flex: 1 }}>
+      <Background />
+      <Header
+        navigation={navigation}
+        type="settings"
+        label="Mis Tarjetas"
+        align="center"
       />
-      <TextInput
-        maxLength="16"
-        label="Numero de tarjeta"
-        onChangeText={(text) => formik.setFieldValue('number', text)}
-        value={formik.values.number}
-        error={formik.errors.number}
-        style={[fontSystem.body1, styles.text]}
-        placeholderTextColor={rgba(darkColor, 0.5)}
-        underlineColorAndroid="transparent"
-      />
-      <View>
+      <View style={styles.container}>
         <View>
-          <TextInput
-            maxLength="2"
-            label="Mes"
-            onChangeText={(text) => formik.setFieldValue('exp_month', text)}
-            value={formik.values.exp_month}
-            error={formik.errors.exp_month}
-            style={[fontSystem.body1, styles.text]}
-            placeholderTextColor={rgba(darkColor, 0.5)}
-            underlineColorAndroid="transparent"
-          />
-          <TextInput
-            maxLength="4"
-            label="year"
-            onChangeText={(text) => formik.setFieldValue('exp_year', text)}
-            value={formik.values.exp_year}
-            error={formik.errors.exp_year}
-            style={[fontSystem.body1, styles.text]}
-            placeholderTextColor={rgba(darkColor, 0.5)}
-            underlineColorAndroid="transparent"
-          />
+          <View style={styles.textInputs}>
+            <Text>Completá con tus datos</Text>
+            <TextInput
+              label="Nombre de la tarjeta"
+              onChangeText={(text) => formik.setFieldValue('name', text)}
+              value={formik.values.name}
+              error={formik.errors.name}
+              style={[fontSystem.body1, styles.text]}
+              placeholderTextColor={rgba(darkColor, 0.5)}
+              underlineColorAndroid="transparent"
+            />
+            <TextInput
+              maxLength="16"
+              label="Numero de tarjeta"
+              onChangeText={(text) => formik.setFieldValue('number', text)}
+              value={formik.values.number}
+              error={formik.errors.number}
+              style={[fontSystem.body1, styles.text]}
+              placeholderTextColor={rgba(darkColor, 0.5)}
+              underlineColorAndroid="transparent"
+            />
+            <View>
+              <View>
+                <TextInput
+                  maxLength="2"
+                  label="Mes"
+                  onChangeText={(text) =>
+                    formik.setFieldValue('exp_month', text)
+                  }
+                  value={formik.values.exp_month}
+                  error={formik.errors.exp_month}
+                  style={[fontSystem.body1, styles.text]}
+                  placeholderTextColor={rgba(darkColor, 0.5)}
+                  underlineColorAndroid="transparent"
+                />
+                <TextInput
+                  maxLength="4"
+                  label="year"
+                  onChangeText={(text) =>
+                    formik.setFieldValue('exp_year', text)
+                  }
+                  value={formik.values.exp_year}
+                  error={formik.errors.exp_year}
+                  style={[fontSystem.body1, styles.text]}
+                  placeholderTextColor={rgba(darkColor, 0.5)}
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+              <TextInput
+                maxLength="3"
+                label="CVV/CVC"
+                onChangeText={(text) => formik.setFieldValue('cvc', text)}
+                value={formik.values.cvc}
+                error={formik.errors.cvc}
+                style={[fontSystem.body1, styles.text]}
+                placeholderTextColor={rgba(darkColor, 0.5)}
+                underlineColorAndroid="transparent"
+              />
+            </View>
+            <Button
+              mode="contained"
+              onPress={formik.handleSubmit}
+              loading={loading}
+              style={styles.button}
+            >
+              Agregar tarjeta
+            </Button>
+          </View>
         </View>
-        <TextInput
-          maxLength="3"
-          label="CVV/CVC"
-          onChangeText={(text) => formik.setFieldValue('cvc', text)}
-          value={formik.values.cvc}
-          error={formik.errors.cvc}
-          style={[fontSystem.body1, styles.text]}
-          placeholderTextColor={rgba(darkColor, 0.5)}
-          underlineColorAndroid="transparent"
-        />
       </View>
-      <Button
-        mode="contained"
-        onPress={formik.handleSubmit}
-        loading={loading}
-        style={styles.button}
-      >
-        Agregar tarjeta
-      </Button>
-    </View>
+      <BottomNav navigation={navigation} init={1} />
+    </SafeAreaView>
   );
 }
 function initialValues() {
