@@ -107,14 +107,7 @@ class App extends React.Component {
             )}
             {this.state.isLogin === 'sessionOn' && (
               <>
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Account"
-                  component={Account}
-                  initialParams={{
-                    handleIsLogin: (value) => this.setState({ isLogin: value })
-                  }}
-                />
+                
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Home"
@@ -158,6 +151,14 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Transaction"
                   component={Transaction}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Account"
+                  component={Account}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
                 />
               </>
             )}

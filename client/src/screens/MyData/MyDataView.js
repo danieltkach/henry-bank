@@ -17,33 +17,39 @@ export default function MyDataView({ handleFinalSubmit, navigation }) {
 
   const user = useSelector(state => state.userReducer.user)
 
+
+  const onSubmit = (data) => handleFinalSubmit(data);
+
+  
   const textFixed = [
-    {name: user.name},
-    {name: user.lastName},
-    {name: user.email},
-    {name: user.birthdate},
+    {name: 'name', value: user.name},
+    {name: 'lastName',value: user.lastName},
+    {name: 'email', value: user.email},
+    {name: 'birthdate', value: user.birthdate},
   ];
 
   const textInputs = [
-    {name: 'phone', placeholder: 'Telefono', maxLength: 20, minLength: 8},
-    {name: 'street', placeholder: 'Domicilio calle', maxLength: 20, minLength: 4},
-    {name: 'streetNumber', placeholder: 'Número', maxLength: 20, minLength: 2},
-    {name: 'zipCode', placeholder: 'Codigo postal', maxLength: 20, minLength: 4},
-    {name: user.city, maxLength: 20, minLength: 3},
-    {name: user.country, maxLength: 20, minLength: 3},
+    {name: 'phone', value: user.phone, placeholder: 'Telefono', maxLength: 20, minLength: 8},
+    {name: 'street', value: user.street, placeholder: 'Domicilio calle', maxLength: 20, minLength: 4},
+    {name: 'streetNumber', value: user.streetNumber, placeholder: 'Numero', maxLength: 20, minLength: 2},
+    {name: 'zipCode', value: user.zipCode, placeholder: 'Cod. Postal', maxLength: 20, minLength: 4},
+    {name: 'city', value: user.city, placeholder: 'Ciudad', maxLength: 20, minLength: 3},
+    {name: 'country', value: user.country, placeholder: 'Pais', maxLength: 20, minLength: 3},
   ];
-  
 
-  const onSubmit = (data) => handleFinalSubmit(data);
   return (
     <View style={[styles.content, { flex: 1 }]}>
-
-      <View style={styles.textInputs}>
+      
+       <View style={[styles.textInputs, {flexDirection : 'row'}]}>
         {textFixed.map((e, index) => (
-          <View key={index}>
+          <View key={index} style={{
+            width
+              : (e.name === 'name' || e.name === 'lastName') ? '45%'
+              : '100%',
+          }}>
             <Controller
               name={e.name}
-              defaultValue={e.name}
+              defaultValue={e.value}
               control={control}
               render={({ value }) => (
                 <TextInput
@@ -53,18 +59,29 @@ export default function MyDataView({ handleFinalSubmit, navigation }) {
                 />
               )}
             />
+            <View id="name" style={[styles.underlineBlur]}></View>
           </View>
         ))}
+      </View> 
+
+      <View> 
+        <Text type='title' text='Modifica los datos:' style={styles.topText} />
       </View>
       
-      <View style={styles.textInputs}>
+      <View style={[styles.textInputs, {flexDirection : 'row'}]}>
         {textInputs.map((e, index) => (
-          <View key={index}>
+          <View key={index} style={{
+            width
+              : (e.name === 'street' || e.name === 'streetNumber') ? '48%'
+              : (e.name === 'zipCode') ? '23%'
+              : (e.name === 'city') ? '73%'
+              : '100%',
+          }}>
             <Controller
               name={e.name}
-              defaultValue={e.name}
+              defaultValue={e.value}
               control={control}
-              /* rules={{
+              rules={{
                 required: {
                   value: e.required,
                   message: 'Campo requerido'
@@ -83,14 +100,14 @@ export default function MyDataView({ handleFinalSubmit, navigation }) {
                   message:
                     (e.maxLength && `Caracteres minimos ${e.minLength}`) || ''
                 }
-              }} */
+              }}
               render={({ onChange, value }) => (
                 <TextInput
-                  //placeholder={e.placeholder}
+                  placeholder={e.placeholder}
                   secureTextEntry={e.type === 'password' ? true : false}
                   maxLength={!e.maxLength ? e.maxLength : 50}
                   style={[fontSystem.body1, styles.text]}
-                  //placeholderTextColor={rgba(darkColor, 0.5)}
+                  placeholderTextColor={rgba(darkColor, 0.5)}
                   underlineColorAndroid="transparent"
                   onChangeText={onChange}
                   value={value}
@@ -98,7 +115,7 @@ export default function MyDataView({ handleFinalSubmit, navigation }) {
                 />
               )}
             />
-            {/* {errors[e.name] ? (
+            {errors[e.name] ? (
               <>
                 <View
                   id="name"
@@ -112,11 +129,10 @@ export default function MyDataView({ handleFinalSubmit, navigation }) {
               </>
             ) : (
               <View id="name" style={[styles.underlineBlur]}></View>
-            )} */}
+            )}
           </View>
         ))}
       </View>
-
       <Button
         label="Confirmar Cambios"
         color="primary"

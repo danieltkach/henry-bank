@@ -45,7 +45,7 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
-  streetName: {
+  street: {
     type: String,
     trim: true
   },
@@ -61,7 +61,7 @@ const UserSchema = new Schema({
     type: String,
     trim: true
   },
-  cellphone: {
+  phone: {
     type: Number,
     trim: true
   },

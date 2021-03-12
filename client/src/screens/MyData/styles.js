@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: '16px',
+    padding: '8px',
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
@@ -18,11 +18,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   button: {
-    marginVertical: '6px'
+    marginVertical: '30px'
   },
   textInputs: {
     marginVertical: '2px',
-    width: '100%'
+    
+    flexWrap      : 'wrap',
+    justifyContent: 'space-between'
   },
   topText: {
     paddingVertical: '2px'
@@ -33,15 +35,7 @@ const styles = StyleSheet.create({
   botText: {
     padding: '4px'
   },
-  googleButton: {
-    padding: '4px',
-    width: 40,
-    height: 40,
-    borderRadius: 1000,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+  
 
   //TEXT STYLES
   underlineBlur: {
@@ -68,7 +62,7 @@ const styles = StyleSheet.create({
   text: {
     height: 48,
     backgroundColor: 'transparent',
-    marginTop: '12px',
+    marginTop: '4px',
     color: palette.accent.dark
   },
   helperText: {
