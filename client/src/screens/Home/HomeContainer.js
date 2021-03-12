@@ -37,7 +37,7 @@ export default function HomeContainer({ navigation, route }) {
   }
   //{month:{spent:[900, 200, 500, 2100, 2800, 1200]}, week:{spent:[100, 1000, 2000]}, day:{spent:[1500, 500, 2000, 200]}}
   useState(() => {
-    axios.get(`http://localhost:4002/transaction/statistics/6049304083e67c1f86628c5d`)
+    axios.get(`http://localhost:4002/transaction/statistics/${cuenta._id}`)
     .then((statistics) => {console.log(statistics.data),setStatistics(statistics.data), setTablas(statistics.data.month.monthArr), setDatas(statistics.data.month.spent)})
   }, []);
   //, {week:{spent:[1200, 100, 800]}}, {day:{spent:[500, 2100, 2800, 1200]}}
@@ -58,30 +58,30 @@ export default function HomeContainer({ navigation, route }) {
       <Background />
       <Header
         type="settings"
-        label='Bienvenido'
+        label='Inicio'
         align="center"
         navigation={navigation}
         handleIsLogin={handleIsLogin}
       />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
       {user ?
         (
-          <HomeView user={user} handleAccount={handleAccount} account={account}/>
+          <HomeView user={user} handleAccount={handleAccount} account={account}/> 
         )
         :(
           <></>
         )
       }
+      </View> */}
+      
+
+      <View style={estilos.saludo}>
+        <Text style={{fontSize:40}}>{ `Hola ${user && user.name}!` }</Text>
       </View>
       <View style={estilos.balanceTotal3}>
         <Text style={estilos.letraBalance}>{ `Balance total \n $${cuenta && cuenta.balance}` }</Text>
       </View>
-      <View style={estilos.balanceTotal2}>
-        <Text> </Text>
-      </View>
-      <View style={estilos.balanceTotal}>
-        <Text> </Text>
-      </View>
+      
       <View style={estilos.titulo}>
         <Text style={estilos.negrita}>
           Estadisticas de gastos
@@ -104,7 +104,7 @@ export default function HomeContainer({ navigation, route }) {
               color="accent"
               label="Semestral"
               type='text'
-              onPress={() => (console.log('trimestral'), setTablas(statistics.month.monthArr), setDatas(statistics.month.spent))}
+              onPress={() => (console.log('semestral'), setTablas(statistics.month.monthArr), setDatas(statistics.month.spent))}
             />
           </View>
       </View>
@@ -206,13 +206,31 @@ const chartConfig = {
 
 
 const estilos = StyleSheet.create({
+  nube2:{
+
+  },
+  saludo:{
+    flex: 0.12,
+    alignItems:'center',
+    
+  },
   balanceTotal3:{
-    flex: 0.2,
-    padding: 10,
+    flex: 0.11,
     alignItems:'center',
     textAlign: 'center',
     borderRadius: 32,
-    borderColor: 'black'
+    borderColor: 'black',
+    margin: 10,
+    padding: 0,
+    borderRadius: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8
   },
   balanceTotal2:{
     flex: 0.2,
@@ -220,6 +238,7 @@ const estilos = StyleSheet.create({
     alignItems:'center',
     textAlign: 'center',
     borderRadius: 32,
+    
     
   },
   balanceTotal:{
@@ -241,23 +260,22 @@ const estilos = StyleSheet.create({
     
   },
   semMesSem:{
-    flex: 0.5,
+    flex: 0.8,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   titulo: {
-    flex: 0.3,
-    margin: 10,
+    flex: 0.11,    
   },
   estadisticas: {
-    flex: 1.5,
-    margin: 10,
+    flex: 0.42,
+    
   },
   surface4: {
     flex: 1,
-    backgroundColor: 'white',
+    
     borderRadius: 32, 
-    margin: 10,
+    padding: 10,
     borderRadius: 32,
     shadowColor: '#000',
     shadowOffset: {
@@ -269,11 +287,11 @@ const estilos = StyleSheet.create({
     elevation: 8
   },
   contenedorBotones: {
-    flex: 1,
-    margin: 10,
+    flex: 0.25,
+    padding: 0,
+    
     justifyContent: 'space-around',
     flexDirection: 'row',
-    
   },
   negrita: {
     fontWeight: 'bold',
@@ -301,6 +319,7 @@ const estilos = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     height: '75px',
+    
     width: '120px',
     borderRadius: 32,
 
@@ -322,7 +341,9 @@ const estilos = StyleSheet.create({
     width: '120px',
     borderRadius: 32,
     borderRadius: 32,
+    
     shadowColor: '#000',
+    
     shadowOffset: {
       width: 0,
       height: 4
@@ -338,6 +359,7 @@ const estilos = StyleSheet.create({
     width: '120px',
     borderRadius: 32,
     borderRadius: 32,
+    
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -350,14 +372,14 @@ const estilos = StyleSheet.create({
   linea:{
     flex: 0.01,
     backgroundColor: '#bdbdbd',
-    margin: 10,
+    margin: 1,
   },
   general: {
     flex: 1,
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 10,
+    padding: 10,
     
     
   },
