@@ -11,10 +11,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 function getLogo(brand) {
-  if (brand === 'MasterCard') {
+  if (brand.toLowerCase() === 'mastercard') {
     return MasterCard;
   }
-  if (brand === 'Visa') {
+  if (brand.toLowerCase() === 'visa') {
     return Visa;
   }
 }
@@ -33,15 +33,20 @@ export default function CardView({ navigation, account, user, deleteCard }) {
   console.log('Usuario >>> ', userId);
 
   const handleDelete = (cardId) => {
-    axios.delete(`http://localhost:4001/user/credit-card/${userId}`, {
-      cardId
-    });
+    console.log('cardId in handleDelete', cardId);
+    axios
+      .delete(`http://localhost:4001/user/credit-card/${userId}`, {
+        data: { cardId }
+      })
+      .then((response) => {
+        setCards(response.data);
+      });
   };
 
-  //
+  console.log(cards);
   return (
     <View style={{ flex: 1, paddingVertical: 8, marginBottom: 60 }}>
-      {cards.map((e, index) => (
+      {cards.map((card, index) => (
         <LinearGradient
           colors={['darkgrey', 'lightgrey']}
           style={styles.surface}
@@ -56,12 +61,12 @@ export default function CardView({ navigation, account, user, deleteCard }) {
                 marginBottom: 5
               }}
             >
-              <Text type="title" text={'XXXX XXXX XXXX ' + e.last4} />
+              <Text type="title" text={'XXXX XXXX XXXX ' + card.last4} />
             </View>
 
             <Text
               type="subtitle2"
-              text={e.exp_month + '/' + e.exp_year}
+              text={card.exp_month + '/' + card.exp_year}
               style={{ marginBottom: 15 }}
             />
 
@@ -74,19 +79,19 @@ export default function CardView({ navigation, account, user, deleteCard }) {
             >
               <Text
                 type="subtitle2"
-                text={e.name}
+                text={card.name}
                 style={{ marginBottom: 15 }}
               />
               <View>
                 <View style={{ alignItems: 'flex-end' }}>
-                  <img src={getLogo(e.brand)} style={{ maxWidth: 60 }} />
+                  <img src={getLogo(card.brand)} style={{ maxWidth: 60 }} />
                 </View>
               </View>
             </View>
             <Button
               color="secondary"
               label="eliminar tarjeta"
-              onPress={() => handleDelete(userId)}
+              onPress={() => handleDelete(card._id)}
             />
           </View>
         </LinearGradient>
