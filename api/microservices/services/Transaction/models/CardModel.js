@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const cardSchema = new Schema({
   _id: { type: String, required: true },
-  newCardId: String,
+  stripeCardId: String,
   number: String,
   name: String,
   exp_month: String,

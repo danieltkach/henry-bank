@@ -265,7 +265,7 @@ const addContact = (req, res) => {
 const addCreditCard = (req, res) => {
   const userId = req.params.id;
   const {
-    newCardId,
+    stripeCardId,
     number,
     name,
     exp_month,
@@ -283,7 +283,7 @@ const addCreditCard = (req, res) => {
 
       let newCreditCard = {
         _id: mongo_id,
-        newCardId,
+        stripeCardId,
         number,
         name,
         exp_month,
@@ -316,10 +316,12 @@ const getCreditCardsList = (req, res) => {
 
 const deleteCreditCard = (req, res) => {
   const userId = req.params.id;
-  const creditCardId = req.body.creditCardId;
+  const creditCardId = req.body.cardId;
+
   User.findById(userId)
     .then((user) => {
-      user.cards = user.cards.filter((c) => c.newCardId !== creditCardId);
+      user.cards = user.cards.filter((c) => c._id !== creditCardId);
+      user.save();
       return res.status(200).json(user.cards);
     })
     .catch((err) => err.message);

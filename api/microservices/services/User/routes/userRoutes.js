@@ -5,6 +5,7 @@ const passport = require('passport');
 
 router.post('/credit-card/:id', userController.addCreditCard);
 router.get('/credit-card/:id', userController.getCreditCardsList);
+router.delete('/credit-card/:id', userController.deleteCreditCard);
 
 router.post(
   '/signup',

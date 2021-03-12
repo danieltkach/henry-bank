@@ -93,7 +93,7 @@ const UserSchema = new Schema({
   cards: [
     {
       _id: { type: String, required: true },
-      newCardId: String,
+      stripeCardId: String,
       number: String,
       name: String,
       exp_month: String,
