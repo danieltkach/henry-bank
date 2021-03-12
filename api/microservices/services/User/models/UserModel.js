@@ -13,7 +13,6 @@ const UserSchema = new Schema({
     trim: true,
     lowercase: true,
     unique: true,
-    required: [true, 'Ingresa un email valido'],
     validate: [validateEmail, 'Ingresa un email valido'],
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -21,8 +20,7 @@ const UserSchema = new Schema({
     ]
   },
   password: {
-    type: String,
-    required: [true, 'Contraseña requerida']
+    type: String
   },
   role: {
     type: String,
@@ -84,6 +82,7 @@ const UserSchema = new Schema({
       ref: 'User'
     }
   ],
+  // contacts: [UserSchema],
   contactsAlias: [{ email: String, alias: String }],
   accounts: [
     {

@@ -263,17 +263,24 @@ const addCreditCard = (req, res) => {
   const { newCardId, number, name, month, year, cvc } = req.body;
   console.log(userId);
 
-  User.findById({ _id: userId })
+  User.findById(userId)
     .then((user) => {
-      const newCreditCard = {
-        newCardId,
-        number,
-        name,
-        month,
-        year,
-        cvc
+      console.log('user >>>', user);
+
+      let newCreditCard = {
+        newCardId: newCardId,
+        number: number,
+        name: name,
+        month: month,
+        year: year,
+        cvc: cvc
       };
-      user.cards.push(newCreditCard);
+
+      // user.cards.push(newCreditCard);
+      user.save();
+      return res
+        .status(200)
+        .json({ message: 'Tarjeta agregada.', cards: user.cards });
     })
     .catch((error) => {
       res.status(400).json({ message: 'Error.', error });

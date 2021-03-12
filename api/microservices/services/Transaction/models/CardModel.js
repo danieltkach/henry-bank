@@ -2,23 +2,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const cardSchema = new Schema({
-		accountId:  {
-			type: Number,
-            required: true
-	    },
-		number: {
-			type: Number,
-			required: true
-		},
-    expDate:{
-        type:Date,
-        required: true,
-    },
-    securityCode:{
-        type: Number,
-        required: true
-    }
+  newCardId: String,
+  number: String,
+  name: String,
+  month: String,
+  year: String,
+  cvc: String
+});
 
-  });
-
-  module.exports = mongoose.model('Card', cardSchema);
+module.exports = mongoose.model('Card', cardSchema);
