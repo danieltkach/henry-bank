@@ -88,3 +88,25 @@ export const listTransactions = (dataId) => {
       });
   });
 };
+
+export const newTransferFetch = (dataId, dataForm) => {
+  console.log('PUT TRANSFER', dataId, dataForm);
+  console.log(PUT_TRANSFER);
+  return new Promise((resolve, reject) => {
+    fetch(`${PUT_TRANSFER}/${dataId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataForm)
+    })
+      .then((response) => {
+        console.log('RESPONSE PUT TRANSFER < STATUS OK');
+        resolve(response.json());
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
+};

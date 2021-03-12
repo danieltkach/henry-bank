@@ -24,16 +24,20 @@ export default function TransactionContainer({ navigation }) {
 
   useEffect(() => {
     dispatch(listAllTransactions(accountId));
-  }, []);
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Background />
-      <Header type="settings" label="Transacciones" align="center" />
+      <Header
+        navigation={navigation}
+        type="default"
+        label="Transacciones"
+        align="center"
+      />
       <View style={styles.container}>
         <TransactionView transactions={transactions} />
       </View>
-      <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
 }
