@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import styles from '../Account/styles';
 import { useForm } from 'react-hook-form';
@@ -10,30 +10,6 @@ import Visa from './img/visa.png';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-const array = [
-  {
-    brand: 'Visa',
-    exp_month: 11,
-    exp_year: 2026,
-    last4: 5000,
-    name: 'CASCO LUCAS GABRIEL'
-  },
-  {
-    brand: 'MasterCard',
-    exp_month: 1,
-    exp_year: 2026,
-    last4: 2923,
-    name: 'CASQUITO LUQUITAS'
-  },
-  {
-    brand: 'MasterCard',
-    exp_month: 10,
-    exp_year: 2026,
-    last4: 2021,
-    name: 'DANIEL CON MUCHA GUITA'
-  }
-];
-
 function getLogo(brand) {
   if (brand === 'MasterCard') {
     return MasterCard;
@@ -44,16 +20,28 @@ function getLogo(brand) {
 }
 
 export default function CardView({ navigation, account, user, deleteCard }) {
+  const [cards, setCards] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4001/user/credit-card/${userId}`)
+      .then((data) => {
+        setCards(data.data);
+      });
+  }, []);
+
   const userId = useSelector((state) => state.userReducer.user._id);
-  console.log(userId, 'holaaaaaaaa');
+  console.log('Usuario >>> ', userId);
 
   const handleDelete = (cardId) => {
-    axios.delete(`http:/localhost:4001/user/credit-card/${userId}`, { cardId });
+    axios.delete(`http://localhost:4001/user/credit-card/${userId}`, {
+      cardId
+    });
   };
 
+  //
   return (
     <View style={{ flex: 1, paddingVertical: 8, marginBottom: 60 }}>
-      {array.map((e, index) => (
+      {cards.map((e, index) => (
         <LinearGradient
           colors={['darkgrey', 'lightgrey']}
           style={styles.surface}
