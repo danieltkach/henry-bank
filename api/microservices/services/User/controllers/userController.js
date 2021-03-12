@@ -128,6 +128,34 @@ const modifyUser = (req, res, next) => {
   );
 };
 
+const modifyProfile = (req, res, next) => {
+  const userId = req.params.id;
+
+  const {
+    cellphone,
+    streetName,
+    streetNumber,
+    city,
+    zipCode,
+    country
+  } = req.body;
+
+  User.findById({_id: userId})
+  .then(user => {
+    user.cellphone = cellphone,
+    user.streetName = streetName,
+    user.streetNumber = streetNumber,
+    user.city = city,
+    user.country = country,
+    user.zipCode = zipCode
+    user.save();
+    res.status(200).json({ message: 'Perfil actualizado.', userId });
+  })
+  .catch((error) =>
+    res.status(400).json({ message: 'Error al actualizar usuario.' })
+  );
+};
+
 const getUser = (req, res, next) => {
   const user = req.params.id;
 
@@ -195,7 +223,7 @@ const addContact = (req, res) => {
       }
 
       // Adding contact to user
-      
+
       foundUser.contacts.push(contact);
       foundUser.contactsAlias.push({
         email: contact.email,
@@ -215,7 +243,7 @@ const addContact = (req, res) => {
 const deleteContact = (req, res) => {
   const userId = req.params.id;
   const contactEmail = req.body.contactEmail;
-  
+
   User.findOne({ _id: userId })
     .populate('contacts',"contactsAlias")
     .then((user) => {
@@ -252,5 +280,6 @@ module.exports = {
   addContact,
   deleteContact,
   modifyAlias,
-  sendEmailVerify
+  sendEmailVerify,
+  modifyProfile
 };

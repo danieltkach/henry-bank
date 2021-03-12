@@ -11,6 +11,7 @@ router.post('/verify', userController.verifyCodeSecurity);
 router.put('/contacts/:id', userController.addContact);
 router.delete('/contacts/:id', userController.deleteContact);
 router.put('/:id', userController.modifyUser);
+router.put('/profile/:id', userController.modifyProfile);
 router.get('/:id', userController.getUser);
 router.get('/', userController.getUsers);
 

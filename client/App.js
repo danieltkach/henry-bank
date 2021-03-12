@@ -21,7 +21,8 @@ import {
   MyData,
   Contact,
   Transaction,
-  Cards
+  Cards,
+  Profile
 } from './src/screens';
 import { Preload } from './src/components';
 
@@ -107,6 +108,14 @@ class App extends React.Component {
             )}
             {this.state.isLogin === 'sessionOn' && (
               <>
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Profile"
+                  component={Profile}
+                  initialParams={{
+                    handleIsLogin: (value) => this.setState({ isLogin: value })
+                  }}
+                />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Account"

@@ -10,7 +10,7 @@ export default function CardsContainer({ navigation }) {
       <Background />
       <Header type="settings" label="Contactos" align="center" />
       <View style={styles.container}>
-        <CardsView />
+
       </View>
       <BottomNav navigation={navigation} init={1} />
     </SafeAreaView>

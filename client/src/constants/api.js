@@ -25,7 +25,7 @@ export const GET_PROFILE_AUTH = `${API_USER_HOST}/profile`;
 export const DELETE_CONTACT = `${API_USER_HOST}/user/contacts`; //dataId;
 export const POST_EMAIL_VERIFY = `${API_USER_HOST}/user/send/email`; //#dataForm;
 export const GET_ADDRESS = `${API_USER_HOST}/user/validate-address`; //?direccion=:queryData
-
+export const PUT_PROFILE = `${API_USER_HOST}/user/profile`
 //Fetchs asociadas a Transactions
 export const GET_TRANSFER_SENDED = `${API_TRANSACTION_HOST}/transaction/transfers`; //:dataId
 export const GET_TRANSFER_INCOME = `${API_TRANSACTION_HOST}/transaction/incomes`; //:dataId
