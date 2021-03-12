@@ -22,7 +22,7 @@ import {
   Contact,
   Transaction,
   Cards,
-  Profile
+  Profile,
   CardsForm
 } from './src/screens';
 import { Preload } from './src/components';
