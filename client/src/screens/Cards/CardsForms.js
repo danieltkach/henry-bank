@@ -57,16 +57,14 @@ export default function CardForms(props) {
           // a la base de datos y se asocie con el usuario.
           // Implementar redux...
           axios.post(`http://localhost:4001/user/credit-card/${userId}`, {
-            algo: {
-              newCardId: response.data.id,
-              number: '4242424242424242',
-              exp_month: '12',
-              exp_year: '2025',
-              cvc: '123',
-              name: 'Test Name',
-              brand: response.data.card.brand,
-              last4: response.data.card.last4
-            }
+            newCardId: response.data.id,
+            number,
+            exp_month,
+            exp_year,
+            cvc,
+            name,
+            brand: response.data.card.brand,
+            last4: response.data.card.last4
           });
         })
         .catch((error) => console.log(error.message));

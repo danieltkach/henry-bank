@@ -96,9 +96,11 @@ const UserSchema = new Schema({
       newCardId: String,
       number: String,
       name: String,
-      month: String,
-      year: String,
-      cvc: String
+      exp_month: String,
+      exp_year: String,
+      cvc: String,
+      brand: String,
+      last4: String
     }
   ]
   // cards: [

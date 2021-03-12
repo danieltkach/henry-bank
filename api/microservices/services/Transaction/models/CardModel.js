@@ -6,8 +6,8 @@ const cardSchema = new Schema({
   newCardId: String,
   number: String,
   name: String,
-  month: String,
-  year: String,
+  exp_month: String,
+  exp_year: String,
   cvc: String
 });
 

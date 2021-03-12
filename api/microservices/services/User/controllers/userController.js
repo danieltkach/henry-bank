@@ -137,12 +137,10 @@ const modifyUser = (req, res, next) => {
     })
     .catch((error) => {
       console.log(error),
-        res
-          .status(400)
-          .json({
-            message: 'Error al actualizar usuario.',
-            error: error.message
-          });
+        res.status(400).json({
+          message: 'Error al actualizar usuario.',
+          error: error.message
+        });
       return;
     });
 };
@@ -266,7 +264,16 @@ const addContact = (req, res) => {
 
 const addCreditCard = (req, res) => {
   const userId = req.params.id;
-  const { newCardId, number, name, month, year, cvc } = req.body;
+  const {
+    newCardId,
+    number,
+    name,
+    exp_month,
+    exp_year,
+    cvc,
+    brand,
+    last4
+  } = req.body;
 
   const mongo_id = new BSON.ObjectID().toHexString();
 
@@ -276,12 +283,14 @@ const addCreditCard = (req, res) => {
 
       let newCreditCard = {
         _id: mongo_id,
-        newCardId: newCardId,
-        number: number,
-        name: name,
-        month: month,
-        year: year,
-        cvc: cvc
+        newCardId,
+        number,
+        name,
+        exp_month,
+        exp_year,
+        cvc,
+        brand,
+        last4
       };
 
       user.cards.push(newCreditCard);

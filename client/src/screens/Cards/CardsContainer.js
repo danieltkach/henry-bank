@@ -11,7 +11,7 @@ export default function CardsContainer({ navigation }) {
       <Header
         navigation={navigation}
         type="settings"
-        label="Cargar tarjeta"
+        label="Mis Tarjetas"
         align="center"
       />
       <View style={styles.container}>
