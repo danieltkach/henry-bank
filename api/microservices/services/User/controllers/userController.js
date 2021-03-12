@@ -157,20 +157,20 @@ const modifyProfile = (req, res, next) => {
     country
   } = req.body;
 
-  User.findById({_id: userId})
-  .then(user => {
-    user.cellphone = cellphone,
-    user.streetName = streetName,
-    user.streetNumber = streetNumber,
-    user.city = city,
-    user.country = country,
-    user.zipCode = zipCode
-    user.save();
-    res.status(200).json({ message: 'Perfil actualizado.', userId });
-  })
-  .catch((error) =>
-    res.status(400).json({ message: 'Error al actualizar usuario.' })
-  );
+  User.findById({ _id: userId })
+    .then((user) => {
+      (user.cellphone = cellphone),
+        (user.streetName = streetName),
+        (user.streetNumber = streetNumber),
+        (user.city = city),
+        (user.country = country),
+        (user.zipCode = zipCode);
+      user.save();
+      res.status(200).json({ message: 'Perfil actualizado.', userId });
+    })
+    .catch((error) =>
+      res.status(400).json({ message: 'Error al actualizar usuario.' })
+    );
 };
 
 const getUser = (req, res, next) => {
@@ -370,7 +370,7 @@ module.exports = {
   deleteContact,
   modifyAlias,
   sendEmailVerify,
-  modifyProfile
+  modifyProfile,
   addCreditCard,
   getCreditCardsList,
   deleteCreditCard
