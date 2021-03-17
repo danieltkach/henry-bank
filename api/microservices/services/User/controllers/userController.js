@@ -241,7 +241,7 @@ const addContact = (req, res) => {
       if (foundUser.contacts.includes(contact._id)) {
         return res
           .status(400)
-          .json({ message: 'Contacto ya existe.', contact });
+          .json({ message: 'El contacto ya existe.', contact });
       }
 
       // Adding contact to user
@@ -258,7 +258,7 @@ const addContact = (req, res) => {
       });
     })
     .catch((error) => {
-      res.status(400).json({ message: 'Error.', error });
+      res.status(400).json({ message: 'No se ha encontrado el usuario a añadir' });
     });
 };
 
@@ -279,7 +279,6 @@ const addCreditCard = (req, res) => {
 
   User.findById(userId)
     .then((user) => {
-      console.log('user >>>', user);
 
       let newCreditCard = {
         _id: mongo_id,
@@ -300,8 +299,8 @@ const addCreditCard = (req, res) => {
         .status(200)
         .json({ message: 'Tarjeta agregada.', cards: user.cards });
     })
-    .catch((error) => {
-      res.status(400).json({ message: 'Error.', error: error.message });
+    .catch(() => {
+      res.status(400).json({ message: 'Error al agregar la tarjeta.' });
     });
 };
 
@@ -324,7 +323,7 @@ const deleteCreditCard = (req, res) => {
       user.save();
       return res.status(200).json(user.cards);
     })
-    .catch((err) => err.message);
+    .catch(() => 'Error al borrar la taarjeta de credito');
 };
 
 const deleteContact = (req, res) => {
@@ -341,7 +340,9 @@ const deleteContact = (req, res) => {
       user.save();
       res.status(200).json(user);
     })
-    .catch((e) => res.send(404).json(e));
+    .catch(() => res.send(404).json({
+      message: 'Error al borrar el contacto.'
+    }));
 };
 
 const modifyAlias = (req, res) => {

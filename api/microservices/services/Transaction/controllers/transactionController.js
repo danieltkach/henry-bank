@@ -86,6 +86,10 @@ const getIncomesByDate = (req, res) => {
 const rapiTransfer = (req, res) => {
   const { amount, cvu } = req.body;
 
+  if(amount <= 0 || amount === '') res.status(400).json({
+    message: 'Ingrese un monto correcto'
+  }) 
+
   AccountModel.findOne({ cvu: cvu })
     .then((acc) => {
       acc.balance += amount;
@@ -113,7 +117,7 @@ const rapiTransfer = (req, res) => {
     })
     .catch((err) => {
       res.status(400).json({
-        message: err.message || 'Error in transfer'
+        message: 'No se encontro el cvu'
       });
     });
 };
