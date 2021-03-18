@@ -10,10 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-pdf": "^1.2.2",
+    "html-pdf": "^2.2.0",
     "mongoose": "^5.11.17",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7"
+    "nodemailer": "^6.5.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7"
   }
 }

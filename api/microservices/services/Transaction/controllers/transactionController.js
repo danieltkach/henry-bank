@@ -2,6 +2,9 @@ const Transaction = require('../models/TransactionModel');
 const AccountModel = require('../models/AccountModel');
 const UserModel = require('../../User/models/UserModel');
 const { response } = require('express');
+const nodeMailer = require('../util/nodeMailer');
+const axios =require("axios")
+
 
 const getTranfers = (req, res) => {
   Transaction.find(
@@ -84,32 +87,53 @@ const getIncomesByDate = (req, res) => {
 };
 
 const rapiTransfer = (req, res) => {
-  const { amount, cvu } = req.body;
+  const { amount, cvu } = req.body;  
 
-  AccountModel.findOne({ cvu: cvu })
+  var account
+  var trans
+    AccountModel.findOne({ cvu: cvu })
     .then((acc) => {
-      acc.balance += amount;
+      account=acc
+      acc.balance += parseFloat( amount);
       acc.save();
       return acc;
     })
     .then((trans) => {
-      console.log(trans);
-
-      const transaction = new Transaction({
+       transaction = new Transaction({
         transactionType: 'recharge',
         currency: 'ARS',
         amount,
         idSenderAccount: -1,
         idReceiverAccount: trans._id
       });
-      transaction.save();
-      return transaction;
+      transaction.save();      
+      trans = transaction;
     })
-    .then((trans) => {
+    .then(()=>{     
+      console.log( account.userId) 
+       /* UserModel.findOne({ _id: "6053b7773443d84e44d14ab1" }) */
+       return axios.get(`http://localhost:4001/user/${account.userId}`)
+    })
+    .then((user)=>{
+      console.log(user.data)
+      nodeMailer.pdfCreate(amount,`${user.data.name+" "+user.data.lastName}`)
+      return user.data
+    })
+    .then((user) => {
+      nodeMailer.sendEmailPdf({
+        email: user.email,
+        name: user.name,
+        date:new Date(),
+        amount:amount,
+      })
+      /* return trans */})
+      .then(()=>{
+        //console.log(trans)
       res.status(200).json({
         message: 'Transfer complete',
-        trans
+        trans:trans
       });
+      
     })
     .catch((err) => {
       res.status(400).json({
