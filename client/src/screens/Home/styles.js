@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { palette } from '../../theme';
+
 
 const styles = StyleSheet.create({
     container          : {
@@ -7,123 +9,78 @@ const styles = StyleSheet.create({
       flexDirection    : 'row',
       flexWrap         : 'wrap',
     },
-    //ESTILOS DE PRUEBA
-    pesos: {
-        position:"absolute",
-        top: 208,
-        left: 200,
+    separator        : {
+      marginVertical : 4,
+      width          : '100%',
+      height         : '1px',
+      backgroundColor: palette.text.disabled,
+      opacity        : 0.8
     },
-    contenedor: {
-        backgroundColor: "#fff"
+    header         : {
+      flexDirection: 'row',
+      paddingBottom: 8
     },
-    imgop: {
-        flex: 1,
-        marginTop: 520,
-        marginLeft: 10,
-        flexDirection: "row" ,
-        justifyContent: "space-around",
-
+    headerChart      : {
+      flex           : 1,
+      width          : 128,
+      height         : 128,
+      alignItems     : 'center',
+      justifyContent : 'center'
     },
-    prueba: {
-        position:"absolute",
-        top: -320,
-        height: 100,
-        width: "100%",
-        left: 5,
+    chartTitle       : {
+      height         : 80,
+      width          : 80,
+      borderRadius   : 100,
+      position       : 'absolute',
+      backgroundColor: palette.accent.light,
+      justifyContent : 'center',
+      alignItems     : 'center'
     },
-    prueba2: {
-        position:"absolute",
-        top: -1,
-        height: 100,
-        width: "100%",
-        left: 5,
+    headerText        : {
+      flex            : 1.4,
+      paddingVertical : 8,
+      justifyContent  : 'space-between'
     },
-    informacion: {
-
-        marginTop: -280,
-        marginLeft: 5,
-        marginRight: 5,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        borderWidth: 0,
-        height: 110,
-        borderRadius: 30,
-    },
-    operaciones: {
-        marginTop: 498,
-        marginRight: 5,
-        marginLeft: 5,
-        flexDirection: "row" ,
-        justifyContent: "space-between",
-        borderWidth: 0,
-        height: 110,
-        borderRadius: 30
-    },
-    cantidadDinero:{
-        position:"absolute",
-        top: 200,
-        left: 233,
-        fontSize: 38,
-        fontWeight: "bold",
-    },
-    saludo: {
-        position:"absolute",
-        color: 'black',
-        top: 140,
-        left: 20,
-        fontSize: 25
-    },
-    dineroDisponible: {
-        position:"absolute",
-        color: 'black',
-        top: 250,
-        left: 239,
-        fontSize: 17,
-    },
-    logo: {
-        height: 80,
-        resizeMode: 'contain',
-        width: 150,
-    },
-    inputs: {
-        flex:1,
-        justifyContent:'center',
-    },
-    foto: {
-      width: '100%',
+    balanceText     : {
+      flexDirection : 'row',
       justifyContent: 'center'
     },
-    button: {
-        position: "absolute",
-        top: 648,
-        left: 0.3,
-        flexDirection: 'row',
-        borderWidth: 1,
-        height: 110,
-        width: "100%",
-        borderRadius: 30,
-        backgroundColor: '#3551F2'
+    currency        : {
+      paddingLeft   : 4,
+      justifyContent: 'flex-end'
     },
-    button1: {
-        position: "absolute",
-        top: 648,
-        flexDirection: 'row',
-        borderWidth: 0,
-        height: 190,
-        width: "97.5%",
-        borderRadius: 30,
-        backgroundColor: 'lightblue'
+    generalText      : {
+      flexDirection  : 'row',
+      justifyContent : 'space-between',
+      paddingVertical: 2
     },
-    button2: {
-        position: "absolute",
-        top: 428,
-        flexDirection: 'row',
-        borderWidth: 0,
-        height: 180,
-        width: "97.5%",
-        borderRadius: 30,
-        backgroundColor: 'lightblue'
+
+    middle           : {
+      paddingVertical: 8
     },
+    buttonsChartLineal: {
+      flexDirection   : 'row',
+      paddingVertical : 4,
+      marginLeft      : -4
+    },
+    bottom          : {
+      flexDirection : 'row',
+      justifyContent: 'space-around',
+      alignItems    : 'center',
+      paddingTop    : 8
+    },
+    buttonFloat   : {
+      height      : 48,
+      width       : 48,
+      borderRadius: 48
+    },
+    textButton  : {
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: -20
+    }
+
 });
 
 export default styles;
