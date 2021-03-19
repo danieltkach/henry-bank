@@ -87,7 +87,7 @@ const getIncomesByDate = (req, res) => {
 };
 
 const rapiTransfer = (req, res) => {
-  const { amount, cvu } = req.body;  
+  const { amount, cvu } = req.body;
 
   var account
   var trans
@@ -106,11 +106,11 @@ const rapiTransfer = (req, res) => {
         idSenderAccount: -1,
         idReceiverAccount: trans._id
       });
-      transaction.save();      
+      transaction.save();
       trans = transaction;
     })
-    .then(()=>{     
-      console.log( account.userId) 
+    .then(()=>{
+      console.log( account.userId)
        /* UserModel.findOne({ _id: "6053b7773443d84e44d14ab1" }) */
        return axios.get(`http://localhost:4001/user/${account.userId}`)
     })
@@ -133,7 +133,7 @@ const rapiTransfer = (req, res) => {
         message: 'Transfer complete',
         trans:trans
       });
-      
+
     })
     .catch((err) => {
       res.status(400).json({
@@ -196,8 +196,8 @@ const getStatistics = (req,res) =>{
     function(err, data) {
       if(err) res.status(400).json({message:'Sin transferencias'})
 
-      let incomes
-      let expenses
+      let incomes = 0;
+      let expenses = 0;
       data.forEach(item => {
         if (item.type === 'transfer') expenses += item.amount;
         if (item.type === 'recharge') incomes += item.amount;
@@ -287,8 +287,8 @@ const getStatistics = (req,res) =>{
           array: dayArr
         },
         movements: {
-          incomes: incomes || 0,
-          expenses: expenses || 0
+          incomes: incomes,
+          expenses: expenses
         }
       })
     }
