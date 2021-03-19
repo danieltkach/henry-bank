@@ -12,6 +12,9 @@ import { palette, rgba } from '../theme';
 import { Text } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteData } from '../controllers/storage';
+import IconArgSvg from '../media/IconArgSvg.js';
+import IconUsdSvg from '../media/IconUsdSvg.js';
+
 
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
@@ -19,6 +22,7 @@ const primaryColor = palette.primary.main;
 export default function Drawer({ navigation, label, align, handleIsLogin }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
+  const account = useSelector((state) => state.accountReducer.account);
   const [isSignOut, setIsSignOut] = useState(false);
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
@@ -33,6 +37,7 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
   const handleClick = () => {
     setToggle(!toggle);
   };
+
   const buttons = [
     {
       index: 0,
@@ -76,7 +81,7 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
 
   const IconButtonText = ({ labelButton, icon, route }) => (
     <TouchableOpacity
-      onPress={route ? () => navigation.navigate(route) : () => handleLogOut()}
+      onPress={route ? () => { navigation.navigate(route); handleClick(); }: () => handleLogOut()}
       style={styles.iconButtonText}
     >
       <IconButton icon={icon} size={20} color={darkColor} />
@@ -86,27 +91,42 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
 
   return (
     <View style={styles.drawer}>
-      <View
-        style={{
-          alignItems: align || 'flex-start',
-          justifyContent: 'center',
-          height: 48,
-          width: '100%',
-          zIndex: 0,
-          position: 'absolute',
-          paddingHorizontal: 16
-        }}
-      >
-        <Text type="title" text={label} />
-      </View>
       <View style={styles.header}>
-        <IconButton
-          icon="menu"
-          size={24}
-          color={darkColor}
-          onPress={handleClick}
-        />
+        <View >
+          <IconButton
+            icon="menu"
+            size={24}
+            color={darkColor}
+            onPress={handleClick}
+          />
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text type="title" text={label} />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Account')}
+          style={styles.buttonCurrency}
+        >
+          {account.currency.toUpperCase() === 'ARS' ?
+            (
+              <IconArgSvg style={{fontSize: 24}} />
+            )
+            :(
+              <IconUsdSvg style={{fontSize: 24}} />
+            )
+          }
+        </TouchableOpacity>
+
       </View>
+
+
+
       <TouchableOpacity
         onPress={handleClick}
         style={[
@@ -184,7 +204,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '48px',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   textBody: {
     color: darkColor,
@@ -241,5 +262,10 @@ const styles = StyleSheet.create({
     height: '1px',
     backgroundColor: palette.text.disabled,
     opacity: 0.8
+  },
+  buttonCurrency: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    padding: 16,
   }
 });
