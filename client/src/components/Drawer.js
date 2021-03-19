@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
-import { IconButton } from 'react-native-paper';
 import {
   StyleSheet,
   View,
@@ -14,15 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteData } from '../controllers/storage';
 import IconArgSvg from '../media/IconArgSvg.js';
 import IconUsdSvg from '../media/IconUsdSvg.js';
+import Icon from 'react-native-vector-icons/Feather';
 
 
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label, align, handleIsLogin }) {
+export default function Drawer({ navigation, label, align, handleIsLogin, account }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  const account = useSelector((state) => state.accountReducer.account);
   const [isSignOut, setIsSignOut] = useState(false);
   const dimensions = useWindowDimensions();
   const [toggle, setToggle] = useState(false);
@@ -43,21 +42,21 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
       index: 0,
       type: 'button',
       label: 'Recargar dinero',
-      icon: 'arrow-collapse-up',
+      icon: 'corner-right-up',
       route: 'Deposit'
     },
     {
       index: 1,
       type: 'button',
       label: 'Enviar dinero',
-      icon: 'subdirectory-arrow-right',
+      icon: 'corner-down-right',
       route: 'Transfer'
     },
     {
       index: 2,
       type: 'button',
       label: 'Transacciones',
-      icon: 'refresh',
+      icon: 'repeat',
       route: 'Transaction'
     },
     { index: 3, type: 'separator' },
@@ -76,7 +75,7 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
       route: 'Support'
     },
     { index: 6, type: 'separator' },
-    { index: 7, type: 'button', label: 'Salir', icon: 'logout', route: false }
+    { index: 7, type: 'button', label: 'Salir', icon: 'log-out', route: false }
   ];
 
   const IconButtonText = ({ labelButton, icon, route }) => (
@@ -84,7 +83,9 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
       onPress={route ? () => { navigation.navigate(route); handleClick(); }: () => handleLogOut()}
       style={styles.iconButtonText}
     >
-      <IconButton icon={icon} size={20} color={darkColor} />
+      <View style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center'}}>
+        <Icon name={icon} size={20} color={darkColor} />
+      </View>
       <Text style={styles.textBody} type="subtitle2" text={labelButton} />
     </TouchableOpacity>
   );
@@ -92,20 +93,17 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
   return (
     <View style={styles.drawer}>
       <View style={styles.header}>
-        <View >
-          <IconButton
-            icon="menu"
+        <TouchableOpacity
+          onPress={handleClick}
+          style={{width: 48, height: 48, justifyContent: 'center', alignItems: 'center'}}
+        >
+          <Icon
+            name="menu"
             size={24}
             color={darkColor}
-            onPress={handleClick}
           />
-        </View>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        </TouchableOpacity>
+        <View style={{ margin: 'auto'}} >
           <Text type="title" text={label} />
         </View>
 
@@ -166,12 +164,16 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
             </View>
           </View>
 
-          <IconButton
-            icon="close"
-            size={24}
-            color="white"
+          <TouchableOpacity
             onPress={handleClick}
-          />
+            style={{width: 48, height: 48, justifyContent: 'center', alignItems: 'center'}}
+          >
+            <Icon
+              name="x"
+              size={24}
+              color={palette.accent.light}
+            />
+          </TouchableOpacity>
         </View>
         <View style={{ paddingVertical: 8, paddingHorizontal: 8 }}>
           <ScrollView style={styles.scrollView} vertical={true}>
@@ -213,6 +215,7 @@ const styles = StyleSheet.create({
   },
   iconButtonText: {
     width: '100%',
+    height: 42,
     flexDirection: 'row',
     alignItems: 'center'
   },

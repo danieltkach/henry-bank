@@ -5,26 +5,27 @@ import { Text, Button } from '../../components';
 import { palette, rgba, fontSystem } from '../../theme';
 import { LineChart, PieChart } from "react-native-chart-kit";
 
+
 const buttons = [
   {
     index: 0,
     type: 'icon',
     label: 'Recargar',
-    icon: 'arrow-collapse-up',
+    icon: 'corner-right-up',
     route: 'Deposit'
   },
   {
     index: 1,
     type: 'icon',
     label: 'Transacciones',
-    icon: 'refresh',
+    icon: 'repeat',
     route: 'Transaction'
   },
   {
     index: 2,
     type: 'icon',
     label: 'Enviar',
-    icon: 'subdirectory-arrow-right',
+    icon: 'corner-down-right',
     route: 'Transfer'
   },
 ];
@@ -158,21 +159,21 @@ export default function HomeView({ navigation, account, statistics}) {
         <View style={styles.separator}></View>
         <View style={styles.buttonsChartLineal}>
           <Button
-            style={{padding: 4}}
+            style={[table === 'day' && styles.buttonSelected, {padding: 4}]}
             color={table === 'day' ? 'primary' : 'accent'}
             type='text'
             label='Quincena'
             onPress={() => handleTable('day')}
           />
           <Button
-            style={{padding: 4}}
+            style={[table === 'week' && styles.buttonSelected, {padding: 4}]}
             color={table === 'week' ? 'primary' : 'accent'}
             type='text'
             label='Trimestral'
             onPress={() => handleTable('week')}
           />
           <Button
-            style={{padding: 4}}
+            style={[table === 'month' && styles.buttonSelected, {padding: 4}]}
             color={table === 'month' ? 'primary' : 'accent'}
             type='text'
             label='Semestral'

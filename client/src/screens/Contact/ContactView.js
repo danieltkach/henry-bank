@@ -31,12 +31,13 @@ const ContactView = ({
   handleClick,
   deleteContact,
   addContact,
-  navigation
+  navigation,
+  handleIsLogin
 }) => {
   const userId = useSelector((state) => state.userReducer.user._id);
   const contactAlias = useSelector((state) => state.userReducer.user.contactsAlias);
   const { control, handleSubmit, errors } = useForm();
-  
+
   const DELETECONTACT = (userId,dataEmail) => {
     var contactEmail = {contactEmail: dataEmail}
     deleteContact(userId,contactEmail )
@@ -139,7 +140,7 @@ const ContactView = ({
           </View>
         </View>
       ) : (
-        <Header type="settings" label="Contactos" align="center" navigation={navigation}/>
+        <Header type="settings" label="Contactos" align="center" navigation={navigation} handleIsLogin={handleIsLogin}/>
       )}
       {contactAlias.length > 0 &&
         contactAlias.map((d, index) => (

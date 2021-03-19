@@ -74,11 +74,16 @@ const styles = StyleSheet.create({
       width       : 48,
       borderRadius: 48
     },
-    textButton  : {
-      position: 'absolute',
+    textButton      : {
+      position      : 'absolute',
       justifyContent: 'center',
-      alignItems: 'center',
-      bottom: -20
+      alignItems    : 'center',
+      bottom        : -20
+    },
+    buttonSelected: {
+      borderWidth: 1,
+      borderColor: palette.primary.main,
+      borderRadius: 12
     }
 
 });
