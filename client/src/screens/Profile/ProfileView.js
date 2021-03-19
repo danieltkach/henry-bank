@@ -127,7 +127,7 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
                 <>
                   <Controller
                     name={e.name}
-                    defaultValue=""
+                    defaultValue={user[e.name]}
                     control={control}
                     rules={{
                       required: {
