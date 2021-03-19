@@ -51,6 +51,7 @@ export default function HomeContainer({ navigation, route }) {
 
 
   const [tablas ,setTablas] = useState([' ']);
+  console.log(tablas)
   const [datas ,setDatas] = useState([0]);
 
   return (

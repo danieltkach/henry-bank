@@ -18,7 +18,6 @@ import {
   Account,
   Deposit,
   Transfer,
-  MyData,
   Contact,
   Transaction,
   Cards,
@@ -109,14 +108,14 @@ class App extends React.Component {
             )}
             {this.state.isLogin === 'sessionOn' && (
               <>
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Home"
-                  component={Home}
-                  initialParams={{
-                    handleIsLogin: (value) => this.setState({ isLogin: value })
-                  }}
-                />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Home"
+                component={Home}
+                initialParams={{
+                  handleIsLogin: (value) => this.setState({ isLogin: value })
+                }}
+              />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Profile"
@@ -125,6 +124,8 @@ class App extends React.Component {
                     handleIsLogin: (value) => this.setState({ isLogin: value })
                   }}
                 />
+
+
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Account"
@@ -150,11 +151,6 @@ class App extends React.Component {
                   options={{ headerShown: false }}
                   name="Deposit"
                   component={Deposit}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="MyData"
-                  component={MyData}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}

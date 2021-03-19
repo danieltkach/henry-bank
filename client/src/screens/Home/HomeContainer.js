@@ -3,7 +3,7 @@ import { View, SafeAreaView } from 'react-native';
 import HomeView from './HomeView';
 import { BottomNav, Header, Background } from '../../components';
 import styles from './styles';
-
+import { statisticsFetch } from '../../controllers/transaction';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -12,7 +12,15 @@ export default function HomeContainer({ navigation, route }) {
   const { handleIsLogin } = route.params;
   const dispatch = useDispatch();
   const account = useSelector((state) => state.accountReducer.account);
+  const [statistics, setStatistics] = useState('');
 
+  useEffect(() => {
+    statisticsFetch(account._id)
+    .then(transactionResponse => {
+      setStatistics(transactionResponse);
+    })
+    .catch(err => console.log(err));
+  }, [])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -25,9 +33,9 @@ export default function HomeContainer({ navigation, route }) {
         handleIsLogin={handleIsLogin}
       />
       <View style={styles.container}>
-      {account ?
+      {statistics ?
         (
-          <HomeView navigation={navigation} account={account} />
+          <HomeView navigation={navigation} account={account} statistics={statistics} />
         )
         :(
           <></>

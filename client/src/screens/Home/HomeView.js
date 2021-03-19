@@ -30,18 +30,29 @@ const buttons = [
 ];
 
 
-export default function HomeView({ navigation, account }) {
+export default function HomeView({ navigation, account, statistics}) {
+  const [labelsTable, setLabelsTable] = useState(statistics.day.array);
+  const [spentTable, setSpentTable] = useState(statistics.day.spent);
+  const [table, setTable] = useState('day')
+
+  console.log(statistics);
+
+  const handleTable = arg => {
+    setTable(arg)
+    setLabelsTable(statistics[arg].array);
+    setSpentTable(statistics[arg].spent);
+  }
 
   const PieChartCustom = () => {
     return (
       <PieChart
         data={[
           {
-            population: 1153.15,
+            values: statistics.movements.incomes || 1,
             color: palette.primary.light,
           },
           {
-            population: 2334.12,
+            values: statistics.movements.expenses || 1,
             color: palette.secondary.light,
           },
         ]}
@@ -54,58 +65,23 @@ export default function HomeView({ navigation, account }) {
           backgroundGradientTo: '#efefef',
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         }}
-        accessor="population"
+        accessor="values"
         backgroundColor="transparent"
         center={[40, 0]}
       />
     )
   }
 
-  const data = [
-    {
-      value: Math.random() * 100,
-      type: 'income'
-    },
-    {
-      value: Math.random() * 100,
-      type: 'express'
-    },
-    {
-      value: Math.random() * 100,
-      type: 'express'
-    },
-    {
-      value: Math.random() * 100,
-      type: 'income'
-    },
-    {
-      value: Math.random() * 100,
-      type: 'income'
-    },
-    { value: Math.random() * 100,
-      type: 'income'
-    }
-  ];
-
   const LineChartCustom = () => {
     return (
       <LineChart
-
-      data={{
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
+        data={{
+          labels: labelsTable,
+          datasets: [
+            {
+              data: spentTable
+            }
           ]
-
-          }
-        ]
         }}
         width={Dimensions.get("window").width - 32}
         height={220}
@@ -116,7 +92,7 @@ export default function HomeView({ navigation, account }) {
         yAxisInterval={1}
         chartConfig={{
           fillShadowGradient:'red',
-          fillShadowGradientOpacity:1,
+          fillShadowGradientOpacity:0.5,
           backgroundColor: '#e20000',
           backgroundGradientFrom: '#fb8c00',
           backgroundGradientTo: '#ffa726',
@@ -167,11 +143,11 @@ export default function HomeView({ navigation, account }) {
           <View>
             <View style={styles.generalText}>
               <Text type='body2' text='Ingresos' />
-              <Text type='subtitle2' text={`$1153.15`} color='primary' />
+              <Text type='subtitle2' text={`$${statistics.movements.incomes}`} color='primary' />
             </View>
             <View style={styles.generalText}>
               <Text type='body2' text='Gastos' />
-              <Text type='subtitle2' text={`$2334.12`} color='secondary' />
+              <Text type='subtitle2' text={`$${statistics.movements.expenses}`} color='secondary' />
             </View>
           </View>
         </View>
@@ -183,21 +159,24 @@ export default function HomeView({ navigation, account }) {
         <View style={styles.buttonsChartLineal}>
           <Button
             style={{padding: 4}}
+            color={table === 'day' ? 'primary' : 'accent'}
             type='text'
             label='Quincena'
-            onPress={() => console.log('clicked')}
+            onPress={() => handleTable('day')}
           />
           <Button
             style={{padding: 4}}
+            color={table === 'week' ? 'primary' : 'accent'}
             type='text'
             label='Trimestral'
-            onPress={() => console.log('clicked')}
+            onPress={() => handleTable('week')}
           />
           <Button
             style={{padding: 4}}
+            color={table === 'month' ? 'primary' : 'accent'}
             type='text'
             label='Semestral'
-            onPress={() => console.log('clicked')}
+            onPress={() => handleTable('month')}
           />
         </View>
         <View style={{paddingTop: 4}}>

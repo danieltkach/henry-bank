@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form"
 import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import styles from './styles';
-import { palette, rgba, fontSystem } from '../../theme';
+import { palette, rgba, fontSystem, setColor } from '../../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, Button } from '../../components';
 import { IconButton } from 'react-native-paper';
@@ -37,7 +37,7 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
     <View style={{flex: 1, paddingVertical: 8}}>
 
       <View style={{alignItems: 'center'}}>
-        <LinearGradient colors={[palette.primary.light, rgba(palette.accent.light, 0.1)]} style={[styles.surface, {top: 90}]} />
+        <View style={[styles.surface, {top: 90}]} />
 
         <View style={styles.avatarCover}>
           <View style={styles.avatar}>
@@ -50,7 +50,7 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
         <Text text={user.email} type='body2' style={{color: 'white'}}/>
       </View>
 
-      <View style={{flex: 1, paddingBottom: 56}}>
+      <View style={{flex: 1, paddingBottom: 56, paddingTop: 8}}>
 
         <View style={{
           position: toggle ? 'static' : 'absolute',
@@ -58,48 +58,46 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
           alignItems: 'space-around',
           transform: toggle ? 'scale(1, 0)' : 'scale(1, 1)',
           transition: '.5s',
-          width: '100%'}}>
+          width: '100%'}}
+        >
           <View style={{flex: 1}}>
             <View style={styles.header}>
-              <View style={{width: 48, height: 48, alignItems: 'center', justifyContent: 'center'}}>
-                <IconButton
-                  icon="map-marker"
-                  size={24}
-                  color={palette.accent.dark}
-                />
+              <View style={{ justifyContent: 'center'}}>
+                <Text text='Domicilio' type='body2' style={styles.labelText} />
               </View>
-              <View style={{height: 48, alignItems: 'space-around', justifyContent: 'center'}}>
-                <Text text={`${user.streetName} ${user.streetNumber}`} type='body1' />
-                <Text text={`${user.city} ${user.country}`} type='body1' />
+              <View style={{ height: 48, alignItems: 'space-around', justifyContent: 'center'}}>
+                <Text text={`${user.streetName}, ${user.streetNumber}`} type='body1' color='light' />
+                <Text text={`${user.city}, ${user.country}`} type='body1' color='light' />
               </View>
             </View>
             <View style={styles.separator}></View>
 
             <View style={styles.header}>
-              <View style={{width: 48, height: 48, alignItems: 'center', justifyContent: 'center'}}>
-                <IconButton
-                  icon="account-box"
-                  size={24}
-                  color={palette.accent.dark}
-                />
+              <View style={{ justifyContent: 'center'}}>
+                <Text text='Codigo postal' type='body2' style={styles.labelText} />
               </View>
-              <View style={{height: 48, alignItems: 'space-around', justifyContent: 'center'}}>
-                <Text text={`${user.idType}, ${user.idNumber}`} type='body1' />
+              <View style={{height: 24, alignItems: 'space-around', justifyContent: 'center'}}>
+                <Text text={user.zipCode} type='body1' color='light' />
               </View>
             </View>
             <View style={styles.separator}></View>
 
             <View style={styles.header}>
-              <View style={{width: 48, height: 48, alignItems: 'center', justifyContent: 'center'}}>
-                <IconButton
-                  icon="phone"
-                  size={24}
-                  color={palette.accent.dark}
-                />
+              <View style={{ justifyContent: 'center'}}>
+                <Text text={user.idType} type='body2' style={styles.labelText} />
               </View>
-              <View style={{height: 48, alignItems: 'space-around', justifyContent: 'center'}}>
-                <Text text={`${user.streetName} ${user.streetNumber}`} type='body1' />
-                <Text text={user.cellphone} type='body1' />
+              <View style={{height: 24, alignItems: 'space-around', justifyContent: 'center'}}>
+                <Text text={user.idNumber} type='body1' color='light' />
+              </View>
+            </View>
+            <View style={styles.separator}></View>
+
+            <View style={styles.header}>
+              <View style={{ justifyContent: 'center'}}>
+                <Text text='Telefono' type='body2' style={styles.labelText} />
+              </View>
+              <View style={{height: 24, alignItems: 'space-around', justifyContent: 'center'}}>
+                <Text text={user.cellphone} type='body1' color='light' />
               </View>
             </View>
             <View style={styles.separator}></View>
@@ -159,7 +157,7 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
                         secureTextEntry={e.type === 'password' ? true : false}
                         maxLength={!e.maxLength ? e.maxLength : 50}
                         style={[fontSystem.body1, styles.text]}
-                        placeholderTextColor={rgba(palette.accent.dark, 0.5)}
+                        placeholderTextColor={setColor.gray}
                         underlineColorAndroid='transparent'
                         onChangeText={onChange}
                         value={value}
@@ -181,7 +179,7 @@ export default function ProfileView({ navigation, user, handleFinalSubmit }) {
               ))
             }
           </View>
-          <Button onPress={handleSubmit(onSubmit)} label='aplicar cambios' color='primary' style={styles.button} />
+          <Button onPress={handleSubmit(onSubmit)} label='aplicar cambios' color='secondary' style={styles.button} />
           <Button onPress={() => {
             setToggle(false);
             clearErrors();
