@@ -196,6 +196,8 @@ const getStatistics = (req,res) =>{
     function(err, data) {
       if(err) res.status(400).json({message:'Sin transferencias'})
 
+      console.log(data)
+
       let incomes = 0;
       let expenses = 0;
       data.forEach(item => {
@@ -245,7 +247,7 @@ const getStatistics = (req,res) =>{
           }
         })
         for (let j=0;j<4;j++){
-            weekNumber[i*4+j]=`week:${j+1}, month:${month+1}`
+            weekNumber[i*4+j]=`${j+1}/${month+1}`
         }
         if(month===0) month=12
         month--
