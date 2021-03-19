@@ -17,7 +17,7 @@ const accountSchema = new Schema({
   },
   // cvuExternal: {
   //   type: String,
-  //   unique: true,    
+  //   unique: true,
   // },
   balance: {
     type: Number,
@@ -27,9 +27,12 @@ const accountSchema = new Schema({
 
 //hook
 accountSchema.pre('save', async function (next) {
-  if(!this.cvu){
-  let aux = Math.floor((Math.random() * (9999999999 - 1000000000 + 1)) + 1000000000);
-    this.cvu = aux
+  if(!this.cvu) {
+    let min = 1000000000;
+    let max = 9999999999999999999;
+    let num = Math.floor(Math.random() * ((max + 1) - min) + min);
+    let stringNum = "000000000000" + num;
+    this.cvu = stringNum.substr(stringNum.length-22);
   }
   next();
 })

@@ -1,7 +1,6 @@
 export { default as Account } from './Account/AccountContainer';
 export { default as Boilerplate } from './Boilerplate/BoilerplateContainer';
 export { default as Deposit } from './Deposit/DepositContainer';
-export { default as MyData } from './MyData/MyDataContainer';
 export { default as Home } from './Home/HomeContainer';
 export { default as Login } from './Login/LoginContainer';
 export { default as Contact } from './Contact/ContactContainer';

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
-import { IconButton } from 'react-native-paper';
 import {
   StyleSheet,
   View,
@@ -12,11 +11,15 @@ import { palette, rgba } from '../theme';
 import { Text } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteData } from '../controllers/storage';
+import IconArgSvg from '../media/IconArgSvg.js';
+import IconUsdSvg from '../media/IconUsdSvg.js';
+import Icon from 'react-native-vector-icons/Feather';
+
 
 const darkColor = palette.accent.dark;
 const primaryColor = palette.primary.main;
 
-export default function Drawer({ navigation, label, align, handleIsLogin }) {
+export default function Drawer({ navigation, label, align, handleIsLogin, account }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
   const [isSignOut, setIsSignOut] = useState(false);
@@ -33,26 +36,27 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
   const handleClick = () => {
     setToggle(!toggle);
   };
+
   const buttons = [
     {
       index: 0,
       type: 'button',
       label: 'Recargar dinero',
-      icon: 'arrow-collapse-up',
+      icon: 'corner-right-up',
       route: 'Deposit'
     },
     {
       index: 1,
       type: 'button',
       label: 'Enviar dinero',
-      icon: 'subdirectory-arrow-right',
+      icon: 'corner-down-right',
       route: 'Transfer'
     },
     {
       index: 2,
       type: 'button',
       label: 'Transacciones',
-      icon: 'refresh',
+      icon: 'repeat',
       route: 'Transaction'
     },
     { index: 3, type: 'separator' },
@@ -71,42 +75,56 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
       route: 'Support'
     },
     { index: 6, type: 'separator' },
-    { index: 7, type: 'button', label: 'Salir', icon: 'logout', route: false }
+    { index: 7, type: 'button', label: 'Salir', icon: 'log-out', route: false }
   ];
 
   const IconButtonText = ({ labelButton, icon, route }) => (
     <TouchableOpacity
-      onPress={route ? () => navigation.navigate(route) : () => handleLogOut()}
+      onPress={route ? () => { navigation.navigate(route); handleClick(); }: () => handleLogOut()}
       style={styles.iconButtonText}
     >
-      <IconButton icon={icon} size={20} color={darkColor} />
+      <View style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center'}}>
+        <Icon name={icon} size={20} color={darkColor} />
+      </View>
       <Text style={styles.textBody} type="subtitle2" text={labelButton} />
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.drawer}>
-      <View
-        style={{
-          alignItems: align || 'flex-start',
-          justifyContent: 'center',
-          height: 48,
-          width: '100%',
-          zIndex: 0,
-          position: 'absolute',
-          paddingHorizontal: 16
-        }}
-      >
-        <Text type="title" text={label} />
-      </View>
       <View style={styles.header}>
-        <IconButton
-          icon="menu"
-          size={24}
-          color={darkColor}
+        <TouchableOpacity
           onPress={handleClick}
-        />
+          style={{width: 48, height: 48, justifyContent: 'center', alignItems: 'center'}}
+        >
+          <Icon
+            name="menu"
+            size={24}
+            color={darkColor}
+          />
+        </TouchableOpacity>
+        <View style={{ margin: 'auto'}} >
+          <Text type="title" text={label} />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Account')}
+          style={styles.buttonCurrency}
+        >
+          {account.currency.toUpperCase() === 'ARS' ?
+            (
+              <IconArgSvg style={{fontSize: 24}} />
+            )
+            :(
+              <IconUsdSvg style={{fontSize: 24}} />
+            )
+          }
+        </TouchableOpacity>
+
       </View>
+
+
+
       <TouchableOpacity
         onPress={handleClick}
         style={[
@@ -146,12 +164,16 @@ export default function Drawer({ navigation, label, align, handleIsLogin }) {
             </View>
           </View>
 
-          <IconButton
-            icon="close"
-            size={24}
-            color="white"
+          <TouchableOpacity
             onPress={handleClick}
-          />
+            style={{width: 48, height: 48, justifyContent: 'center', alignItems: 'center'}}
+          >
+            <Icon
+              name="x"
+              size={24}
+              color={palette.accent.light}
+            />
+          </TouchableOpacity>
         </View>
         <View style={{ paddingVertical: 8, paddingHorizontal: 8 }}>
           <ScrollView style={styles.scrollView} vertical={true}>
@@ -184,7 +206,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '48px',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   textBody: {
     color: darkColor,
@@ -192,6 +215,7 @@ const styles = StyleSheet.create({
   },
   iconButtonText: {
     width: '100%',
+    height: 42,
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -241,5 +265,10 @@ const styles = StyleSheet.create({
     height: '1px',
     backgroundColor: palette.text.disabled,
     opacity: 0.8
+  },
+  buttonCurrency: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    padding: 16,
   }
 });

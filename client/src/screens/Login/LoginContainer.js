@@ -4,6 +4,7 @@ import { View, SafeAreaView } from "react-native";
 import LoginView from './LoginView';
 import { Background, Alert } from '../../components';
 import { loginUserFetch, profileAuthFetch } from '../../controllers/user';
+import { readAccountByIdFetch } from '../../controllers/account';
 import { storeData } from '../../controllers/storage';
 import { useDispatch } from 'react-redux';
 import styles from './styles';
@@ -31,12 +32,16 @@ export default function LoginContainer({ navigation, route }) {
 
   const handleFinalSubmit = inputs => {
     let token;
+    let user;
+
     loginUserFetch(inputs)
     .then(responseLogin =>  {
       token = responseLogin.token;
       return profileAuthFetch(responseLogin.token);
     })
     .then(responseUser => {
+      user = responseUser.user;
+
       if (responseUser.user.role === 'guest') {
         if (responseUser.user.codeSecurity === 'active') {
           navigation.navigate('Register3', { userId: responseUser.user._id });
@@ -46,16 +51,19 @@ export default function LoginContainer({ navigation, route }) {
 
       } else if(responseUser.user.role === "client"){
         storeData(token);
+        console.log('ACCOUNT', user.accounts[0]);
         dispatch({type: "ADD_SESSION", payload: responseUser.user});
-        handleIsLogin('sessionOn');
+        return readAccountByIdFetch(user.accounts[0]);
       }
+    })
+    .then((responseAccount) => {
+      dispatch({type: "ADD_ACCOUNT", payload: responseAccount.account});
+      handleIsLogin('sessionOn');
     })
     .catch(err => {
       handleAlert('Usuario no identificado', 'error');
     });
   }
-
-  console.log(alert)
 
   return (
     <SafeAreaView style={{flex: 1}}>

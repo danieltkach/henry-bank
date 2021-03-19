@@ -14,7 +14,7 @@ export default function AccountView({ navigation, account, user }) {
       >
         <View style={styles.card}>
           <View style={{ alignItems: 'flex-end' }}>
-            <Text type="subtitle2" text="Nombre del banco" color="disabled" />
+            <Text type="subtitle2" text={`Cuenta en ${account.currency}`} color="disabled" />
           </View>
           <View>
             <Text type="title" text="CVU:" />
@@ -28,7 +28,7 @@ export default function AccountView({ navigation, account, user }) {
               alignItems: 'flex-end'
             }}
           >
-            <Text type="subtitle2" text="mi nombre" color="disabled" />
+            <Text type="subtitle2" text={`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`} color="disabled" />
             <View style={styles.symbol}>
               <View style={[styles.circle, { left: 8 }]}></View>
               <View style={[styles.circle, { right: 8 }]}></View>

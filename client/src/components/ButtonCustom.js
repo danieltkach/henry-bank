@@ -3,6 +3,7 @@ import { IconButton } from 'react-native-paper';
 import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { palette, rgba, setColor, fontSystem } from '../theme';
 import { Text } from './index'
+import Icon from 'react-native-vector-icons/Feather';
 
 
 export default function ButtonCustom({ type, color, style, onPress, label, icon, size }) {
@@ -16,13 +17,14 @@ export default function ButtonCustom({ type, color, style, onPress, label, icon,
     {type === 'icon' ?
       (
         <TouchableOpacity
-          style={[genStyleButton, style, {background: genColor}]}>
-            <IconButton
-              icon={icon}
-              size={size || 20}
-              color={"white" }
-              onPress={onPress}
-            />
+          style={[genStyleButton, {background: genColor, justifyContent: 'center', alignItems: 'center', width: size || 36}, style]}
+          onPress={onPress}
+        >
+          <Icon
+            name={icon}
+            size={size || 20}
+            color={palette.accent.light}
+          />
         </TouchableOpacity>
       ):(
         <TouchableOpacity

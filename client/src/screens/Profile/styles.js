@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { palette, rgba } from '../../theme';
+import { palette, rgba, setColor } from '../../theme';
 
 
 const styles = StyleSheet.create({
@@ -10,10 +10,11 @@ const styles = StyleSheet.create({
       flexWrap         : 'wrap',
     },
     surface: {
+      backgroundColor: palette.primary.main,
       position: 'fixed',
-      width: 600,
-      height: 600,
-      borderRadius: 600,
+      width: '100%',
+      height: '100%',
+      borderRadius: 32,
     },
     card: {
       flex: 1,
@@ -42,15 +43,17 @@ const styles = StyleSheet.create({
     },
     header: {
       width: '100%',
-      height: '48px',
-      flexDirection: 'row'
+      flexDirection: 'column'
     },
     separator: {
       marginVertical: 8,
       width: '100%',
       height: '1px',
-      backgroundColor: palette.text.disabled,
-      opacity: 0.8
+      backgroundColor: setColor.gray,
+      opacity: 0.4
+    },
+    labelText: {
+      color: setColor.gray
     },
 
     button          : {
@@ -71,8 +74,7 @@ const styles = StyleSheet.create({
       bottom         : '8px',
       width          : '100%',
       height         : '1px',
-      backgroundColor: palette.accent.dark,
-      opacity        : 0.8,
+      backgroundColor: setColor.gray,
       // transition     : '.4s',
     },
     underlineFocus   : {
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
       height         : 48,
       backgroundColor: 'transparent',
       marginTop      : '12px',
-      color          : palette.accent.dark,
+      color          : palette.accent.light,
     },
     helperText  :{
       position  : 'absolute',

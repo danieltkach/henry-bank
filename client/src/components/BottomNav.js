@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { IconButton } from 'react-native-paper';
 import { Text } from './index';
 import { palette, rgba } from '../theme';
+import Icon from 'react-native-vector-icons/Feather';
+
 
 const disableColor = palette.text.disabled;
 const activeColor = palette.primary.main;
@@ -12,15 +13,10 @@ export default function BottomNav({ navigation, init }) {
   const [indexClick, setIndexClick] = React.useState((init && init) || 0);
 
   const buttons = [
-    { index: 0, label: 'Inicio', icon: 'view-grid', route: 'Home' },
-    {
-      index: 1,
-      label: 'Contactos',
-      icon: 'book-open-variant',
-      route: 'Contact'
-    },
-    { index: 2, label: 'Cuenta', icon: 'bank', route: 'Account' },
-    { index: 3, label: 'Yo', icon: 'account', route: 'Profile' }
+    { index: 0, label: 'Inicio', icon: 'home', route: 'Home' },
+    { index: 1, label: 'Contactos', icon: 'message-circle', route: 'Contact' },
+    { index: 2, label: 'Cuenta', icon: 'trello', route: 'Account' },
+    { index: 3, label: 'Yo', icon: 'user', route: 'Profile' }
   ];
 
   const handleClick = (value) => {
@@ -36,10 +32,10 @@ export default function BottomNav({ navigation, init }) {
             key={index}
             onPress={() => navigation.navigate(bt.route)}
           >
-            <IconButton
+            <Icon
               style={styles.iconButton}
-              icon={bt.icon}
-              size={(indexClick === index && 20) || 24}
+              name={bt.icon}
+              size={(indexClick === index && 24) || 20}
               color={(indexClick === index && activeColor) || disableColor}
             />
             <Text
@@ -48,6 +44,7 @@ export default function BottomNav({ navigation, init }) {
               style={[
                 styles.text,
                 {
+                  display: indexClick === index ? 'none' : 'inline',
                   color:
                     (indexClick === index && `${activeColor}`) ||
                     `${disableColor}`
@@ -71,8 +68,8 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     width: 48,
-    height: 48
   },
   iconButton: {
     width: 24,

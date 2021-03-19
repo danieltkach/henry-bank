@@ -33,6 +33,7 @@ export const POST_TRANSFER = `${API_TRANSACTION_HOST}/transaction/transfer`; //#
 export const PUT_TRANSFER = `${API_TRANSACTION_HOST}/transaction/newTransfer`;
 export const PUT_RECHARGE = `${API_TRANSACTION_HOST}/transaction/transfer/recharge`; //#cvu
 export const GET_TRANSACTIONS = `${API_TRANSACTION_HOST}/transaction/all`; //:dataId
+export const GET_STATISTICS = `${API_TRANSACTION_HOST}/transaction/statistics`;
 
 //Fetchs asociadas a User
 export const POST_ACCOUNT = `${API_TRANSACTION_HOST}/transaction/account`; //:dataId

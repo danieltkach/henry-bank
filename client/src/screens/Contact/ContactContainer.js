@@ -14,11 +14,12 @@ import { palette, rgba } from '../../theme';
 import { addContactAction } from '../../stores/userStore/userActions';
 
 
-const ContactContainer = ({ navigation }) => {
+const ContactContainer = ({ navigation, route }) => {
+  const { handleIsLogin } = route.params;
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userReducer.user._id);
   const contacts = useSelector(state => state.userReducer.contacts)
-  
+
   const [users, Setusers] = useState([]);
   const [toggle, setToggle] = useState(false);
   const handleClick = () => {
@@ -60,6 +61,7 @@ const ContactContainer = ({ navigation }) => {
           deleteContact={deleteContact}
           addContact={addContact}
           navigation={navigation}
+          handleIsLogin={handleIsLogin}
         />
       ) : (
         <>
@@ -72,7 +74,8 @@ const ContactContainer = ({ navigation }) => {
         label="A"
         type="icon"
         onPress={handleClick}
-        icon="account-multiple-plus"
+        icon="plus"
+        color='secondary'
       ></Button>
       <BottomNav navigation={navigation} init={1} />
     </SafeAreaView>
