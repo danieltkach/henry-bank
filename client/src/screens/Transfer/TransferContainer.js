@@ -29,7 +29,7 @@ export default function TransferContainer({ navigation }) {
     newTransferFetch(accountId[0], inputs)
       .then((responseTransfer) => {
         console.log('login: ', responseTransfer);
-        handleAlert('Transferencia Realizado');
+        handleAlert('Transferencia Realizada');
       })
       .catch((err) => console.log(err));
   };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, TextInput } from 'react-native';
-import { Surface, IconButton } from 'react-native-paper';
 import { Text, Button } from '../../components';
 import styles from './styles';
 import { validations, REGEX } from '../../validations/index';
